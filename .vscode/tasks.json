@@ -1,0 +1,24 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "PyInstaller Build",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "-m",
+                "PyInstaller",
+                "--noconfirm",
+                "--clean",
+                "--onefile",
+                "--windowed",
+                "Display_Sheet_Generate_Tool_3P_Pro.py"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}
