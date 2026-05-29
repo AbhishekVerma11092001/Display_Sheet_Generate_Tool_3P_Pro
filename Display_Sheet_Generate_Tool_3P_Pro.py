@@ -180,7 +180,7 @@ def get_image_list(folder):
 
 
 # === Table creation in docx ===
-def create_table(doc, values, meter_type):
+def create_table(doc, values, meter_type, energy_decimal):
     table = doc.add_table(rows=1, cols=2)
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
     table.allow_autofit = False
@@ -201,15 +201,15 @@ def create_table(doc, values, meter_type):
     for dec in values:
         filename = f"{dec:04d}"
 
-        # # Get parameter name from XML mapping
-        # param_name = predefined_names_new.get(dec, "").lower()
+        # Get parameter name from XML mapping
+        param_name = predefined_names_new.get(dec, "").lower()
 
-        # # If parameter contains "energy" use energy_decimal logic
-        # if energy_decimal in ["1", "2"] and "energy" in param_name and "hr" not in param_name:
-        #     matches = glob.glob(os.path.join(folder, f"{filename}@{energy_decimal}_*.[jp][pn]g"))
+        # If parameter contains "energy" use energy_decimal logic
+        if energy_decimal in ["1", "2"] and "energy" in param_name and "hr" not in param_name:
+            matches = glob.glob(os.path.join(folder, f"{filename}@{energy_decimal}_*.[jp][pn]g"))
             
-        # else:
-        matches = glob.glob(os.path.join(folder, f"{filename}_*.[jp][pn]g"))
+        else:
+            matches = glob.glob(os.path.join(folder, f"{filename}_*.[jp][pn]g"))
 
         if matches:
             for img_path in matches:
@@ -266,30 +266,6 @@ def generate_doc():
         messagebox.showerror("Error", "Input Test hex String is Invalid, Check Length.")
         return
 
-    if auto_input_string and auto_vals:
-        messagebox.showerror("Error", "Please select either parameters or insert hex string in Auto Scroll, not both")
-        return
-    elif auto_input_string:
-        auto_vals = [int(auto_input_string[i:i+4], 16) for i in range(0, len(auto_input_string), 4)]
-
-    if push_input_string and push_vals:
-        messagebox.showerror("Error", "Please select either parameters or insert hex string in Push Scroll, not both")
-        return
-    elif push_input_string:
-        push_vals = [int(push_input_string[i:i+4], 16) for i in range(0, len(push_input_string), 4)]
-
-    if diag_input_string and diag_vals:
-        messagebox.showerror("Error", "Please select either parameters or insert hex string in Diagnostic Scroll, not both")
-        return
-    elif diag_input_string:
-        diag_vals = [int(diag_input_string[i:i+4], 16) for i in range(0, len(diag_input_string), 4)]
-
-    if test_input_string and test_vals:
-        messagebox.showerror("Error", "Please select either parameters or insert hex string in Test Scroll, not both")
-        return
-    elif test_input_string:
-        test_vals = [int(test_input_string[i:i+4], 16) for i in range(0, len(test_input_string), 4)]
-
 
     if not auto_vals:
         # elif not auto_input_hex_string:
@@ -302,6 +278,14 @@ def generate_doc():
     if not diag_vals:
         diag_vals = [int(item.split(" - ")[0]) for item in ["92", "3101", "3103", "3106", "3107", "3102", "3105", "3104", "3108"]]
         
+    # Ask user to enter decimal in energy parameter
+    energy_decimal_var = simpledialog.askstring("Decimal Input", "Enter energy decimal value (0, 1, or 2):")
+    if energy_decimal_var not in ["0", "1", "2"]:
+        messagebox.showerror("Invalid Input", "Energy decimal value must be 0, 1, or 2.")
+        return
+    
+    energy_decimal = energy_decimal_var
+
 
     auto_hex_str = "".join(f"{val:04X}" for val in auto_vals)
     auto_hex_str_len = len(auto_hex_str) // 2
@@ -515,7 +499,7 @@ def generate_doc():
         run.underline = True  # Simple underline
         # Or for more options:
         # run.underline = WD_UNDERLINE.SINGLE
-        create_table(doc, auto_vals, meter_type)
+        create_table(doc, auto_vals, meter_type, energy_decimal)
     
     # Insert a page break
     paragraph = doc.add_paragraph()
@@ -529,7 +513,7 @@ def generate_doc():
         run.underline = True  # Simple underline
         # Or for more options:
         # run.underline = WD_UNDERLINE.SINGLE
-        create_table(doc, push_vals, meter_type)
+        create_table(doc, push_vals, meter_type, energy_decimal)
     
     # Insert a page break
     paragraph = doc.add_paragraph()
@@ -543,7 +527,7 @@ def generate_doc():
         run.underline = True  # Simple underline
         # Or for more options:
         # run.underline = WD_UNDERLINE.SINGLE
-        create_table(doc, diag_vals, meter_type)
+        create_table(doc, diag_vals, meter_type, energy_decimal)
     
     # Insert a page break
     paragraph = doc.add_paragraph()
@@ -557,7 +541,7 @@ def generate_doc():
         run.underline = True  # Simple underline
         # Or for more options:
         # run.underline = WD_UNDERLINE.SINGLE
-        create_table(doc, test_vals, meter_type)
+        create_table(doc, test_vals, meter_type, energy_decimal)
        
     doc.add_heading("Note: ", level=3)
     para = doc.add_paragraph("1.  In the Push Mode Display table, present tamper status display parameter was normally hidden and if tamper present continuously for 10 seconds then status showing as above table for respective tamper.")
@@ -613,7 +597,7 @@ def generate_doc():
         run.underline = True  # Simple underline
         # Or for more options:
         # run.underline = WD_UNDERLINE.SINGLE
-        create_table(doc, test_vals_temp, meter_type)
+        create_table(doc, test_vals_temp, meter_type, energy_decimal)
 
         # Insert a page break
         paragraph = doc.add_paragraph()
@@ -1673,8 +1657,8 @@ ctk.set_appearance_mode("light")   # Options: "light", "dark", "system"
 ctk.set_default_color_theme("blue")  # Try "green", "dark-blue", etc.
 # === Main Window ===
 root = ctk.CTk()
-root.iconbitmap("logo.ico")
-root.title("3P Pro Meter Display Report Generator V1.0")
+# root.iconbitmap("logo.ico")
+root.title("3P Pro Meter Display Report Generator V2.0")
 root.geometry("1200x760")
 root.resizable(False, False)
 
@@ -1682,8 +1666,11 @@ root.resizable(False, False)
 top_frame = ctk.CTkFrame(root, corner_radius=15)
 top_frame.pack(pady=15, padx=15, fill="x")
 
+# Base Folder (left side)
 ctk.CTkLabel(top_frame, text="Base Folder:", text_color="#1a1a1a").grid(row=0, column=0, padx=5, sticky="w")
 ctk.CTkButton(top_frame, text="Browse Base Folder", fg_color="#1f6aa5", hover_color="#155a8a", command= choose_base_folder).grid(row=0, column=1, padx=5, sticky="w")
+
+# Meter Type (middle side)
 ctk.CTkLabel(top_frame, text="Meter Type:").grid(row=0, column=2, padx=20, sticky="w")
 meter_type_var = tk.StringVar(value="Select Type")
 meter_type_combo = ctk.CTkComboBox(top_frame, variable=meter_type_var, values=[])
@@ -1703,6 +1690,43 @@ revision_combo.grid(row=0, column=7, padx=5, sticky="w")
 
 
 # === Dual listbox UI ===
+
+def auto_fill_selected(input_var, available_listbox, selected_listbox):
+    """Auto-fill the selected listbox from a HEX entry string.
+
+    The input is treated as a continuous HEX stream, split into 4-character chunks.
+    Each valid chunk is converted to decimal and formatted as a 4-digit string.
+    Matching available items are inserted into selected_listbox, duplicates avoided.
+    """
+    hex_text = input_var.get().strip().upper()
+    selected_listbox.delete(0, tk.END)
+
+    if not hex_text:
+        return
+
+    values = []
+    for i in range(0, len(hex_text), 4):
+        chunk = hex_text[i:i+4]
+        if len(chunk) != 4:
+            continue
+        try:
+            values.append(int(chunk, 16))
+        except ValueError:
+            continue
+
+    if not values:
+        return
+
+    available_items = getattr(available_listbox, "full_items", available_listbox.get(0, tk.END))
+    available_map = {item.split(" - ", 1)[0]: item for item in available_items}
+
+    for value in values:
+        formatted = f"{value:04d}"
+        match = available_map.get(formatted)
+        if match and match not in selected_listbox.get(0, tk.END):
+            selected_listbox.insert(tk.END, match)
+
+
 def create_dual_listbox(frame, title, items):
     ttk.Label(frame, text=title, font=("Arial", 16, "bold")).grid(row=0, column=0, columnspan=3, pady=5)
 
@@ -1739,6 +1763,7 @@ def create_dual_listbox(frame, title, items):
 
     # --- Populate Available ---
     filtered_items = items.copy()
+    available.full_items = filtered_items
     for item in filtered_items:
         available.insert(tk.END, item)
 
@@ -1797,6 +1822,7 @@ def create_dual_listbox(frame, title, items):
                 available.insert(tk.END, item)
 
     search_var.trace_add("write", update_filter)
+    input_hex_string.trace_add("write", lambda *args: auto_fill_selected(input_hex_string, available, selected))
 
     return available, selected, input_hex_string
 
