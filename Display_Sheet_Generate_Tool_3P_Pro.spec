@@ -5,7 +5,7 @@ a = Analysis(
     ['Display_Sheet_Generate_Tool_3P_Pro.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[('logo.ico', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -35,4 +35,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    icon=['logo.ico'],
 )
