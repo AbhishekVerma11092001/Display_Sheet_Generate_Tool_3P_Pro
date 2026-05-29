@@ -1673,6 +1673,7 @@ ctk.set_appearance_mode("light")   # Options: "light", "dark", "system"
 ctk.set_default_color_theme("blue")  # Try "green", "dark-blue", etc.
 # === Main Window ===
 root = ctk.CTk()
+root.iconbitmap("logo.ico")
 root.title("3P Pro Meter Display Report Generator V1.0")
 root.geometry("1200x760")
 root.resizable(False, False)
