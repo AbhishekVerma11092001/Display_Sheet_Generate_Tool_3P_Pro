@@ -143,7 +143,7 @@ def choose_base_folder():
     }
 
     # Update meter type combobox values
-    meter_type_combo["values"] = list(image_folders.keys())
+    meter_type_combo.configure(values=list(image_folders.keys()))
     meter_type_var.set("Select Type")
 
     # Update default output path
@@ -1669,35 +1669,35 @@ def generate_doc():
 
 
 # === Tkinter GUI ===
-root = tk.Tk()
+ctk.set_appearance_mode("light")   # Options: "light", "dark", "system"
+ctk.set_default_color_theme("blue")  # Try "green", "dark-blue", etc.
+# === Main Window ===
+root = ctk.CTk()
 root.title("3P Pro Meter Display Report Generator V1.0")
-root.geometry("1080x780")
+root.geometry("1200x760")
 root.resizable(False, False)
 
-# === Top Frame: Base Folder + Meter Type side by side ===
-top_frame = tk.Frame(root)
-top_frame.pack(pady=10, fill="x")
+# === Top Frame ===
+top_frame = ctk.CTkFrame(root, corner_radius=15)
+top_frame.pack(pady=15, padx=15, fill="x")
 
-# Base Folder (left side)
-ttk.Label(top_frame, text="Base Folder:").grid(row=0, column=0, padx=5, sticky="w")
-ttk.Button(top_frame, text="Browse Base Folder", command=choose_base_folder).grid(row=0, column=1, padx=5, sticky="w")
-
-# Meter Type (middle side)
-ttk.Label(top_frame, text="Meter Type:").grid(row=0, column=2, padx=20, sticky="w")
+ctk.CTkLabel(top_frame, text="Base Folder:", text_color="#1a1a1a").grid(row=0, column=0, padx=5, sticky="w")
+ctk.CTkButton(top_frame, text="Browse Base Folder", fg_color="#1f6aa5", hover_color="#155a8a", command= choose_base_folder).grid(row=0, column=1, padx=5, sticky="w")
+ctk.CTkLabel(top_frame, text="Meter Type:").grid(row=0, column=2, padx=20, sticky="w")
 meter_type_var = tk.StringVar(value="Select Type")
-meter_type_combo = ttk.Combobox(top_frame, textvariable=meter_type_var, values=[])
+meter_type_combo = ctk.CTkComboBox(top_frame, variable=meter_type_var, values=[])
 meter_type_combo.grid(row=0, column=3, padx=5, sticky="w")
 
 # Date input with calendar picker (right side)
-ttk.Label(top_frame, text="Date:").grid(row=0, column=4, padx=30, sticky="w")
+ctk.CTkLabel(top_frame, text="Date:").grid(row=0, column=4, padx=30, sticky="w")
 date_var = tk.StringVar()
 date_entry = DateEntry(top_frame, textvariable=date_var, date_pattern="dd-mm-yyyy", width=30)
 date_entry.grid(row=0, column=5, padx=5, sticky="w")
 
 # Revision Number (right side)
-ttk.Label(top_frame, text="Rev. No:").grid(row=0, column=6, padx=40, sticky="w")
+ctk.CTkLabel(top_frame, text="Rev. No:").grid(row=0, column=6, padx=40, sticky="w")
 revision_var = tk.StringVar(value="00")
-revision_combo = ttk.Combobox(top_frame, textvariable=revision_var, values=["00", "01", "02", "03"])
+revision_combo = ctk.CTkComboBox(top_frame, variable=revision_var, values=["00", "01", "02", "03"], width=80)
 revision_combo.grid(row=0, column=7, padx=5, sticky="w")
 
 
@@ -1721,7 +1721,7 @@ def create_dual_listbox(frame, title, items):
     # --- Available Listbox + Scrollbar ---
     available_frame = tk.Frame(frame)
     available_frame.grid(row=2, column=0, padx=10, pady=5)
-    available = tk.Listbox(available_frame, selectmode=tk.SINGLE, width=60, height=15)
+    available = tk.Listbox(available_frame, selectmode=tk.SINGLE, width=70, height=12)
     available_scroll = tk.Scrollbar(available_frame, orient=tk.VERTICAL, command=available.yview)
     available.config(yscrollcommand=available_scroll.set)
     available.grid(row=0, column=0, sticky="nsew")
@@ -1730,7 +1730,7 @@ def create_dual_listbox(frame, title, items):
     # --- Selected Listbox + Scrollbar ---
     selected_frame = tk.Frame(frame)
     selected_frame.grid(row=2, column=2, padx=10, pady=5)
-    selected = tk.Listbox(selected_frame, selectmode=tk.SINGLE, width=60, height=15)
+    selected = tk.Listbox(selected_frame, selectmode=tk.SINGLE, width=70, height=12)
     selected_scroll = tk.Scrollbar(selected_frame, orient=tk.VERTICAL, command=selected.yview)
     selected.config(yscrollcommand=selected_scroll.set)
     selected.grid(row=0, column=0, sticky="nsew")
@@ -1807,11 +1807,11 @@ diag_items = [f"{dec:04d} - {desc}" for dec, desc in diag_predefined_names_new.i
 test_items = [f"{dec:04d} - {desc}" for dec, desc in test_predefined_names_new.items()]
 
 # Create a frame with fixed size for the notebook
-notebook_frame = tk.Frame(root, width=1080, height=400)
+notebook_frame = tk.Frame(root, width=1080, height=350)
 notebook_frame.pack(padx=10, pady=(0,5))  # adjust pady to reduce gap
 
 # Prevent frame from shrinking to fit notebook
-# notebook_frame.pack_propagate(False)
+notebook_frame.pack_propagate(False)
 
 # Tabs for Auto / Push
 notebook = ttk.Notebook(notebook_frame)
@@ -1858,59 +1858,59 @@ input_frame = ttk.Frame(root)
 input_frame.pack(pady=20, padx=10, fill="x")   # This uses pack()
 
 ttk.Label(input_frame, text="Auto Mode:").grid(row=0, column=0, padx=5, sticky="w")
-ttk.Entry(input_frame, textvariable=auto_txt, width=150).grid(row=0, column=1, padx=30, sticky="w")
+ttk.Entry(input_frame, textvariable=auto_txt, width=170).grid(row=0, column=1, padx=30, sticky="w")
 
 ttk.Label(input_frame, text="Push Mode:").grid(row=1, column=0, padx=5, sticky="w")
-ttk.Entry(input_frame, textvariable=push_txt, width=150).grid(row=1, column=1, padx=30, sticky="w")
+ttk.Entry(input_frame, textvariable=push_txt, width=170).grid(row=1, column=1, padx=30, sticky="w")
 
 ttk.Label(input_frame, text="Diag. Mode:").grid(row=2, column=0, padx=5, sticky="w")
-ttk.Entry(input_frame, textvariable=diag_txt, width=150).grid(row=2, column=1, padx=30, sticky="w")
+ttk.Entry(input_frame, textvariable=diag_txt, width=170).grid(row=2, column=1, padx=30, sticky="w")
 
 ttk.Label(input_frame, text="Test Mode:").grid(row=3, column=0, padx=5, sticky="w")
-ttk.Entry(input_frame, textvariable=test_txt, width=150).grid(row=3, column=1, padx=30, sticky="w")
+ttk.Entry(input_frame, textvariable=test_txt, width=170).grid(row=3, column=1, padx=30, sticky="w")
 
 ttk.Label(input_frame, text="Battery Mode:").grid(row=4, column=0, padx=5, sticky="w")
-ttk.Entry(input_frame, textvariable=batt_txt, width=150).grid(row=4, column=1, padx=30, sticky="w")
+ttk.Entry(input_frame, textvariable=batt_txt, width=170).grid(row=4, column=1, padx=30, sticky="w")
 
 # Create a frame for output file controls
-output_frame = ttk.Frame(root)
+output_frame = ctk.CTkFrame(root, corner_radius=15)
 output_frame.pack(pady=5, fill="x")   # This uses pack()
 
 ttk.Label(output_frame, text="Output File:").grid(row=0, column=0, padx=5, sticky="w")
-ttk.Entry(output_frame, textvariable=output_var, width=100).grid(row=0, column=1, padx=30, sticky="w")
-ttk.Button(output_frame, text="Browse", command=choose_output).grid(row=0, column=2, padx=30, sticky="w")
+ttk.Entry(output_frame, textvariable=output_var, width=130).grid(row=0, column=1, padx=30, sticky="w")
+ctk.CTkButton(output_frame, text="Browse", command=choose_output, fg_color="#2196f3").grid(row=0, column=2, padx=30, sticky="w")
 
 # Generate button
-ttk.Button(output_frame, text="Generate Report", command=generate_doc).grid(row=0, column=3, padx=30, sticky="w")
+ctk.CTkButton(output_frame, text="Generate Report", command=generate_doc, fg_color="#388e3c").grid(row=2, column=2, padx=30, sticky="w")
 
 auto_string = tk.StringVar()
 
-ttk.Label(output_frame, text="").grid(row=1, column=3, padx=5, sticky="w")
+ctk.CTkLabel(output_frame, text="").grid(row=1, column=3, padx=5, sticky="w")
 
 ttk.Label(output_frame, text="Auto Display String:").grid(row=2, column=0, padx=5, sticky="w")
-ttk.Entry(output_frame, textvariable=auto_string, width=100).grid(row=2, column=1, padx=30, sticky="e")
+ttk.Entry(output_frame, textvariable=auto_string, width=130).grid(row=2, column=1, padx=30, sticky="e")
 
 push_string = tk.StringVar()
 
 ttk.Label(output_frame, text="Push Display String:").grid(row=3, column=0, padx=5, sticky="w")
-ttk.Entry(output_frame, textvariable=push_string, width=100).grid(row=3, column=1, padx=30, sticky="e")
+ttk.Entry(output_frame, textvariable=push_string, width=130).grid(row=3, column=1, padx=30, sticky="e")
 
 diag_string = tk.StringVar()
 
 ttk.Label(output_frame, text="Diag Display String:").grid(row=4, column=0, padx=5, sticky="w")
-ttk.Entry(output_frame, textvariable=diag_string, width=100).grid(row=4, column=1, padx=30, sticky="e")
+ttk.Entry(output_frame, textvariable=diag_string, width=130).grid(row=4, column=1, padx=30, sticky="e")
 
 test_string = tk.StringVar()
 
 ttk.Label(output_frame, text="Test Display String:").grid(row=5, column=0, padx=5, sticky="w")
-ttk.Entry(output_frame, textvariable=test_string, width=100).grid(row=5, column=1, padx=30, sticky="e")
+ttk.Entry(output_frame, textvariable=test_string, width=130).grid(row=5, column=1, padx=30, sticky="e")
 
 
 # === Footer ===
-footer_frame = ttk.Frame(root, height=30)
+footer_frame = ctk.CTkFrame(root, height=30)
 footer_frame.pack(side="bottom", fill="x")
 
-footer_label = ttk.Label(
+footer_label = ctk.CTkLabel(
     footer_frame,
     text="Disclaimer - This is internal property of Genus Power Infrastructure Limited. Do not use without permission of developers.                                CopyRight - abhishek.Verma@genus.in (All Rights Reserved)"
 )
