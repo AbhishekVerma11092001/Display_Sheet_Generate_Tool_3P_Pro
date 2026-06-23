@@ -1,5 +1,4 @@
-('D:\\My Development '
- 'Tools\\Display_Sheet_Generate_Tool_3P_Pro\\build\\Display_Sheet_Generate_Tool_3P_Pro\\PYZ-00.pyz',
+('D:\\My_Development_Tools\\Display_Sheet_Generate_Tool_3P_Pro\\build\\Display_Sheet_Generate_Tool_3P_Pro\\PYZ-00.pyz',
  [('PIL',
    'C:\\Users\\107450\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\PIL\\__init__.py',
    'PYMODULE'),

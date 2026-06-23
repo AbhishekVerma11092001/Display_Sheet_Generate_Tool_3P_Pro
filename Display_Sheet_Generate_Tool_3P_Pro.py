@@ -55,8 +55,15 @@ def read_dict_from_section(root, section):
         data_dict[key] = value
     return data_dict
 
-# Load XML
-tree = ET.parse("predefined_names_3p_pro.xml")
+# Determine app folder and default base folder
+if getattr(sys, 'frozen', False):
+    base_folder = os.path.dirname(sys.executable)
+else:
+    base_folder = os.path.dirname(os.path.abspath(__file__))
+
+# Load XML relative to exe/script location
+xml_path = os.path.join(base_folder, "predefined_names_3p_pro.xml")
+tree = ET.parse(xml_path)
 root = tree.getroot()
 
 # Read each dictionary
@@ -66,8 +73,9 @@ test_predefined_names_new = read_dict_from_section(root, "TestPredefinedNames")
 
 
 # Global variables for folder paths
-base_folder = ""
-image_folders = {}
+image_folders = {
+    "3P-Pro WC 10-60A": os.path.join(base_folder, "3P Pro WC Display"),
+}
 # template_path = ""
 
 def add_page_number(paragraph):
@@ -124,7 +132,6 @@ def add_page_number(paragraph):
     r_element.append(instrText2)
     r_element.append(fldChar2)
     r_element.append(fldChar3)
-
 
 # === Function to set base folder dynamically ===
 def choose_base_folder():
@@ -224,6 +231,60 @@ def create_table(doc, values, meter_type, energy_decimal):
             row[1].text = f"Image {filename} not found"
             idx += 1
 
+class InputDialog(simpledialog.Dialog):
+    def body(self, master):
+        tk.Label(master, text="Energy Decimal (0, 1, or 2):").grid(row=0, column=0, padx=5, pady=5, sticky="w")
+        self.energy_entry = tk.Entry(master)
+        self.energy_entry.grid(row=0, column=1, padx=5, pady=5)
+
+        tk.Label(master, text="Display Lock (0-No, 1-Auto, 2-All):").grid(row=1, column=0, padx=5, pady=5, sticky="w")
+        self.display_lock_entry = tk.Entry(master)
+        self.display_lock_entry.grid(row=1, column=1, padx=5, pady=5)
+
+        tk.Label(master, text="Bell Icon Display (0-PSEQ Only, 1-All Tampers):").grid(row=2, column=0, padx=5, pady=5, sticky="w")
+        self.bell_icon_entry = tk.Entry(master)
+        self.bell_icon_entry.grid(row=2, column=1, padx=5, pady=5)
+
+        return self.energy_entry
+
+    def apply(self):
+        self.result = (
+            self.energy_entry.get().strip(),
+            self.display_lock_entry.get().strip(),
+            self.bell_icon_entry.get().strip()
+        )
+
+def get_user_inputs(root):
+    dialog = InputDialog(root, title="Meter Configuration")
+
+    if dialog.result is None:
+        return None, None, None
+
+    energy_decimal, display_lock, bell_icon = dialog.result
+
+    if energy_decimal not in ["0", "1", "2"]:
+        messagebox.showerror(
+            "Invalid Input",
+            "Energy decimal value must be 0, 1, or 2."
+        )
+        return None, None, None
+
+    if display_lock not in ["0", "1", "2"]:
+        messagebox.showerror(
+            "Invalid Input",
+            "Display lock value must be 0, 1, or 2."
+        )
+        return None, None, None
+
+    if bell_icon not in ["0", "1"]:
+        messagebox.showerror(
+            "Invalid Input",
+            "Bell icon display value must be 0 or 1."
+        )
+        return None, None, None
+
+    return energy_decimal, display_lock, bell_icon
+
 
 # === Generate document === 
 def generate_doc():
@@ -277,15 +338,10 @@ def generate_doc():
         return
     if not diag_vals:
         diag_vals = [int(item.split(" - ")[0]) for item in ["92", "3101", "3103", "3106", "3107", "3102", "3105", "3104", "3108"]]
-        
-    # Ask user to enter decimal in energy parameter
-    energy_decimal_var = simpledialog.askstring("Decimal Input", "Enter energy decimal value (0, 1, or 2):")
-    if energy_decimal_var not in ["0", "1", "2"]:
-        messagebox.showerror("Invalid Input", "Energy decimal value must be 0, 1, or 2.")
-        return
-    
-    energy_decimal = energy_decimal_var
 
+    energy_decimal, display_lock, bell_icon = get_user_inputs(root)
+    if energy_decimal is None or display_lock is None or bell_icon is None:
+        return  # User cancelled or invalid input
 
     auto_hex_str = "".join(f"{val:04X}" for val in auto_vals)
     auto_hex_str_len = len(auto_hex_str) // 2
@@ -554,7 +610,22 @@ def generate_doc():
     run = para.add_run(" on display.")
     para = doc.add_paragraph("3.  In the Auto Mode Display and Push Mode Display default here show all 8 zones for zone wise display parameters otherwise meter will show zones wise display parameters as per the configured zones in meter.")
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-
+    if display_lock in["1", "2"]:
+        para = doc.add_paragraph("4.")   
+        para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+        run = para.add_run()
+        run = para.add_run(" If top cover open tamper occurred in the meter then only the ") 
+        run.add_picture(os.path.join(base_folder, "Template images", "C-Open.jpg"), width=Inches(0.70))
+        if display_lock == "1":
+            run = para.add_run("display continuously at LCD when meter power ON at supply or battery. During this time normal auto scroll mode will get stopped.However push parameters will be available in push mode as usual.")
+        elif display_lock == "2":
+            run = para.add_run("display continuously at LCD when meter power ON at supply or battery, and all other display modes will be disabled.")
+        
+        para = doc.add_picture(os.path.join(base_folder, "Template images", "C-Open-Status.png"), width=Inches(5.0))
+        # Center align the picture
+        last_paragraph = doc.paragraphs[-1]  # the paragraph where the picture was added
+        last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    
 
     doc.add_heading("\nDisplay Modes : ", level=2)
     para = doc.add_paragraph("Display parameters are displayed in four different modes called Auto scrolling mode, push button mode, diagnostic mode and test mode.")
@@ -1598,7 +1669,10 @@ def generate_doc():
     para7 = doc.add_paragraph("7.  ")
     run = para7.add_run()
     run.add_picture(os.path.join(base_folder, "Template images", "bell.jpg"), width=Inches(0.3))
-    para7.add_run(" Sign indicates phase sequence reverse in meter.")
+    if bell_icon == "0":
+        para7.add_run(" Sign indicates phase sequence reverse in meter.")
+    elif bell_icon == "1":
+        para7.add_run(" Sign indicates any tamper exist in the meter.")
 
     if(meter_type == "3P-Pro WC 10-60A" or meter_type == "3P-Pro WC 20-100A"):
         para8 = doc.add_paragraph("8.  ")
@@ -1658,7 +1732,7 @@ ctk.set_default_color_theme("blue")  # Try "green", "dark-blue", etc.
 # === Main Window ===
 root = ctk.CTk()
 # root.iconbitmap("logo.ico")
-root.title("3P Pro Meter Display Report Generator V2.0")
+root.title("3P Pro Meter Display Report Generator V2.1")
 root.geometry("1200x760")
 root.resizable(False, False)
 
@@ -1673,7 +1747,7 @@ ctk.CTkButton(top_frame, text="Browse Base Folder", fg_color="#1f6aa5", hover_co
 # Meter Type (middle side)
 ctk.CTkLabel(top_frame, text="Meter Type:").grid(row=0, column=2, padx=20, sticky="w")
 meter_type_var = tk.StringVar(value="Select Type")
-meter_type_combo = ctk.CTkComboBox(top_frame, variable=meter_type_var, values=[])
+meter_type_combo = ctk.CTkComboBox(top_frame, variable=meter_type_var, values=list(image_folders.keys()))
 meter_type_combo.grid(row=0, column=3, padx=5, sticky="w")
 
 # Date input with calendar picker (right side)
@@ -1794,7 +1868,10 @@ def create_dual_listbox(frame, title, items):
             item = selected.get(idx)
             selected.delete(idx)
             selected.insert(idx - 1, item)
+            selected.selection_clear(0, tk.END)
             selected.select_set(idx - 1)
+            selected.activate(idx - 1)
+            selected.see(idx - 1)
 
     def move_down():
         sel = selected.curselection()
@@ -1803,7 +1880,10 @@ def create_dual_listbox(frame, title, items):
             item = selected.get(idx)
             selected.delete(idx)
             selected.insert(idx + 1, item)
+            selected.selection_clear(0, tk.END)
             selected.select_set(idx + 1)
+            selected.activate(idx + 1)
+            selected.see(idx + 1)
 
     # --- Buttons Frame ---
     btn_frame = tk.Frame(frame)
