@@ -224,7 +224,7 @@ def create_table(doc, values, meter_type, energy_decimal):
                 row[0].text = str(idx)
                 run = row[1].paragraphs[0].add_run()
                 run.add_picture(img_path, width=Inches(6.5))
-                idx += 1
+            idx += 1
         else:
             row = table.add_row().cells
             row[0].text = str(idx)
@@ -1820,7 +1820,7 @@ def create_dual_listbox(frame, title, items):
     # --- Available Listbox + Scrollbar ---
     available_frame = tk.Frame(frame)
     available_frame.grid(row=2, column=0, padx=10, pady=5)
-    available = tk.Listbox(available_frame, selectmode=tk.SINGLE, width=70, height=12)
+    available = tk.Listbox(available_frame, selectmode=tk.EXTENDED, width=70, height=12)
     available_scroll = tk.Scrollbar(available_frame, orient=tk.VERTICAL, command=available.yview)
     available.config(yscrollcommand=available_scroll.set)
     available.grid(row=0, column=0, sticky="nsew")
@@ -1829,7 +1829,7 @@ def create_dual_listbox(frame, title, items):
     # --- Selected Listbox + Scrollbar ---
     selected_frame = tk.Frame(frame)
     selected_frame.grid(row=2, column=2, padx=10, pady=5)
-    selected = tk.Listbox(selected_frame, selectmode=tk.SINGLE, width=70, height=12)
+    selected = tk.Listbox(selected_frame, selectmode=tk.EXTENDED, width=70, height=12)
     selected_scroll = tk.Scrollbar(selected_frame, orient=tk.VERTICAL, command=selected.yview)
     selected.config(yscrollcommand=selected_scroll.set)
     selected.grid(row=0, column=0, sticky="nsew")
@@ -1843,47 +1843,84 @@ def create_dual_listbox(frame, title, items):
 
     # --- Button Functions ---
     def add_item():
-        sel = available.curselection()
-        if sel:
-            idx = sel[0]
+        selections = available.curselection()
+
+        if not selections:
+            return
+
+        existing = set(selected.get(0, tk.END))
+
+        for idx in selections:
             text = available.get(idx)
-            if text not in selected.get(0, tk.END):
+            if text not in existing:
                 selected.insert(tk.END, text)
-            # Move selection to next item
-            next_idx = idx + 1
-            available.selection_clear(0, tk.END)
-            if next_idx < available.size():
-                available.selection_set(next_idx)
-                available.see(next_idx)
+                existing.add(text)
+
+        # Keep focus on the last selected item
+        available.selection_clear(0, tk.END)
+
+        next_idx = selections[-1] + 1
+        if next_idx < available.size():
+            available.selection_set(next_idx)
+            available.activate(next_idx)
+            available.see(next_idx)
 
     def remove_item():
-        sel = selected.curselection()
-        if sel:
-            selected.delete(sel[0])
+        selections = selected.curselection()
+
+        if not selections:
+            return
+
+        first = selections[0]
+
+        for idx in reversed(selections):
+            selected.delete(idx)
+
+        if selected.size() > 0:
+            new_idx = min(first, selected.size() - 1)
+            selected.selection_set(new_idx)
+            selected.activate(new_idx)
+            selected.see(new_idx)
 
     def move_up():
-        sel = selected.curselection()
-        if sel and sel[0] > 0:
-            idx = sel[0]
+        selections = list(selected.curselection())
+
+        if not selections or selections[0] == 0:
+            return
+
+        # Move each selected item up by one
+        for idx in selections:
             item = selected.get(idx)
             selected.delete(idx)
             selected.insert(idx - 1, item)
-            selected.selection_clear(0, tk.END)
-            selected.select_set(idx - 1)
-            selected.activate(idx - 1)
-            selected.see(idx - 1)
+
+        # Restore selection
+        selected.selection_clear(0, tk.END)
+        for idx in selections:
+            selected.selection_set(idx - 1)
+
+        selected.activate(selections[0] - 1)
+        selected.see(selections[0] - 1)
 
     def move_down():
-        sel = selected.curselection()
-        if sel and sel[0] < selected.size() - 1:
-            idx = sel[0]
+        selections = list(selected.curselection())
+
+        if not selections or selections[-1] == selected.size() - 1:
+            return
+
+        # Move from bottom to top
+        for idx in reversed(selections):
             item = selected.get(idx)
             selected.delete(idx)
             selected.insert(idx + 1, item)
-            selected.selection_clear(0, tk.END)
-            selected.select_set(idx + 1)
-            selected.activate(idx + 1)
-            selected.see(idx + 1)
+
+        # Restore selection
+        selected.selection_clear(0, tk.END)
+        for idx in selections:
+            selected.selection_set(idx + 1)
+
+        selected.activate(selections[-1] + 1)
+        selected.see(selections[-1] + 1)
 
     # --- Buttons Frame ---
     btn_frame = tk.Frame(frame)
