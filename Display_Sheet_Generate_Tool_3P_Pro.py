@@ -35,9 +35,9 @@ check_expiry()
 
 try:
     import pypandoc
-    pandoc_installed = True
+    pypandoc_installed = True
 except ImportError:
-    pandoc_installed = False
+    pypandoc_installed = False
 
 try:
     from docx2pdf import convert as docx2pdf_convert
@@ -70,6 +70,7 @@ root = tree.getroot()
 predefined_names_new = read_dict_from_section(root, "PredefinedNames")
 diag_predefined_names_new = read_dict_from_section(root, "DiagPredefinedNames")
 test_predefined_names_new = read_dict_from_section(root, "TestPredefinedNames")
+tamper_predefined_names_new = read_dict_from_section(root, "TamperPredefinedNames")
 
 
 DEFAULT_OUTPUT_FILE = "Display_Parameters_report.docx"
@@ -195,12 +196,14 @@ def add_table_section(doc, title, values, meter_type, energy_decimal, add_break=
 
 def insert_error_tables(doc, test_vals):
     if 3115 in test_vals:
-        add_error_details_table(doc, "Table 6: Error Details for GPRS :", GPRS_ERROR_ROWS)
+        add_error_details_table(doc, "Table {table_seq_no}: Error Details for GPRS :", GPRS_ERROR_ROWS)
     elif 3125 in test_vals:
-        add_error_details_table(doc, "Table 6: Error Details for RF :", RF_ERROR_ROWS)
+        add_error_details_table(doc, "Table {table_seq_no}: Error Details for RF :", RF_ERROR_ROWS)
     else:
-        add_error_details_table(doc, "Table 6: Error Details for GPRS :", GPRS_ERROR_ROWS)
-        add_error_details_table(doc, "Table 7: Error Details for RF :", RF_ERROR_ROWS)
+        add_error_details_table(doc, "Table {table_seq_no}: Error Details for GPRS :", GPRS_ERROR_ROWS)
+        table_seq_no += 1
+        add_error_details_table(doc, "Table {table_seq_no}: Error Details for RF :", RF_ERROR_ROWS)
+        table_seq_no += 1
 
 
 def get_pdf_path(docx_path):
@@ -388,11 +391,11 @@ def create_table(doc, values, meter_type, energy_decimal):
 
 class InputDialog(simpledialog.Dialog):
     def body(self, master):
-        tk.Label(master, text="Energy Decimal (0, 1, or 2):").grid(row=0, column=0, padx=5, pady=5, sticky="w")
+        tk.Label(master, text="Energy Decimal (0 or 1):").grid(row=0, column=0, padx=5, pady=5, sticky="w")
         self.energy_entry = tk.Entry(master)
         self.energy_entry.grid(row=0, column=1, padx=5, pady=5)
 
-        tk.Label(master, text="Display Lock (0-No, 1-Auto, 2-All):").grid(row=1, column=0, padx=5, pady=5, sticky="w")
+        tk.Label(master, text="Display Lock (0-No, 1-Auto Mode lock, 2-All Mode lock):").grid(row=1, column=0, padx=5, pady=5, sticky="w")
         self.display_lock_entry = tk.Entry(master)
         self.display_lock_entry.grid(row=1, column=1, padx=5, pady=5)
 
@@ -417,10 +420,10 @@ def get_user_inputs(root):
 
     energy_decimal, display_lock, bell_icon = dialog.result
 
-    if energy_decimal not in ["0", "1", "2"]:
+    if energy_decimal not in ["0", "1"]:
         messagebox.showerror(
             "Invalid Input",
-            "Energy decimal value must be 0, 1, or 2."
+            "Energy decimal value must be 0 or 1."
         )
         return None, None, None
 
@@ -444,6 +447,8 @@ def get_user_inputs(root):
 # === Generate document === 
 def generate_doc():
     global auto_string, push_string, diag_string, test_string
+    table_seq_no = 1
+    refer_table_seq_no = 1
     if not base_folder:
         messagebox.showerror("Error", "Please select a Base Folder first")
         return
@@ -455,6 +460,8 @@ def generate_doc():
     
     auto_vals = [int(item.split(" - ")[0]) for item in auto_selected.get(0, tk.END)]
     push_vals = [int(item.split(" - ")[0]) for item in push_selected.get(0, tk.END)]
+    tamper_vals = [int(item.split(" - ")[0]) for item in tamper_selected.get(0, tk.END)]
+    batt_vals = [int(item.split(" - ")[0]) for item in battery_selected.get(0, tk.END)]
     diag_vals = [int(item.split(" - ")[0]) for item in diag_selected.get(0, tk.END)]
     test_vals = [int(item.split(" - ")[0]) for item in test_selected.get(0, tk.END)]
 
@@ -489,6 +496,8 @@ def generate_doc():
 
     auto_string.set(build_hex_payload(auto_vals))
     push_string.set(build_hex_payload(push_vals))
+    tamper_string.set(build_hex_payload(tamper_vals))
+    batt_string.set(build_hex_payload(batt_vals))
     diag_string.set(build_hex_payload(diag_vals))
     test_string.set(build_hex_payload(test_vals))
     
@@ -654,16 +663,24 @@ def generate_doc():
     heading.paragraph_format.space_after = Pt(0)   # Optional: remove space after
 
     if auto_vals:
-        add_table_section(doc, "Table 1: Auto Scroll Display :", auto_vals, meter_type, energy_decimal)
+        add_table_section(doc, f"Table {table_seq_no}: Auto Scroll Display :", auto_vals, meter_type, energy_decimal)
+        table_seq_no += 1
 
     if push_vals:
-        add_table_section(doc, "Table 2: Push Button Display :", push_vals, meter_type, energy_decimal)
+        add_table_section(doc, f"Table {table_seq_no}: Push Button Display :", push_vals, meter_type, energy_decimal)
+        table_seq_no += 1
+
+    if batt_vals:
+        add_table_section(doc, f"Table {table_seq_no}: Under Power OFF Display :", batt_vals, meter_type, energy_decimal)
+        table_seq_no += 1
 
     if diag_vals:
-        add_table_section(doc, "Table 3: Diagnostic Mode Display :", diag_vals, meter_type, energy_decimal)
+        add_table_section(doc, f"Table {table_seq_no}: Diagnostic Mode Display :", diag_vals, meter_type, energy_decimal)
+        table_seq_no += 1
 
     if test_vals:
-        add_table_section(doc, "Table 4: Test Mode Display :", test_vals, meter_type, energy_decimal, add_break=False)
+        add_table_section(doc, f"Table {table_seq_no}: Test Mode Display :", test_vals, meter_type, energy_decimal, add_break=False)
+        table_seq_no += 1
 
     doc.add_heading("Note: ", level=3)
     para = doc.add_paragraph("1.  In the Push Mode Display table, present tamper status display parameter was normally hidden and if tamper present continuously for 10 seconds then status showing as above table for respective tamper.")
@@ -697,33 +714,45 @@ def generate_doc():
     para = doc.add_paragraph("Display parameters are displayed in four different modes called Auto scrolling mode, push button mode, diagnostic mode and test mode.")
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
-    doc.add_heading("\nAUTO MODE-- (Auto Scrolling, Refer TABLE-1): ", level=3)
+
+    doc.add_heading(f"\nAUTO MODE-- (Auto Scrolling, Refer TABLE-{refer_table_seq_no}): ", level=3)
     para = doc.add_paragraph(auto_txt.get())
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    refer_table_seq_no += 1
 
-    doc.add_heading("\nPUSH MODE-- (Scroll with Push Button, Refer TABLE-2): ", level=3)
+    doc.add_heading(f"\nPUSH MODE-- (Scroll with Push Button, Refer TABLE-{refer_table_seq_no}): ", level=3)
     para = doc.add_paragraph(push_txt.get())
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    refer_table_seq_no += 1
 
-    # if diag_vals:
-    doc.add_heading("\nDIAGNOSTIC MODE-- (High resolution display, Refer TABLE-3): ", level=3)
+    if batt_vals:
+        refer_table_seq_no_temp = refer_table_seq_no
+        refer_table_seq_no += 1
+
+    doc.add_heading(f"\nDIAGNOSTIC MODE-- (High resolution display, Refer TABLE-{refer_table_seq_no}): ", level=3)
     para = doc.add_paragraph(diag_txt.get())
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    refer_table_seq_no += 1
 
     if test_vals:
-        doc.add_heading("\nTEST MODE—(Test Mode Display, Refer TABLE-4): ", level=3)
+        doc.add_heading(f"\nTEST MODE—(Test Mode Display, Refer TABLE-{refer_table_seq_no}): ", level=3)
+        refer_table_seq_no += 1
     else:
-        doc.add_heading("\nTEST MODE—(Test Mode Display): ", level=3)
+        doc.add_heading(f"\nTEST MODE—(Test Mode Display): ", level=3)
     para = doc.add_paragraph(test_txt.get())
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
-    doc.add_heading("\nUnder Power OFF condition: ", level=3)
+    if batt_vals: 
+        doc.add_heading(f"\nUnder Power OFF condition—(Battery Mode Display): Refer TABLE-{refer_table_seq_no_temp}: ", level=3)
+    else: 
+        doc.add_heading(f"\nUnder Power OFF condition: ", level=3)
     para = doc.add_paragraph(batt_txt.get())
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
     if test_vals:
         add_page_break(doc)
-        add_table_section(doc, "Table 5: Relay Disconnect Reason (Present Status):", [3301, 3302, 3303, 3304, 3305], meter_type, energy_decimal)
+        add_table_section(doc, f"Table {table_seq_no}: Relay Disconnect Reason (Present Status):", [3301, 3302, 3303, 3304, 3305], meter_type, energy_decimal)
+        table_seq_no += 1
         add_page_break(doc)
         insert_error_tables(doc, test_vals)
 
@@ -1035,6 +1064,7 @@ def create_dual_listbox(frame, title, items):
 default_items = [f"{dec:04d} - {desc}" for dec, desc in predefined_names_new.items()]
 diag_items = [f"{dec:04d} - {desc}" for dec, desc in diag_predefined_names_new.items()]
 test_items = [f"{dec:04d} - {desc}" for dec, desc in test_predefined_names_new.items()]
+tamper_items = [f"{dec:04d} - {desc}" for dec, desc in tamper_predefined_names_new.items()]
 
 # Create a frame with fixed size for the notebook
 notebook_frame = tk.Frame(root, width=1080, height=350)
@@ -1050,16 +1080,18 @@ notebook.pack(pady=20, expand=True, fill="both")
 auto_tab = ttk.Frame(notebook)
 notebook.add(auto_tab, text="Auto Scroll Selection")
 auto_available, auto_selected, auto_input_hex_string = create_dual_listbox(auto_tab, "Auto Scroll Selection", default_items)
-# frame_auto = tk.LabelFrame(root, text="Auto Mode")
-# frame_auto.pack(pady=10, fill="x")
-# auto_available, auto_selected = create_dual_listbox(frame_auto, "Auto Scroll Selection", default_items)
 
 push_tab = ttk.Frame(notebook)
 notebook.add(push_tab, text="Push Scroll Selection")
 push_available, push_selected, push_input_hex_string  = create_dual_listbox(push_tab, "Push Scroll Selection", default_items)
-# frame_push = tk.LabelFrame(root, text="Push Mode")
-# frame_push.pack(pady=10, fill="x")
-# push_available, push_selected = create_dual_listbox(frame_push, "Push Scroll Selection", default_items)
+
+tamper_tab = ttk.Frame(notebook)
+notebook.add(tamper_tab, text="Tamper Selection")
+tamper_available, tamper_selected, tamper_input_hex_string  = create_dual_listbox(tamper_tab, "Present Tamper Status Selection", tamper_items)
+
+battery_tab = ttk.Frame(notebook)
+notebook.add(battery_tab, text="Battery Mode Selection")
+battery_available, battery_selected, battery_input_hex_string  = create_dual_listbox(battery_tab, "Battery Mode Selection", default_items)
 
 diag_tab = ttk.Frame(notebook)
 notebook.add(diag_tab, text="Diagnostic Selection")
@@ -1124,6 +1156,13 @@ push_string = tk.StringVar()
 
 ttk.Label(output_frame, text="Push Display String:").grid(row=3, column=0, padx=5, sticky="w")
 ttk.Entry(output_frame, textvariable=push_string, width=130).grid(row=3, column=1, padx=30, sticky="e")
+
+tamper_string = tk.StringVar()
+
+batt_string = tk.StringVar()
+
+ttk.Label(output_frame, text="Battery Display String:").grid(row=6, column=0, padx=5, sticky="w")
+ttk.Entry(output_frame, textvariable=batt_string, width=130).grid(row=6, column=1, padx=30, sticky="e")
 
 diag_string = tk.StringVar()
 
