@@ -72,11 +72,166 @@ diag_predefined_names_new = read_dict_from_section(root, "DiagPredefinedNames")
 test_predefined_names_new = read_dict_from_section(root, "TestPredefinedNames")
 
 
+DEFAULT_OUTPUT_FILE = "Display_Parameters_report.docx"
+
 # Global variables for folder paths
 image_folders = {
     "3P-Pro WC 10-60A": os.path.join(base_folder, "3P Pro WC Display"),
 }
 # template_path = ""
+
+
+def set_column_widths(table, widths):
+    for col, width in zip(table.columns, widths):
+        for cell in col.cells:
+            cell.width = width
+
+
+def add_underlined_heading(doc, text, level=2):
+    heading = doc.add_heading(text, level=level)
+    if heading.runs:
+        heading.runs[0].underline = True
+    return heading
+
+
+def add_page_break(doc):
+    paragraph = doc.add_paragraph()
+    paragraph.add_run().add_break(WD_BREAK.PAGE)
+
+
+def get_selected_values(listbox):
+    return [int(item.split(" - ")[0]) for item in listbox.get(0, tk.END)]
+
+
+def build_hex_payload(values):
+    payload = "".join(f"{val:04X}" for val in values)
+    length = len(payload) // 2
+
+    if length <= 127:
+        length_prefix = f"{length:02X}"
+    elif length <= 255:
+        length_prefix = "81" + f"{length:02X}"
+    else:
+        length_prefix = "82" + f"{length:04X}"
+
+    return "09" + length_prefix + payload
+
+
+def validate_hex_input_string(value, label):
+    if not value:
+        return True
+    if len(value.strip()) % 4 != 0:
+        messagebox.showerror("Error", f"Input {label} hex string is invalid. Check length.")
+        return False
+    return True
+
+
+def add_error_details_table(doc, title, rows):
+    add_underlined_heading(doc, title, level=2)
+    table = doc.add_table(rows=1, cols=3)
+    table.alignment = WD_TABLE_ALIGNMENT.LEFT
+    table.autofit = True
+    table.style = 'Table Grid'
+
+    set_column_widths(table, [Inches(1.0), Inches(4.0), Inches(1.5)])
+
+    hdr_cells = table.rows[0].cells
+    headers = ["Sr. No.", "Error Description", "Meter Display"]
+    for cell, text in zip(hdr_cells, headers):
+        run = cell.paragraphs[0].add_run(text)
+        run.bold = True
+        run.font.size = Pt(14)
+        cell.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+    for number, description, display in rows:
+        row = table.add_row().cells
+        row[0].text = number
+        row[1].text = description
+        row[2].text = display
+        row[0].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
+        row[2].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+    return table
+
+GPRS_ERROR_ROWS = [
+    ("1.", "All Good", "Err 00"),
+    ("2.", "Meter NIC communication failure", "Err 01"),
+    ("3.", "Modem initialization failure", "Err 02"),
+    ("4.", "SIM not detected", "Err 03"),
+    ("5.", "SIM invalid", "Err 04"),
+    ("6.", "No GSM Network coverage", "Err 05"),
+    ("7.", "GPRS Network registration failure", "Err 06"),
+    ("8.", "GPRS registration denied", "Err 07"),
+    ("9.", "No APN configured", "Err 08"),
+    ("10.", "GPRS connection not establish", "Err 09"),
+    ("11.", "HES IP/Port not configured", "Err 10"),
+    ("12.", "HES port not open", "Err 11"),
+    ("13.", "Internal Diagnostic Purpose", "Err 12"),
+    ("14.", "Internal Diagnostic Purpose", "Err 13"),
+    ("15.", "Internal Diagnostic Purpose", "Err 14"),
+    ("16.", "Internal Diagnostic Purpose", "Err 15"),
+    ("17.", "Internal Diagnostic Purpose", "Err 16"),
+    ("18.", "Internal Diagnostic Purpose", "Err 17"),
+    ("19.", "Internal Diagnostic Purpose", "Err 18"),
+]
+
+RF_ERROR_ROWS = [
+    ("1.", "All Good", "Err 00"),
+    ("2.", "Meter NIC communication failure", "Err 01"),
+    ("3.", "NIC Not Joined with Gateway", "Err 02"),
+    ("4.", "Network Joining", "Err 03"),
+    ("5.", "NIC Joined with Gateway but not connected with HES", "Err 05"),
+    ("6.", "Channel Change", "Err 06"),
+    ("7.", "Searching Network", "Err 07"),
+]
+
+
+def add_table_section(doc, title, values, meter_type, energy_decimal, add_break=True):
+    add_underlined_heading(doc, title, level=2)
+    create_table(doc, values, meter_type, energy_decimal)
+    if add_break:
+        add_page_break(doc)
+
+
+def insert_error_tables(doc, test_vals):
+    if 3115 in test_vals:
+        add_error_details_table(doc, "Table 6: Error Details for GPRS :", GPRS_ERROR_ROWS)
+    elif 3125 in test_vals:
+        add_error_details_table(doc, "Table 6: Error Details for RF :", RF_ERROR_ROWS)
+    else:
+        add_error_details_table(doc, "Table 6: Error Details for GPRS :", GPRS_ERROR_ROWS)
+        add_error_details_table(doc, "Table 7: Error Details for RF :", RF_ERROR_ROWS)
+
+
+def get_pdf_path(docx_path):
+    root, _ = os.path.splitext(docx_path)
+    return root + ".pdf"
+
+
+def convert_docx_to_pdf(docx_path, pdf_path):
+    last_error = None
+
+    if docx2pdf_installed and sys.platform == "win32":
+        try:
+            docx2pdf_convert(docx_path, pdf_path)
+            return "docx2pdf"
+        except Exception as exc:
+            last_error = exc
+
+    if pypandoc_installed:
+        try:
+            pypandoc.convert_file(docx_path, "pdf", outputfile=pdf_path)
+            return "pypandoc"
+        except Exception as exc:
+            last_error = exc
+
+    if last_error:
+        raise RuntimeError(f"PDF conversion failed: {last_error}")
+
+    raise RuntimeError(
+        "No PDF converter is available. Install docx2pdf (Windows) or pypandoc with Pandoc."
+    )
+
 
 def add_page_number(paragraph):
     """Insert 'Page: X of Y' field into a paragraph with 'Page:' in bold."""
@@ -304,88 +459,38 @@ def generate_doc():
     test_vals = [int(item.split(" - ")[0]) for item in test_selected.get(0, tk.END)]
 
     auto_input_string = auto_input_hex_string.get().strip()
-    auto_input_string_len = len(auto_input_string) % 4
-    if(auto_input_string_len != 0): 
-        messagebox.showerror("Error", "Input Auto hex String is Invalid, Check Length.")
+    if not validate_hex_input_string(auto_input_string, "Auto"):
         return
-    
+
     push_input_string = push_input_hex_string.get().strip()
-    push_input_string_len = len(push_input_string) % 4
-    if(push_input_string_len != 0): 
-        messagebox.showerror("Error", "Input Push hex String is Invalid, Check Length.")
+    if not validate_hex_input_string(push_input_string, "Push"):
         return
 
     diag_input_string = diag_input_hex_string.get().strip()
-    diag_input_string_len = len(diag_input_string) % 4
-    if(diag_input_string_len != 0): 
-        messagebox.showerror("Error", "Input Diagnostic hex String is Invalid, Check Length.")
-        return
-    
-    test_input_string = test_input_hex_string.get().strip()
-    test_input_string_len = len(test_input_string) % 4  
-    if(test_input_string_len != 0): 
-        messagebox.showerror("Error", "Input Test hex String is Invalid, Check Length.")
+    if not validate_hex_input_string(diag_input_string, "Diagnostic"):
         return
 
+    test_input_string = test_input_hex_string.get().strip()
+    if not validate_hex_input_string(test_input_string, "Test"):
+        return
 
     if not auto_vals:
-        # elif not auto_input_hex_string:
         messagebox.showerror("Error", "Please select at least one parameter or insert hex string in Auto Scroll")
         return
     if not push_vals:
-    # elif not push_input_hex_string:
         messagebox.showerror("Error", "Please select at least one parameter or insert hex string in Push Scroll")
         return
     if not diag_vals:
-        diag_vals = [int(item.split(" - ")[0]) for item in ["92", "3101", "3103", "3106", "3107", "3102", "3105", "3104", "3108"]]
+        diag_vals = [92, 3101, 3103, 3106, 3107, 3102, 3105, 3104, 3108]
 
     energy_decimal, display_lock, bell_icon = get_user_inputs(root)
     if energy_decimal is None or display_lock is None or bell_icon is None:
         return  # User cancelled or invalid input
 
-    auto_hex_str = "".join(f"{val:04X}" for val in auto_vals)
-    auto_hex_str_len = len(auto_hex_str) // 2
-    if(auto_hex_str_len <= 127):
-        auto_hex_str_temp = f"{auto_hex_str_len:02X}" + auto_hex_str
-    elif(auto_hex_str_len >127 and auto_hex_str_len <= 255):
-        auto_hex_str_temp = "81" + f"{auto_hex_str_len:02X}" + auto_hex_str
-    else:
-        auto_hex_str_temp = "82" + f"{auto_hex_str_len:04X}" + auto_hex_str
-    auto_hex_string = "09" + auto_hex_str_temp
-    auto_string.set(auto_hex_string)
-      
-    push_hex_str = "".join(f"{val:04X}" for val in push_vals)
-    push_hex_str_len = len(push_hex_str) // 2
-    if(push_hex_str_len <= 127):
-        push_hex_str_temp = f"{push_hex_str_len:02X}" + push_hex_str
-    elif(push_hex_str_len >127 and push_hex_str_len <= 255):
-        push_hex_str_temp = "81" + f"{push_hex_str_len:02X}" + push_hex_str
-    else:
-        push_hex_str_temp = "82" + f"{push_hex_str_len:04X}" + push_hex_str
-    push_hex_string = "09" + push_hex_str_temp
-    push_string.set(push_hex_string)
-
-    diag_hex_str = "".join(f"{val:04X}" for val in diag_vals)
-    diag_hex_str_len = len(diag_hex_str) // 2
-    if(diag_hex_str_len <= 127):
-        diag_hex_str_temp = f"{diag_hex_str_len:02X}" + diag_hex_str
-    elif(diag_hex_str_len >127 and diag_hex_str_len <= 255):
-        diag_hex_str_temp = "81" + f"{diag_hex_str_len:02X}" + diag_hex_str
-    else:
-        diag_hex_str_temp = "82" + f"{diag_hex_str_len:04X}" + diag_hex_str
-    diag_hex_string = "09" + diag_hex_str_temp
-    diag_string.set(diag_hex_string)
-      
-    test_hex_str = "".join(f"{val:04X}" for val in test_vals)
-    test_hex_str_len = len(test_hex_str) // 2
-    if(test_hex_str_len <= 127):
-        test_hex_str_temp = f"{test_hex_str_len:02X}" + test_hex_str
-    elif(test_hex_str_len >127 and test_hex_str_len <= 255):
-        test_hex_str_temp = "81" + f"{test_hex_str_len:02X}" + test_hex_str
-    else:
-        test_hex_str_temp = "82" + f"{test_hex_str_len:04X}" + test_hex_str
-    test_hex_string = "09" + test_hex_str_temp
-    test_string.set(test_hex_string)
+    auto_string.set(build_hex_payload(auto_vals))
+    push_string.set(build_hex_payload(push_vals))
+    diag_string.set(build_hex_payload(diag_vals))
+    test_string.set(build_hex_payload(test_vals))
     
     # ==== Create Template in Docx ===
     # template_path = os.path.join(base_folder, "template.docx")
@@ -549,56 +654,17 @@ def generate_doc():
     heading.paragraph_format.space_after = Pt(0)   # Optional: remove space after
 
     if auto_vals:
-        heading1 = doc.add_heading("Table 1: Auto Scroll Display :\n", level=2)
-        # Apply underline to the heading text
-        run = heading1.runs[0]
-        run.underline = True  # Simple underline
-        # Or for more options:
-        # run.underline = WD_UNDERLINE.SINGLE
-        create_table(doc, auto_vals, meter_type, energy_decimal)
-    
-    # Insert a page break
-    paragraph = doc.add_paragraph()
-    run = paragraph.add_run()
-    run.add_break(WD_BREAK.PAGE)  # <-- page break here
+        add_table_section(doc, "Table 1: Auto Scroll Display :", auto_vals, meter_type, energy_decimal)
 
     if push_vals:
-        heading2 = doc.add_heading("Table 2: Push Button Display :\n", level=2)
-        # Apply underline to the heading text
-        run = heading2.runs[0]
-        run.underline = True  # Simple underline
-        # Or for more options:
-        # run.underline = WD_UNDERLINE.SINGLE
-        create_table(doc, push_vals, meter_type, energy_decimal)
-    
-    # Insert a page break
-    paragraph = doc.add_paragraph()
-    run = paragraph.add_run()
-    run.add_break(WD_BREAK.PAGE)  # <-- page break here
+        add_table_section(doc, "Table 2: Push Button Display :", push_vals, meter_type, energy_decimal)
 
-    if diag_vals: 
-        heading3 = doc.add_heading("Table 3:  Diagnostic Mode Display :\n", level=2)
-        # Apply underline to the heading text
-        run = heading3.runs[0]
-        run.underline = True  # Simple underline
-        # Or for more options:
-        # run.underline = WD_UNDERLINE.SINGLE
-        create_table(doc, diag_vals, meter_type, energy_decimal)
-    
-    # Insert a page break
-    paragraph = doc.add_paragraph()
-    run = paragraph.add_run()
-    run.add_break(WD_BREAK.PAGE)  # <-- page break here
+    if diag_vals:
+        add_table_section(doc, "Table 3: Diagnostic Mode Display :", diag_vals, meter_type, energy_decimal)
 
     if test_vals:
-        heading3 = doc.add_heading("Table 4: Test Mode Display :\n", level=2)
-        # Apply underline to the heading text
-        run = heading3.runs[0]
-        run.underline = True  # Simple underline
-        # Or for more options:
-        # run.underline = WD_UNDERLINE.SINGLE
-        create_table(doc, test_vals, meter_type, energy_decimal)
-       
+        add_table_section(doc, "Table 4: Test Mode Display :", test_vals, meter_type, energy_decimal, add_break=False)
+
     doc.add_heading("Note: ", level=3)
     para = doc.add_paragraph("1.  In the Push Mode Display table, present tamper status display parameter was normally hidden and if tamper present continuously for 10 seconds then status showing as above table for respective tamper.")
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
@@ -656,966 +722,10 @@ def generate_doc():
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
     if test_vals:
-        # Insert a page break
-        paragraph = doc.add_paragraph()
-        run = paragraph.add_run()
-        run.add_break(WD_BREAK.PAGE)  # <-- page break here
-        
-        heading3 = doc.add_heading("Table 5: Relay Disconnect Reason (Present Status):\n", level=2)
-        test_vals_temp = [3301, 3302, 3303, 3304, 3305]
-        # Apply underline to the heading text
-        run = heading3.runs[0]
-        run.underline = True  # Simple underline
-        # Or for more options:
-        # run.underline = WD_UNDERLINE.SINGLE
-        create_table(doc, test_vals_temp, meter_type, energy_decimal)
-
-        # Insert a page break
-        paragraph = doc.add_paragraph()
-        run = paragraph.add_run()
-        run.add_break(WD_BREAK.PAGE)  # <-- page break here
-
-        if 3115 in test_vals:
-            heading3 = doc.add_heading("Table 6: Error Details for GPRS :\n", level=2)
-            # Apply underline to the heading text
-            run = heading3.runs[0]
-            run.underline = True  # Simple underline
-            # Or for more options:
-            # run.underline = WD_UNDERLINE.SINGLE
-
-            table = doc.add_table(rows=20, cols=3)
-            table.alignment = WD_TABLE_ALIGNMENT.LEFT
-            table.autofit = True
-            table.style = 'Table Grid'
-
-            # Set column widths (optional, so it looks neat)
-            col_widths = [Inches(1.0), Inches(4.0), Inches(1.5)]
-            for col, width in zip(table.columns, col_widths):
-                for cell in col.cells:
-                    cell.width = width
-
-            cell = table.cell(0, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Sr. No.")
-            run.bold = True
-            run.font.size = Pt(14)
-
-            cell = table.cell(0, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Error Description")
-            run.bold = True
-            run.font.size = Pt(14)
-            
-            cell = table.cell(0, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Meter Display")
-            run.bold = True
-            run.font.size = Pt(14)
-            
-            cell = table.cell(1, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("1.")
-
-            cell = table.cell(1, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("All Good")
-
-            cell = table.cell(1, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 00")
-
-            cell = table.cell(2, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("2.")
-
-            cell = table.cell(2, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Meter NIC communication failure")
-
-            cell = table.cell(2, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 01")
-
-            cell = table.cell(3, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("3.")
-
-            cell = table.cell(3, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Modem initialization failure")
-
-            cell = table.cell(3, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 02")
-
-            cell = table.cell(4, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("4.")
-
-            cell = table.cell(4, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("SIM not detected")
-
-            cell = table.cell(4, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 03")
-
-            cell = table.cell(5, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("5.")
-
-            cell = table.cell(5, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("SIM invalid")
-
-            cell = table.cell(5, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 04")
-
-            cell = table.cell(6, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("6.")
-
-            cell = table.cell(6, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("No GSM Network coverage")
-
-            cell = table.cell(6, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 05")
-
-            cell = table.cell(7, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("7.")
-
-            cell = table.cell(7, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("GPRS Network registration failure")
-
-            cell = table.cell(7, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 06")
-
-            cell = table.cell(8, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("8.")
-
-            cell = table.cell(8, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("GPRS registration denied")
-
-            cell = table.cell(8, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 07")
-
-            cell = table.cell(9, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("9.")
-
-            cell = table.cell(9, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("No APN configured")
-
-            cell = table.cell(9, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 08")
-
-            cell = table.cell(10, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("10.")
-
-            cell = table.cell(10, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("GPRS connection not establish")
-
-            cell = table.cell(10, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 09")
-
-            cell = table.cell(11, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("11.")
-
-            cell = table.cell(11, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("HES IP/Port not configured")
-
-            cell = table.cell(11, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 10")
-
-            cell = table.cell(12, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("12.")
-
-            cell = table.cell(12, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("HES port not open")
-
-            cell = table.cell(12, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 11")
-
-            cell = table.cell(13, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("13.")
-
-            cell = table.cell(13, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Internal Diagnostic Purpose")
-
-            cell = table.cell(13, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 12")
-
-            cell = table.cell(14, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("14.")
-
-            cell = table.cell(14, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Internal Diagnostic Purpose")
-
-            cell = table.cell(14, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 13")
-
-            cell = table.cell(15, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("15.")
-
-            cell = table.cell(15, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Internal Diagnostic Purpose")
-
-            cell = table.cell(15, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 14")
-
-            cell = table.cell(16, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("16.")
-
-            cell = table.cell(16, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Internal Diagnostic Purpose")
-
-            cell = table.cell(16, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 15")
-
-            cell = table.cell(17, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("17.")
-
-            cell = table.cell(17, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Internal Diagnostic Purpose")
-
-            cell = table.cell(17, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 16")
-
-            cell = table.cell(18, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("18.")
-
-            cell = table.cell(18, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Internal Diagnostic Purpose")
-
-            cell = table.cell(18, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 17")
-
-            cell = table.cell(19, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("19.")
-
-            cell = table.cell(19, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Internal Diagnostic Purpose")
-
-            cell = table.cell(19, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 18")
-
-        elif 3125 in test_vals:
-            heading3 = doc.add_heading("Table 6: Error Details for RF :\n", level=2)
-            # Apply underline to the heading text
-            run = heading3.runs[0]
-            run.underline = True  # Simple underline
-            # Or for more options:
-            # run.underline = WD_UNDERLINE.SINGLE
-
-            table = doc.add_table(rows=8, cols=3)
-            table.alignment = WD_TABLE_ALIGNMENT.LEFT
-            table.autofit = True
-            table.style = 'Table Grid'
-
-            # Set column widths (optional, so it looks neat)
-            col_widths = [Inches(1.0), Inches(4.0), Inches(1.5)]
-            for col, width in zip(table.columns, col_widths):
-                for cell in col.cells:
-                    cell.width = width
-
-            cell = table.cell(0, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Sr. No.")
-            run.bold = True
-            run.font.size = Pt(14)
-
-            cell = table.cell(0, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Error Description")
-            run.bold = True
-            run.font.size = Pt(14)
-            
-            cell = table.cell(0, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Meter Display")
-            run.bold = True
-            run.font.size = Pt(14)
-            
-            cell = table.cell(1, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("1.")
-
-            cell = table.cell(1, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("All Good")
-
-            cell = table.cell(1, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 00")
-
-            cell = table.cell(2, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("2.")
-
-            cell = table.cell(2, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Meter NIC communication failure")
-
-            cell = table.cell(2, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 01")
-
-            cell = table.cell(3, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("3.")
-
-            cell = table.cell(3, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("NIC Not Joined with Gateway")
-
-            cell = table.cell(3, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 02")
-
-            cell = table.cell(4, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("4.")
-
-            cell = table.cell(4, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Network Joining")
-
-            cell = table.cell(4, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 03")
-
-            cell = table.cell(5, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("5.")
-
-            cell = table.cell(5, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("NIC Joined with Gateway but not connected with HES")
-
-            cell = table.cell(5, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 05")
-
-            cell = table.cell(6, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("6.")
-
-            cell = table.cell(6, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Channel Change")
-
-            cell = table.cell(6, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 06")
-
-            cell = table.cell(7, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("7.")
-
-            cell = table.cell(7, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Searching Network")
-
-            cell = table.cell(7, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 07")
-
-        else:
-            heading3 = doc.add_heading("Table 6: Error Details for GPRS :\n", level=2)
-            # Apply underline to the heading text
-            run = heading3.runs[0]
-            run.underline = True  # Simple underline
-            # Or for more options:
-            # run.underline = WD_UNDERLINE.SINGLE
-
-            table = doc.add_table(rows=20, cols=3)
-            table.alignment = WD_TABLE_ALIGNMENT.LEFT
-            table.autofit = True
-            table.style = 'Table Grid'
-
-            # Set column widths (optional, so it looks neat)
-            col_widths = [Inches(1.0), Inches(4.0), Inches(1.5)]
-            for col, width in zip(table.columns, col_widths):
-                for cell in col.cells:
-                    cell.width = width
-
-            cell = table.cell(0, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Sr. No.")
-            run.bold = True
-            run.font.size = Pt(14)
-
-            cell = table.cell(0, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Error Description")
-            run.bold = True
-            run.font.size = Pt(14)
-            
-            cell = table.cell(0, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Meter Display")
-            run.bold = True
-            run.font.size = Pt(14)
-            
-            cell = table.cell(1, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("1.")
-
-            cell = table.cell(1, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("All Good")
-
-            cell = table.cell(1, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 00")
-
-            cell = table.cell(2, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("2.")
-
-            cell = table.cell(2, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Meter NIC communication failure")
-
-            cell = table.cell(2, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 01")
-
-            cell = table.cell(3, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("3.")
-
-            cell = table.cell(3, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Modem initialization failure")
-
-            cell = table.cell(3, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 02")
-
-            cell = table.cell(4, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("4.")
-
-            cell = table.cell(4, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("SIM not detected")
-
-            cell = table.cell(4, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 03")
-
-            cell = table.cell(5, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("5.")
-
-            cell = table.cell(5, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("SIM invalid")
-
-            cell = table.cell(5, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 04")
-
-            cell = table.cell(6, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("6.")
-
-            cell = table.cell(6, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("No GSM Network coverage")
-
-            cell = table.cell(6, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 05")
-
-            cell = table.cell(7, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("7.")
-
-            cell = table.cell(7, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("GPRS Network registration failure")
-
-            cell = table.cell(7, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 06")
-
-            cell = table.cell(8, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("8.")
-
-            cell = table.cell(8, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("GPRS registration denied")
-
-            cell = table.cell(8, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 07")
-
-            cell = table.cell(9, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("9.")
-
-            cell = table.cell(9, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("No APN configured")
-
-            cell = table.cell(9, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 08")
-
-            cell = table.cell(10, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("10.")
-
-            cell = table.cell(10, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("GPRS connection not establish")
-
-            cell = table.cell(10, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 09")
-
-            cell = table.cell(11, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("11.")
-
-            cell = table.cell(11, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("HES IP/Port not configured")
-
-            cell = table.cell(11, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 10")
-
-            cell = table.cell(12, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("12.")
-
-            cell = table.cell(12, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("HES port not open")
-
-            cell = table.cell(12, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 11")
-
-            cell = table.cell(13, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("13.")
-
-            cell = table.cell(13, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Internal Diagnostic Purpose")
-
-            cell = table.cell(13, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 12")
-
-            cell = table.cell(14, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("14.")
-
-            cell = table.cell(14, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Internal Diagnostic Purpose")
-
-            cell = table.cell(14, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 13")
-
-            cell = table.cell(15, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("15.")
-
-            cell = table.cell(15, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Internal Diagnostic Purpose")
-
-            cell = table.cell(15, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 14")
-
-            cell = table.cell(16, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("16.")
-
-            cell = table.cell(16, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Internal Diagnostic Purpose")
-
-            cell = table.cell(16, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 15")
-
-            cell = table.cell(17, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("17.")
-
-            cell = table.cell(17, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Internal Diagnostic Purpose")
-
-            cell = table.cell(17, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 16")
-
-            cell = table.cell(18, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("18.")
-
-            cell = table.cell(18, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Internal Diagnostic Purpose")
-
-            cell = table.cell(18, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 17")
-
-            cell = table.cell(19, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("19.")
-
-            cell = table.cell(19, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Internal Diagnostic Purpose")
-
-            cell = table.cell(19, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 18")
-
-            heading3 = doc.add_heading("Table 7: Error Details for RF :\n", level=2)
-            # Apply underline to the heading text
-            run = heading3.runs[0]
-            run.underline = True  # Simple underline
-            # Or for more options:
-            # run.underline = WD_UNDERLINE.SINGLE
-
-            table = doc.add_table(rows=8, cols=3)
-            table.alignment = WD_TABLE_ALIGNMENT.LEFT
-            table.autofit = True
-            table.style = 'Table Grid'
-
-            # Set column widths (optional, so it looks neat)
-            col_widths = [Inches(1.0), Inches(4.0), Inches(1.5)]
-            for col, width in zip(table.columns, col_widths):
-                for cell in col.cells:
-                    cell.width = width
-
-            cell = table.cell(0, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Sr. No.")
-            run.bold = True
-            run.font.size = Pt(14)
-
-            cell = table.cell(0, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Error Description")
-            run.bold = True
-            run.font.size = Pt(14)
-            
-            cell = table.cell(0, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Meter Display")
-            run.bold = True
-            run.font.size = Pt(14)
-            
-            cell = table.cell(1, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("1.")
-
-            cell = table.cell(1, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("All Good")
-
-            cell = table.cell(1, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 00")
-
-            cell = table.cell(2, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("2.")
-
-            cell = table.cell(2, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Meter NIC communication failure")
-
-            cell = table.cell(2, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 01")
-
-            cell = table.cell(3, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("3.")
-
-            cell = table.cell(3, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("NIC Not Joined with Gateway")
-
-            cell = table.cell(3, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 02")
-
-            cell = table.cell(4, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("4.")
-
-            cell = table.cell(4, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Network Joining")
-
-            cell = table.cell(4, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 03")
-
-            cell = table.cell(5, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("5.")
-
-            cell = table.cell(5, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("NIC Joined with Gateway but not connected with HES")
-
-            cell = table.cell(5, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 05")
-
-            cell = table.cell(6, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("6.")
-
-            cell = table.cell(6, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Channel Change")
-
-            cell = table.cell(6, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 06")
-
-            cell = table.cell(7, 0)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("7.")
-
-            cell = table.cell(7, 1)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            run = para.add_run("Searching Network")
-
-            cell = table.cell(7, 2)
-            para = cell.paragraphs[0]
-            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            run = para.add_run("Err 07")
-
-
-
+        add_page_break(doc)
+        add_table_section(doc, "Table 5: Relay Disconnect Reason (Present Status):", [3301, 3302, 3303, 3304, 3305], meter_type, energy_decimal)
+        add_page_break(doc)
+        insert_error_tables(doc, test_vals)
 
     doc.add_heading("\nLCD Glass Description: ", level=3)
     para = doc.add_picture(os.path.join(base_folder, "Template images", "LCD_Glass_Description_3P-Pro.png"), width=Inches(5.0))
@@ -1682,48 +792,24 @@ def generate_doc():
 
 
     # === Save DOCX ===
+    if not output_path.lower().endswith(".docx"):
+        output_path = output_path + ".docx"
+        output_var.set(output_path)
+
     doc.save(output_path)
-    messagebox.showinfo("Success", f"Report generated Word file created \n{output_path}")
 
-    # # === Save DOCX ===
-    # doc.save(output_path)
-    # pdf_file_path = output_path.replace(".docx", ".pdf")
-    
-    # try:
-    #     # Try using Pandoc first
-    #     if pandoc_installed:
-    #         try:
-    #             pypandoc.convert_file(
-    #                 output_path,
-    #                 "pdf",
-    #                 outputfile=pdf_file_path,
-    #                 extra_args=["--standalone"]
-    #             )
-    #             messagebox.showinfo("Success", f"Report generated using Pandoc:\n\nWord: {output_path}\nPDF: {pdf_file_path}")
-    #         except Exception as pandoc_error:
-    #             # Pandoc failed; fallback to docx2pdf
-    #             if docx2pdf_installed:
-    #                 docx2pdf_convert(output_path, pdf_file_path)
-    #                 messagebox.showinfo("Success", f"Pandoc failed but PDF generated using docx2pdf:\n\nWord: {output_path}\nPDF: {pdf_file_path}")
-    #             else:
-    #                 raise RuntimeError(f"PDF conversion failed with Pandoc:\n{pandoc_error}\nAlso, docx2pdf is not installed.")
-    #     # If Pandoc not installed, try docx2pdf
-    #     elif docx2pdf_installed:
-    #         docx2pdf_convert(output_path, pdf_file_path)
-    #         messagebox.showinfo("Success", f"PDF generated using docx2pdf:\n\nWord: {output_path}\nPDF: {pdf_file_path}")
-    #     else:
-    #         raise RuntimeError("Neither Pandoc nor docx2pdf is installed. Cannot generate PDF.")
+    pdf_path = get_pdf_path(output_path)
+    pdf_message = ""
+    try:
+        converter = convert_docx_to_pdf(output_path, pdf_path)
+        pdf_message = f"\nPDF created using {converter}:\n{pdf_path}"
+    except Exception as exc:
+        pdf_message = f"\nPDF conversion failed:\n{exc}"
 
-    # except Exception as e:
-    #     messagebox.showerror("PDF Conversion Failed", f"Word file created but PDF failed:\n{e}")
-
-    # # === Save PDF ===
-    # try:
-    #     pdf_path = output_path.replace(".docx", ".pdf")
-    #     convert(output_path, pdf_path)
-    #     messagebox.showinfo("Success", f"Report generated:\n\n{output_path}\n{pdf_path}")
-    # except Exception as e:
-    #     messagebox.showerror("PDF Conversion Failed", f"Word file created but PDF failed:\n{e}")
+    messagebox.showinfo(
+        "Success",
+        f"Word file created:\n{output_path}{pdf_message}"
+    )
 
 
 # === Tkinter GUI ===
