@@ -1323,6 +1323,7 @@
 		<Item id="3514">T6 - Net Apparent Energy</Item>
 		<Item id="3515">T7 - Net Apparent Energy</Item>
 		<Item id="3516">T8 - Net Apparent Energy</Item>
+		<Item id="9999">Present Tamper Status</Item>
 
 	</PredefinedNames>
 	<DiagPredefinedNames>
@@ -2685,6 +2686,7 @@
 		<Item id="3514">T6 - Net Apparent Energy</Item>
 		<Item id="3515">T7 - Net Apparent Energy</Item>
 		<Item id="3516">T8 - Net Apparent Energy</Item>
+		<Item id="9999">Present Tamper Status</Item>
 
 	</DiagPredefinedNames>
 	<TestPredefinedNames>

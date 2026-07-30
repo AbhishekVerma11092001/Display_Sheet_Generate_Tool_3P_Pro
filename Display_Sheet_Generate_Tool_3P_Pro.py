@@ -74,12 +74,49 @@ tamper_predefined_names_new = read_dict_from_section(root, "TamperPredefinedName
 
 
 DEFAULT_OUTPUT_FILE = "Display_Parameters_report.docx"
+DISPLAY_STRINGS_XML = "display_strings.xml"
 
 # Global variables for folder paths
 image_folders = {
     "3P-Pro WC 10-60A": os.path.join(base_folder, "3P Pro WC Display"),
 }
 # template_path = ""
+
+
+def get_display_strings_xml_path():
+    return os.path.join(base_folder, DISPLAY_STRINGS_XML)
+
+
+def load_display_strings():
+    xml_path = get_display_strings_xml_path()
+    if not os.path.exists(xml_path):
+        return {}
+
+    try:
+        tree = ET.parse(xml_path)
+        root = tree.getroot()
+        return {
+            "auto_string": root.findtext("auto_string") or "",
+            "push_string": root.findtext("push_string") or "",
+            "tamper_string": root.findtext("tamper_string") or "",
+            "batt_string": root.findtext("batt_string") or "",
+            "diag_string": root.findtext("diag_string") or "",
+            "test_string": root.findtext("test_string") or "",
+        }
+    except ET.ParseError:
+        return {}
+
+
+def save_display_strings(strings):
+    xml_path = get_display_strings_xml_path()
+    root = ET.Element("DisplayStrings")
+
+    for key, value in strings.items():
+        elem = ET.SubElement(root, key)
+        elem.text = value or ""
+
+    tree = ET.ElementTree(root)
+    tree.write(xml_path, encoding="utf-8", xml_declaration=True)
 
 
 def set_column_widths(table, widths):
@@ -104,8 +141,15 @@ def get_selected_values(listbox):
     return [int(item.split(" - ")[0]) for item in listbox.get(0, tk.END)]
 
 
-def build_hex_payload(values):
-    payload = "".join(f"{val:04X}" for val in values)
+def build_hex_payload(values, replacement_payload=""):
+    parts = []
+    for val in values:
+        if val == 9999:
+            parts.append(replacement_payload)
+        else:
+            parts.append(f"{val:04X}")
+
+    payload = "".join(parts)
     length = len(payload) // 2
 
     if length <= 127:
@@ -125,6 +169,85 @@ def validate_hex_input_string(value, label):
         messagebox.showerror("Error", f"Input {label} hex string is invalid. Check length.")
         return False
     return True
+
+
+def parse_payload_to_values(payload, available_items):
+    if not payload:
+        return []
+
+    payload = payload.strip()
+    if payload.startswith("09"):
+        payload = payload[2:]
+
+    if len(payload) >= 2:
+        length_bytes = payload[:2]
+        try:
+            length = int(length_bytes, 16)
+        except ValueError:
+            return []
+
+        if length <= 127:
+            body = payload[2:2 + length * 2]
+        elif length <= 255:
+            body = payload[4:4 + length * 2]
+        else:
+            body = payload[6:6 + length * 2]
+    else:
+        body = ""
+
+    values = []
+    for i in range(0, len(body), 4):
+        chunk = body[i:i+4]
+        if len(chunk) != 4:
+            continue
+        try:
+            values.append(int(chunk, 16))
+        except ValueError:
+            continue
+
+    if not available_items:
+        return values
+
+    available_map = {f"{value:04d}": item for value, item in [(int(item.split(" - ", 1)[0]), item) for item in available_items]}
+    result = []
+    for value in values:
+        item = available_map.get(f"{value:04d}")
+        if item:
+            result.append(item)
+    return result
+
+
+def extract_payload_body(payload):
+    if not payload:
+        return ""
+
+    payload = payload.strip()
+    if payload.startswith("09"):
+        payload = payload[2:]
+
+    if len(payload) < 2:
+        return ""
+
+    try:
+        length = int(payload[:2], 16)
+    except ValueError:
+        return ""
+
+    if length <= 127:
+        body_start = 2
+    elif length <= 255:
+        body_start = 4
+    else:
+        body_start = 6
+
+    if length <= 127:
+        body_end = body_start + length * 2
+    elif length <= 255:
+        body_end = body_start + length * 2
+    else:
+        body_end = body_start + length * 2
+
+    return payload[body_start:body_end]
 
 
 def add_error_details_table(doc, title, rows):
@@ -194,16 +317,20 @@ def add_table_section(doc, title, values, meter_type, energy_decimal, add_break=
         add_page_break(doc)
 
 
-def insert_error_tables(doc, test_vals):
-    if 3115 in test_vals:
-        add_error_details_table(doc, "Table {table_seq_no}: Error Details for GPRS :", GPRS_ERROR_ROWS)
+def insert_error_tables(doc, test_vals, table_seq_no):
+    if 3115 in test_vals and 3125 in test_vals:
+        add_error_details_table(doc, f"Table {table_seq_no}: Error Details for GPRS :", GPRS_ERROR_ROWS)
+        table_seq_no += 1
+        add_error_details_table(doc, f"Table {table_seq_no}: Error Details for RF :", RF_ERROR_ROWS)
+        return table_seq_no + 1
+    elif 3115 in test_vals:
+        add_error_details_table(doc, f"Table {table_seq_no}: Error Details for GPRS :", GPRS_ERROR_ROWS)
+        return table_seq_no + 1
     elif 3125 in test_vals:
-        add_error_details_table(doc, "Table {table_seq_no}: Error Details for RF :", RF_ERROR_ROWS)
+        add_error_details_table(doc, f"Table {table_seq_no}: Error Details for RF :", RF_ERROR_ROWS)
+        return table_seq_no + 1
     else:
-        add_error_details_table(doc, "Table {table_seq_no}: Error Details for GPRS :", GPRS_ERROR_ROWS)
-        table_seq_no += 1
-        add_error_details_table(doc, "Table {table_seq_no}: Error Details for RF :", RF_ERROR_ROWS)
-        table_seq_no += 1
+        return table_seq_no
 
 
 def get_pdf_path(docx_path):
@@ -391,57 +518,60 @@ def create_table(doc, values, meter_type, energy_decimal):
 
 class InputDialog(simpledialog.Dialog):
     def body(self, master):
-        tk.Label(master, text="Energy Decimal (0 or 1):").grid(row=0, column=0, padx=5, pady=5, sticky="w")
-        self.energy_entry = tk.Entry(master)
-        self.energy_entry.grid(row=0, column=1, padx=5, pady=5)
+        tk.Label(master, text="Energy Decimal :").grid(row=0, column=0, padx=5, pady=5, sticky="w")
+        self.energy_var = tk.StringVar(value="1 Decimal Digit")
+        self.energy_combo = ttk.Combobox(master, textvariable=self.energy_var, values=["1 Decimal Digit", "0 Decimal Digit"], state="readonly", width=20)
+        self.energy_combo.grid(row=0, column=1, padx=5, pady=5)
 
-        tk.Label(master, text="Display Lock (0-No, 1-Auto Mode lock, 2-All Mode lock):").grid(row=1, column=0, padx=5, pady=5, sticky="w")
-        self.display_lock_entry = tk.Entry(master)
-        self.display_lock_entry.grid(row=1, column=1, padx=5, pady=5)
+        tk.Label(master, text="Display Lock Feature:").grid(row=1, column=0, padx=5, pady=5, sticky="w")
+        self.display_lock_var = tk.StringVar(value="0-No Mode lock")
+        self.display_lock_combo = ttk.Combobox(master, textvariable=self.display_lock_var, values=["0-No Mode lock", "1-Auto Mode lock", "2-All Mode lock"], state="readonly", width=20)
+        self.display_lock_combo.grid(row=1, column=1, padx=5, pady=5)
 
-        tk.Label(master, text="Bell Icon Display (0-PSEQ Only, 1-All Tampers):").grid(row=2, column=0, padx=5, pady=5, sticky="w")
-        self.bell_icon_entry = tk.Entry(master)
-        self.bell_icon_entry.grid(row=2, column=1, padx=5, pady=5)
+        tk.Label(master, text="Bell Icon Display :").grid(row=2, column=0, padx=5, pady=5, sticky="w")
+        self.bell_icon_var = tk.StringVar(value="0-PSEQ Only")
+        self.bell_icon_combo = ttk.Combobox(master, textvariable=self.bell_icon_var, values=["0-PSEQ Only", "1-All Tampers"], state="readonly", width=20)
+        self.bell_icon_combo.grid(row=2, column=1, padx=5, pady=5)
 
-        return self.energy_entry
+        tk.Label(master, text="Tamper Detect Time for Display :").grid(row=3, column=0, padx=5, pady=5, sticky="w")
+        self.tamper_time_value = tk.StringVar(value="10 seconds")
+        self.tamper_time_var = ttk.Entry(master, textvariable=self.tamper_time_value, width=22)
+        self.tamper_time_var.grid(row=3, column=1, padx=5, pady=5)
+
+
+        return self.energy_combo
 
     def apply(self):
         self.result = (
-            self.energy_entry.get().strip(),
-            self.display_lock_entry.get().strip(),
-            self.bell_icon_entry.get().strip()
+            self.energy_var.get().strip(),
+            self.display_lock_var.get().strip(),
+            self.bell_icon_var.get().strip(),
+            self.tamper_time_value.get().strip()
         )
 
 def get_user_inputs(root):
     dialog = InputDialog(root, title="Meter Configuration")
 
-    if dialog.result is None:
-        return None, None, None
+    energy_decimal, display_lock, bell_icon, tamper_time = dialog.result
 
-    energy_decimal, display_lock, bell_icon = dialog.result
+    if energy_decimal == "0 Decimal Digit":
+        energy_decimal = "0"
+    elif energy_decimal == "1 Decimal Digit":
+        energy_decimal = "1"
 
-    if energy_decimal not in ["0", "1"]:
-        messagebox.showerror(
-            "Invalid Input",
-            "Energy decimal value must be 0 or 1."
-        )
-        return None, None, None
+    if display_lock == "0-No Mode lock":
+        display_lock = "0"
+    elif display_lock == "1-Auto Mode lock":
+        display_lock = "1"
+    elif display_lock == "2-All Mode lock":
+        display_lock = "2"
 
-    if display_lock not in ["0", "1", "2"]:
-        messagebox.showerror(
-            "Invalid Input",
-            "Display lock value must be 0, 1, or 2."
-        )
-        return None, None, None
+    if bell_icon == "0-PSEQ Only":
+        bell_icon = "0"
+    elif bell_icon == "1-All Tampers":
+        bell_icon = "1"
 
-    if bell_icon not in ["0", "1"]:
-        messagebox.showerror(
-            "Invalid Input",
-            "Bell icon display value must be 0 or 1."
-        )
-        return None, None, None
-
-    return energy_decimal, display_lock, bell_icon
+    return energy_decimal, display_lock, bell_icon, tamper_time
 
 
 # === Generate document === 
@@ -490,16 +620,26 @@ def generate_doc():
     if not diag_vals:
         diag_vals = [92, 3101, 3103, 3106, 3107, 3102, 3105, 3104, 3108]
 
-    energy_decimal, display_lock, bell_icon = get_user_inputs(root)
-    if energy_decimal is None or display_lock is None or bell_icon is None:
+    energy_decimal, display_lock, bell_icon, tamper_time = get_user_inputs(root)
+    if energy_decimal is None or display_lock is None or bell_icon is None or tamper_time is None:
         return  # User cancelled or invalid input
 
-    auto_string.set(build_hex_payload(auto_vals))
-    push_string.set(build_hex_payload(push_vals))
-    tamper_string.set(build_hex_payload(tamper_vals))
+    tamper_payload = build_hex_payload(tamper_vals)
+    auto_string.set(build_hex_payload(auto_vals, replacement_payload=tamper_payload))
+    push_string.set(build_hex_payload(push_vals, replacement_payload=tamper_payload))
+    tamper_string.set(tamper_payload)
     batt_string.set(build_hex_payload(batt_vals))
     diag_string.set(build_hex_payload(diag_vals))
     test_string.set(build_hex_payload(test_vals))
+
+    save_display_strings({
+        "auto_string": auto_string.get(),
+        "push_string": push_string.get(),
+        "tamper_string": tamper_string.get(),
+        "batt_string": batt_string.get(),
+        "diag_string": diag_string.get(),
+        "test_string": test_string.get(),
+    })
     
     # ==== Create Template in Docx ===
     # template_path = os.path.join(base_folder, "template.docx")
@@ -671,7 +811,7 @@ def generate_doc():
         table_seq_no += 1
 
     if batt_vals:
-        add_table_section(doc, f"Table {table_seq_no}: Under Power OFF Display :", batt_vals, meter_type, energy_decimal)
+        add_table_section(doc, f"Table {table_seq_no}: Under Power OFF (Battery Mode) Display :", batt_vals, meter_type, energy_decimal)
         table_seq_no += 1
 
     if diag_vals:
@@ -679,11 +819,22 @@ def generate_doc():
         table_seq_no += 1
 
     if test_vals:
-        add_table_section(doc, f"Table {table_seq_no}: Test Mode Display :", test_vals, meter_type, energy_decimal, add_break=False)
+        add_table_section(doc, f"Table {table_seq_no}: Test Mode Display :", test_vals, meter_type, energy_decimal)
         table_seq_no += 1
 
+    if tamper_vals:
+        add_table_section(doc, f"Table : Present Tamper Status Display :", tamper_vals, meter_type, energy_decimal, add_break=False)
+
     doc.add_heading("Note: ", level=3)
-    para = doc.add_paragraph("1.  In the Push Mode Display table, present tamper status display parameter was normally hidden and if tamper present continuously for 10 seconds then status showing as above table for respective tamper.")
+    if 9999 in auto_vals and 9999 in push_vals:
+        para = doc.add_paragraph(f"1.  In the Auto Mode Display and Push Mode Display tables, present tamper status display parameter was normally hidden and if tamper present continuously for {tamper_time} then status showing as per the above table (Present Tamper Status Display) for respective tamper.")    
+    elif 9999 in auto_vals:
+        para = doc.add_paragraph(f"1.  In the Auto Mode Display table, present tamper status display parameter was normally hidden and if tamper present continuously for {tamper_time} then status showing as per the above table (Present Tamper Status Display) for respective tamper.")
+    elif 9999 in push_vals:
+        para = doc.add_paragraph(f"1.  In the Push Mode Display table, present tamper status display parameter was normally hidden and if tamper present continuously for {tamper_time} then status showing as per the above table (Present Tamper Status Display) for respective tamper.")
+    else:
+        para = doc.add_paragraph(f"1.  In the Push Mode Display table, present tamper status display parameter was normally hidden and if tamper present continuously for {tamper_time} then status showing as above table for respective tamper.")
+    
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     para = doc.add_paragraph("2.")  
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
@@ -743,7 +894,7 @@ def generate_doc():
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
     if batt_vals: 
-        doc.add_heading(f"\nUnder Power OFF condition—(Battery Mode Display): Refer TABLE-{refer_table_seq_no_temp}: ", level=3)
+        doc.add_heading(f"\nUnder Power OFF condition—(Battery Mode Display: Refer TABLE-{refer_table_seq_no_temp}): ", level=3)
     else: 
         doc.add_heading(f"\nUnder Power OFF condition: ", level=3)
     para = doc.add_paragraph(batt_txt.get())
@@ -753,8 +904,8 @@ def generate_doc():
         add_page_break(doc)
         add_table_section(doc, f"Table {table_seq_no}: Relay Disconnect Reason (Present Status):", [3301, 3302, 3303, 3304, 3305], meter_type, energy_decimal)
         table_seq_no += 1
-        add_page_break(doc)
-        insert_error_tables(doc, test_vals)
+        # add_page_break(doc)
+        table_seq_no = insert_error_tables(doc, test_vals, table_seq_no)
 
     doc.add_heading("\nLCD Glass Description: ", level=3)
     para = doc.add_picture(os.path.join(base_folder, "Template images", "LCD_Glass_Description_3P-Pro.png"), width=Inches(5.0))
@@ -1066,6 +1217,19 @@ diag_items = [f"{dec:04d} - {desc}" for dec, desc in diag_predefined_names_new.i
 test_items = [f"{dec:04d} - {desc}" for dec, desc in test_predefined_names_new.items()]
 tamper_items = [f"{dec:04d} - {desc}" for dec, desc in tamper_predefined_names_new.items()]
 
+saved_display_strings = load_display_strings()
+
+
+def restore_saved_selection(input_var, listbox, payload, available_items):
+    body = extract_payload_body(payload)
+    input_var.set(body)
+
+    values = parse_payload_to_values(payload, available_items)
+    listbox.delete(0, tk.END)
+    for item in values:
+        if item not in listbox.get(0, tk.END):
+            listbox.insert(tk.END, item)
+
 # Create a frame with fixed size for the notebook
 notebook_frame = tk.Frame(root, width=1080, height=350)
 notebook_frame.pack(padx=10, pady=(0,5))  # adjust pady to reduce gap
@@ -1100,6 +1264,13 @@ diag_available, diag_selected, diag_input_hex_string  = create_dual_listbox(diag
 test_tab = ttk.Frame(notebook)
 notebook.add(test_tab, text="Test Mode Selection")
 test_available, test_selected, test_input_hex_string  = create_dual_listbox(test_tab, "Test Mode Selection", test_items)
+
+restore_saved_selection(auto_input_hex_string, auto_selected, saved_display_strings.get("auto_string", ""), default_items)
+restore_saved_selection(push_input_hex_string, push_selected, saved_display_strings.get("push_string", ""), default_items)
+restore_saved_selection(tamper_input_hex_string, tamper_selected, saved_display_strings.get("tamper_string", ""), tamper_items)
+restore_saved_selection(battery_input_hex_string, battery_selected, saved_display_strings.get("batt_string", ""), default_items)
+restore_saved_selection(diag_input_hex_string, diag_selected, saved_display_strings.get("diag_string", ""), diag_items)
+restore_saved_selection(test_input_hex_string, test_selected, saved_display_strings.get("test_string", ""), test_items)
 
 # Output file
 output_var = tk.StringVar(value=os.path.join(base_folder, "Display_Parameters_report.docx"))
@@ -1145,31 +1316,33 @@ ctk.CTkButton(output_frame, text="Browse", command=choose_output, fg_color="#219
 # Generate button
 ctk.CTkButton(output_frame, text="Generate Report", command=generate_doc, fg_color="#388e3c").grid(row=2, column=2, padx=30, sticky="w")
 
-auto_string = tk.StringVar()
+saved_display_strings = load_display_strings()
+
+auto_string = tk.StringVar(value="")
 
 ctk.CTkLabel(output_frame, text="").grid(row=1, column=3, padx=5, sticky="w")
 
 ttk.Label(output_frame, text="Auto Display String:").grid(row=2, column=0, padx=5, sticky="w")
 ttk.Entry(output_frame, textvariable=auto_string, width=130).grid(row=2, column=1, padx=30, sticky="e")
 
-push_string = tk.StringVar()
+push_string = tk.StringVar(value="")
 
 ttk.Label(output_frame, text="Push Display String:").grid(row=3, column=0, padx=5, sticky="w")
 ttk.Entry(output_frame, textvariable=push_string, width=130).grid(row=3, column=1, padx=30, sticky="e")
 
-tamper_string = tk.StringVar()
+tamper_string = tk.StringVar(value="")
 
-batt_string = tk.StringVar()
+batt_string = tk.StringVar(value="")
 
 ttk.Label(output_frame, text="Battery Display String:").grid(row=6, column=0, padx=5, sticky="w")
 ttk.Entry(output_frame, textvariable=batt_string, width=130).grid(row=6, column=1, padx=30, sticky="e")
 
-diag_string = tk.StringVar()
+diag_string = tk.StringVar(value="")
 
 ttk.Label(output_frame, text="Diag Display String:").grid(row=4, column=0, padx=5, sticky="w")
 ttk.Entry(output_frame, textvariable=diag_string, width=130).grid(row=4, column=1, padx=30, sticky="e")
 
-test_string = tk.StringVar()
+test_string = tk.StringVar(value="")
 
 ttk.Label(output_frame, text="Test Display String:").grid(row=5, column=0, padx=5, sticky="w")
 ttk.Entry(output_frame, textvariable=test_string, width=130).grid(row=5, column=1, padx=30, sticky="e")
