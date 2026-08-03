@@ -122,6 +122,11 @@ image_folders = {
     "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(base_folder, "3P Pro WC Display Torrent Specific Forward Mode"),
 }
 
+image_folders_net = {
+    "3P-Pro WC 10-60A": os.path.join(base_folder, "3P Pro WC Display NET Mode"),
+    "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(base_folder, "3P Pro WC Display Torrent Specific NET Mode"),
+    # "3P-Pro WC 20-100A" : os.path.join(base_folder, "3P Pro WC Display"),
+}
 
 def get_display_strings_xml_path():
     return os.path.join(base_folder, "RefXML", DISPLAY_STRINGS_XML)
@@ -1311,7 +1316,7 @@ ctk.set_default_color_theme("blue")  # Try "green", "dark-blue", etc.
 # === Main Window ===
 root = ctk.CTk()
 # root.iconbitmap("logo.ico")
-root.title("3P Pro Meter Display Report Generator V2.1")
+root.title("3P Pro Meter Display Report Generator V3.0")
 root.geometry("1200x760")
 root.resizable(False, False)
 
