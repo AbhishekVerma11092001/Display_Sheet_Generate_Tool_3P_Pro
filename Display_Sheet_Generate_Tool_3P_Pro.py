@@ -7,7 +7,7 @@ import xml.etree.ElementTree as ET
 from tkcalendar import DateEntry
 from tkinter import ttk, filedialog, simpledialog, messagebox
 from docx import Document
-from docx.shared import Inches, Pt, RGBColor
+from docx.shared import Cm, Inches, Pt, RGBColor
 from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.table import WD_ALIGN_VERTICAL
@@ -49,11 +49,59 @@ except ImportError:
 
 def read_dict_from_section(root, section):
     data_dict = {}
-    for item in root.find(section).findall("Item"):
-        key = int(item.get("id"))
-        value = item.text.strip()
+    section_node = root.find(section)
+    if section_node is None:
+        return data_dict
+
+    for item in section_node.findall("Item"):
+        item_id = item.get("id")
+        if item_id is None:
+            continue
+        try:
+            key = int(item_id)
+        except ValueError:
+            continue
+        value = (item.text or "").strip()
         data_dict[key] = value
     return data_dict
+
+
+def read_text_mapping_from_file(xml_path, section="FORWARDDisplayTexts"):
+    if not os.path.exists(xml_path):
+        return {}
+
+    try:
+        tree = ET.parse(xml_path)
+        root = tree.getroot()
+    except ET.ParseError:
+        return {}
+
+    return read_dict_from_section(root, section)
+
+
+def load_xml_mappings():
+    global predefined_names_new, diag_predefined_names_new, test_predefined_names_new, tamper_predefined_names_new, forward_display_text_mapping, net_display_text_mapping
+
+    xml_path = os.path.join(base_folder, "RefXML",  "predefined_names_3p_pro.xml")
+    display_text_xml_path = os.path.join(base_folder, "RefXML", "display_parameter_description.xml")
+
+    if os.path.exists(xml_path):
+        tree = ET.parse(xml_path)
+        root = tree.getroot()
+        predefined_names_new = read_dict_from_section(root, "PredefinedNames")
+        diag_predefined_names_new = read_dict_from_section(root, "DiagPredefinedNames")
+        test_predefined_names_new = read_dict_from_section(root, "TestPredefinedNames")
+        tamper_predefined_names_new = read_dict_from_section(root, "TamperPredefinedNames")
+    else:
+        predefined_names_new = {}
+        diag_predefined_names_new = {}
+        test_predefined_names_new = {}
+        tamper_predefined_names_new = {}
+
+    if os.path.exists(display_text_xml_path):
+        forward_display_text_mapping = read_text_mapping_from_file(display_text_xml_path, "FORWARDDisplayTexts")
+        net_display_text_mapping = read_text_mapping_from_file(display_text_xml_path, "NETDisplayTexts")
+
 
 # Determine app folder and default base folder
 if getattr(sys, 'frozen', False):
@@ -62,15 +110,7 @@ else:
     base_folder = os.path.dirname(os.path.abspath(__file__))
 
 # Load XML relative to exe/script location
-xml_path = os.path.join(base_folder, "predefined_names_3p_pro.xml")
-tree = ET.parse(xml_path)
-root = tree.getroot()
-
-# Read each dictionary
-predefined_names_new = read_dict_from_section(root, "PredefinedNames")
-diag_predefined_names_new = read_dict_from_section(root, "DiagPredefinedNames")
-test_predefined_names_new = read_dict_from_section(root, "TestPredefinedNames")
-tamper_predefined_names_new = read_dict_from_section(root, "TamperPredefinedNames")
+load_xml_mappings()
 
 
 DEFAULT_OUTPUT_FILE = "Display_Parameters_report.docx"
@@ -78,13 +118,13 @@ DISPLAY_STRINGS_XML = "display_strings.xml"
 
 # Global variables for folder paths
 image_folders = {
-    "3P-Pro WC 10-60A": os.path.join(base_folder, "3P Pro WC Display"),
+    "3P-Pro WC 10-60A": os.path.join(base_folder, "3P Pro WC Display Forward Mode"),
+    "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(base_folder, "3P Pro WC Display Torrent Specific"),
 }
-# template_path = ""
 
 
 def get_display_strings_xml_path():
-    return os.path.join(base_folder, DISPLAY_STRINGS_XML)
+    return os.path.join(base_folder, "RefXML", DISPLAY_STRINGS_XML)
 
 
 def load_display_strings():
@@ -145,6 +185,16 @@ def build_hex_payload(values, replacement_payload=""):
     parts = []
     for val in values:
         if val == 9999:
+            if replacement_payload.startswith("09"):
+                replacement_payload = replacement_payload[2:]  # Remove the 09 prefix
+            
+                if len(replacement_payload) >= 2:
+                    if replacement_payload.startswith("81"):
+                        replacement_payload = replacement_payload[4:]  # Remove the 81 and Length prefix
+                    elif replacement_payload.startswith("82"):
+                        replacement_payload = replacement_payload[6:]  # Remove the 82 and Length prefix
+                    else:
+                        replacement_payload = replacement_payload[2:]  # Remove the Length prefix
             parts.append(replacement_payload)
         else:
             parts.append(f"{val:04X}")
@@ -177,10 +227,18 @@ def parse_payload_to_values(payload, available_items):
 
     payload = payload.strip()
     if payload.startswith("09"):
-        payload = payload[2:]
+        payload = payload[2:]  # Remove the 09 prefix
 
     if len(payload) >= 2:
-        length_bytes = payload[:2]
+        if payload.startswith("81"):
+            payload = payload[2:]  # Remove the 81 prefix
+            length_bytes = payload[:2]
+        elif payload.startswith("82"):
+            payload = payload[2:]  # Remove the 82 prefix
+            length_bytes = payload[:4]
+        else:
+            length_bytes = payload[:2]
+
         try:
             length = int(length_bytes, 16)
         except ValueError:
@@ -188,10 +246,13 @@ def parse_payload_to_values(payload, available_items):
 
         if length <= 127:
             body = payload[2:2 + length * 2]
+            body = payload[2:]  # Remove the Length
         elif length <= 255:
-            body = payload[4:4 + length * 2]
+            body = payload[2:2 + length * 2]
+            body = payload[2:]  # Remove the Length
         else:
-            body = payload[6:6 + length * 2]
+            body = payload[4:4 + length * 2]
+            body = payload[4:]  # Remove the Length
     else:
         body = ""
 
@@ -223,22 +284,29 @@ def extract_payload_body(payload):
 
     payload = payload.strip()
     if payload.startswith("09"):
-        payload = payload[2:]
+        payload = payload[2:]  # Remove the 09 prefix
 
-    if len(payload) < 2:
-        return ""
+    if len(payload) >= 2:
+        if payload.startswith("81"):
+            payload = payload[2:]  # Remove the 81 prefix
+            length_bytes = payload[:2]
+        elif payload.startswith("82"):
+            payload = payload[2:]  # Remove the 82 prefix
+            length_bytes = payload[:4]
+        else:
+            length_bytes = payload[:2]
 
-    try:
-        length = int(payload[:2], 16)
-    except ValueError:
-        return ""
+        try:
+            length = int(length_bytes, 16)
+        except ValueError:
+            return []
 
     if length <= 127:
         body_start = 2
     elif length <= 255:
-        body_start = 4
+        body_start = 2
     else:
-        body_start = 6
+        body_start = 4
 
     if length <= 127:
         body_end = body_start + length * 2
@@ -310,9 +378,15 @@ RF_ERROR_ROWS = [
 ]
 
 
-def add_table_section(doc, title, values, meter_type, energy_decimal, add_break=True):
+def add_table_section(doc, title, values, meter_type, energy_decimal, display_table_mode, add_break=True):
     add_underlined_heading(doc, title, level=2)
-    create_table(doc, values, meter_type, energy_decimal)
+    create_table(doc, values, meter_type, energy_decimal, display_table_mode)
+    if add_break:
+        add_page_break(doc)
+
+def forward_add_table_section(doc, title, values, meter_type, energy_decimal, display_table_mode, add_break=True):
+    add_underlined_heading(doc, title, level=2)
+    forward_create_table(doc, values, meter_type, energy_decimal, display_table_mode)
     if add_break:
         add_page_break(doc)
 
@@ -428,9 +502,11 @@ def choose_base_folder():
         return
     
     base_folder = folder
+    load_xml_mappings()
 
     image_folders = {
-        "3P-Pro WC 10-60A" : os.path.join(base_folder, "3P Pro WC Display"),
+        "3P-Pro WC 10-60A": os.path.join(base_folder, "3P Pro WC Display Forward Mode"),
+        "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(base_folder, "3P Pro WC Display Torrent Specific"),
         # "3P-Pro WC 20-100A" : os.path.join(base_folder, "3P Pro WC Display"),
     }
 
@@ -470,36 +546,70 @@ def get_image_list(folder):
         images.append(name)
     return sorted(images)
 
+def add_formatted_runs(paragraph, text):
+    if not text:
+        return
+
+    paragraph.text = ""
+    import re
+
+    default_font_size = Pt(10)
+    pattern = re.compile(r"\[(font|size)=([^\]]+)\](.*?)\[/\1\]", re.IGNORECASE)
+    last_end = 0
+
+    for match in pattern.finditer(text):
+        if match.start() > last_end:
+            run = paragraph.add_run(text[last_end:match.start()])
+            run.font.size = default_font_size
+
+        run = paragraph.add_run(match.group(3))
+        if match.group(1).lower() == "font":
+            run.font.name = match.group(2)
+            run.font.size = default_font_size
+        else:
+            try:
+                run.font.size = Pt(int(match.group(2)))
+            except ValueError:
+                run.font.size = default_font_size
+        last_end = match.end()
+
+    if last_end < len(text):
+        run = paragraph.add_run(text[last_end:])
+        run.font.size = default_font_size
+
 
 # === Table creation in docx ===
-def create_table(doc, values, meter_type, energy_decimal):
-    table = doc.add_table(rows=1, cols=2)
+def create_table(doc, values, meter_type, energy_decimal, display_table_mode):
+    table = doc.add_table(rows=1, cols=3)
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
     table.allow_autofit = False
     table.style = 'Table Grid'
 
     hdr_cells = table.rows[0].cells
-    hdr_texts = ['S.No', 'Parameters Display']
-    column_widths = [Inches(0.5), Inches(7.0)]
+    hdr_texts = ['S.No', 'Parameters Display', 'Parameters Description']
+    column_widths = [Cm(1.3), Cm(10.8), Cm(6.6)]
     for i, w in enumerate(column_widths):
-        hdr_cells[i].width = w
-        run = hdr_cells[i].paragraphs[0].add_run(hdr_texts[i])
+        for cell in table.columns[i].cells:
+            cell.width = w
+        para = hdr_cells[i].paragraphs[0]
+        para.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        run = para.add_run(hdr_texts[i])
         run.bold = True
-        run.font.size = Pt(12)
+        run.font.size = Pt(14)
 
     folder = image_folders[meter_type]
-    # for idx, dec in enumerate(values, start=1):
     idx = 1
     for dec in values:
         filename = f"{dec:04d}"
 
         # Get parameter name from XML mapping
         param_name = predefined_names_new.get(dec, "").lower()
+        forward_display_text = forward_display_text_mapping.get(dec, "")
+        net_display_text = net_display_text_mapping.get(dec, "")
 
         # If parameter contains "energy" use energy_decimal logic
-        if energy_decimal in ["1", "2"] and "energy" in param_name and "hr" not in param_name:
+        if energy_decimal in ["1", "2"] and "energy" in param_name and "hr" not in param_name and "tamper" not in param_name:
             matches = glob.glob(os.path.join(folder, f"{filename}@{energy_decimal}_*.[jp][pn]g"))
-            
         else:
             matches = glob.glob(os.path.join(folder, f"{filename}_*.[jp][pn]g"))
 
@@ -507,14 +617,94 @@ def create_table(doc, values, meter_type, energy_decimal):
             for img_path in matches:
                 row = table.add_row().cells
                 row[0].text = str(idx)
+                row[0].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
+                for i, w in enumerate(column_widths):
+                    row[i].width = w
                 run = row[1].paragraphs[0].add_run()
-                run.add_picture(img_path, width=Inches(6.5))
+                run.add_picture(img_path, width=Inches(4.0))
+                desc_para = row[2].paragraphs[0]
+                desc_para.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                if display_table_mode == "1":
+                    add_formatted_runs(desc_para, net_display_text)
+                elif display_table_mode == "0":
+                    add_formatted_runs(desc_para, forward_display_text)
             idx += 1
         else:
             row = table.add_row().cells
             row[0].text = str(idx)
+            row[0].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
+            for i, w in enumerate(column_widths):
+                row[i].width = w
             row[1].text = f"Image {filename} not found"
+            desc_para = row[2].paragraphs[0]
+            desc_para.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            if display_table_mode == "1":
+                add_formatted_runs(desc_para, net_display_text)
+            elif display_table_mode == "0":
+                add_formatted_runs(desc_para, forward_display_text)
             idx += 1
+
+
+def forward_create_table(doc, values, meter_type, energy_decimal, display_table_mode):
+    table = doc.add_table(rows=1, cols=3)
+    table.alignment = WD_TABLE_ALIGNMENT.CENTER
+    table.allow_autofit = False
+    table.style = 'Table Grid'
+
+    hdr_cells = table.rows[0].cells
+    hdr_texts = ['S.No', 'Parameters Display', 'Parameters Description']
+    column_widths = [Cm(1.3), Cm(10.8), Cm(6.6)]
+    for i, w in enumerate(column_widths):
+        for cell in table.columns[i].cells:
+            cell.width = w
+        para = hdr_cells[i].paragraphs[0]
+        para.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        run = para.add_run(hdr_texts[i])
+        run.bold = True
+        run.font.size = Pt(14)
+
+    folder = image_folders[meter_type]
+    idx = 1
+    for dec in values:
+        filename = f"{dec:04d}"
+
+        # Get parameter name from XML mapping
+        param_name = predefined_names_new.get(dec, "").lower()
+        forward_display_text = forward_display_text_mapping.get(dec, "")
+        net_display_text = net_display_text_mapping.get(dec, "")
+
+        # If parameter contains "energy" use energy_decimal logic
+        if energy_decimal in ["1", "2"] and "energy" in param_name and "hr" not in param_name and "tamper" not in param_name:
+            matches = glob.glob(os.path.join(folder, f"{filename}@{energy_decimal}_*.[jp][pn]g"))
+        else:
+            matches = glob.glob(os.path.join(folder, f"{filename}_*.[jp][pn]g"))
+
+        if display_table_mode == "1":
+            if "ex" not in param_name:
+                if matches:
+                    for img_path in matches:
+                        row = table.add_row().cells
+                        row[0].text = str(idx)
+                        row[0].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
+                        for i, w in enumerate(column_widths):
+                            row[i].width = w
+                        run = row[1].paragraphs[0].add_run()
+                        run.add_picture(img_path, width=Inches(4.0))
+                        desc_para = row[2].paragraphs[0]
+                        desc_para.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                        add_formatted_runs(desc_para, net_display_text)
+                    idx += 1
+                else:
+                    row = table.add_row().cells
+                    row[0].text = str(idx)
+                    row[0].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
+                    for i, w in enumerate(column_widths):
+                        row[i].width = w
+                    row[1].text = f"Image {filename} not found"
+                    desc_para = row[2].paragraphs[0]
+                    desc_para.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                    add_formatted_runs(desc_para, net_display_text)
+                    idx += 1
 
 class InputDialog(simpledialog.Dialog):
     def body(self, master):
@@ -538,6 +728,10 @@ class InputDialog(simpledialog.Dialog):
         self.tamper_time_var = ttk.Entry(master, textvariable=self.tamper_time_value, width=22)
         self.tamper_time_var.grid(row=3, column=1, padx=5, pady=5)
 
+        tk.Label(master, text="Display Table Required :").grid(row=4, column=0, padx=5, pady=5, sticky="w")
+        self.display_table_mode_var = tk.StringVar(value="Forward & NET Combined Mode")
+        self.display_table_mode_combo = ttk.Combobox(master, textvariable=self.display_table_mode_var, values=["Forward & NET Combined Mode", "Forward & NET Individual Mode"], state="readonly", width=20)
+        self.display_table_mode_combo.grid(row=4, column=1, padx=5, pady=5)
 
         return self.energy_combo
 
@@ -546,13 +740,14 @@ class InputDialog(simpledialog.Dialog):
             self.energy_var.get().strip(),
             self.display_lock_var.get().strip(),
             self.bell_icon_var.get().strip(),
-            self.tamper_time_value.get().strip()
+            self.tamper_time_value.get().strip(),
+            self.display_table_mode_var.get().strip()
         )
 
 def get_user_inputs(root):
     dialog = InputDialog(root, title="Meter Configuration")
 
-    energy_decimal, display_lock, bell_icon, tamper_time = dialog.result
+    energy_decimal, display_lock, bell_icon, tamper_time, display_table_mode = dialog.result
 
     if energy_decimal == "0 Decimal Digit":
         energy_decimal = "0"
@@ -571,7 +766,13 @@ def get_user_inputs(root):
     elif bell_icon == "1-All Tampers":
         bell_icon = "1"
 
-    return energy_decimal, display_lock, bell_icon, tamper_time
+    if display_table_mode == "Forward & NET Combined Mode":
+        display_table_mode = "0"
+    elif display_table_mode == "Forward & NET Individual Mode":
+        display_table_mode = "1"
+
+
+    return energy_decimal, display_lock, bell_icon, tamper_time, display_table_mode
 
 
 # === Generate document === 
@@ -620,8 +821,8 @@ def generate_doc():
     if not diag_vals:
         diag_vals = [92, 3101, 3103, 3106, 3107, 3102, 3105, 3104, 3108]
 
-    energy_decimal, display_lock, bell_icon, tamper_time = get_user_inputs(root)
-    if energy_decimal is None or display_lock is None or bell_icon is None or tamper_time is None:
+    energy_decimal, display_lock, bell_icon, tamper_time, display_table_mode = get_user_inputs(root)
+    if energy_decimal is None or display_lock is None or bell_icon is None or tamper_time is None or display_table_mode is None:
         return  # User cancelled or invalid input
 
     tamper_payload = build_hex_payload(tamper_vals)
@@ -746,7 +947,8 @@ def generate_doc():
     para.alignment = WD_ALIGN_PARAGRAPH.CENTER
     run = para.add_run("Title :  ")
     run.bold = True
-    run = para.add_run("Display Parameter")
+    run = para.add_run("Display Parameter ")
+    run = para.add_run(project_code_var.get())
     run.font.size = Pt(12)
 
     cell = table.cell(1, 2)   # Row=1, Col=2
@@ -802,30 +1004,74 @@ def generate_doc():
     heading.paragraph_format.space_before = Pt(0)  # Remove space before
     heading.paragraph_format.space_after = Pt(0)   # Optional: remove space after
 
-    if auto_vals:
-        add_table_section(doc, f"Table {table_seq_no}: Auto Scroll Display :", auto_vals, meter_type, energy_decimal)
-        table_seq_no += 1
+    if display_table_mode == "0":
+        if auto_vals:
+            add_table_section(doc, f"Table {table_seq_no}: Auto Scroll Display :", auto_vals, meter_type, energy_decimal, display_table_mode)
+            table_seq_no += 1
 
-    if push_vals:
-        add_table_section(doc, f"Table {table_seq_no}: Push Button Display :", push_vals, meter_type, energy_decimal)
-        table_seq_no += 1
+        if push_vals:
+            add_table_section(doc, f"Table {table_seq_no}: Push Button Display :", push_vals, meter_type, energy_decimal, display_table_mode)
+            table_seq_no += 1
 
-    if batt_vals:
-        add_table_section(doc, f"Table {table_seq_no}: Under Power OFF (Battery Mode) Display :", batt_vals, meter_type, energy_decimal)
-        table_seq_no += 1
+        if batt_vals:
+            add_table_section(doc, f"Table {table_seq_no}: Auto and Push Mode Display (Battery)", batt_vals, meter_type, energy_decimal, display_table_mode)
+            table_seq_no += 1
 
-    if diag_vals:
-        add_table_section(doc, f"Table {table_seq_no}: Diagnostic Mode Display :", diag_vals, meter_type, energy_decimal)
-        table_seq_no += 1
+        if diag_vals:
+            add_table_section(doc, f"Table {table_seq_no}: Diagnostic Mode Display :", diag_vals, meter_type, energy_decimal, display_table_mode)
+            table_seq_no += 1
 
-    if test_vals:
-        add_table_section(doc, f"Table {table_seq_no}: Test Mode Display :", test_vals, meter_type, energy_decimal)
-        table_seq_no += 1
+        if test_vals:
+            add_table_section(doc, f"Table {table_seq_no}: Test Mode Display :", test_vals, meter_type, energy_decimal, display_table_mode)
+            table_seq_no += 1
 
-    if tamper_vals:
-        add_table_section(doc, f"Table : Present Tamper Status Display :", tamper_vals, meter_type, energy_decimal, add_break=False)
+        if tamper_vals:
+            add_table_section(doc, f"Table {table_seq_no}: Present Tamper Status Display :", tamper_vals, meter_type, energy_decimal, display_table_mode, add_break=False)
+            table_seq_no += 1
 
-    doc.add_heading("Note: ", level=3)
+    elif display_table_mode == "1":
+        if auto_vals:
+            forward_add_table_section(doc, f"Table {table_seq_no}: Auto Scroll Display : Forwarded Mode", auto_vals, meter_type, energy_decimal, display_table_mode)
+            table_seq_no += 1
+
+        if push_vals:
+            forward_add_table_section(doc, f"Table {table_seq_no}: Push Button Display : Forwarded Mode", push_vals, meter_type, energy_decimal, display_table_mode)
+            table_seq_no += 1
+
+        if batt_vals:
+            forward_add_table_section(doc, f"Table {table_seq_no}: Auto and Push Mode Display (Battery) : Forwarded Mode", batt_vals, meter_type, energy_decimal, display_table_mode)
+            table_seq_no += 1
+
+        if diag_vals:
+            forward_add_table_section(doc, f"Table {table_seq_no}: Diagnostic Mode Display : Forwarded Mode", diag_vals, meter_type, energy_decimal, display_table_mode)
+            table_seq_no += 1
+
+        if auto_vals:
+            add_table_section(doc, f"Table {table_seq_no}: Auto Scroll Display : NET Metering Mode", auto_vals, meter_type, energy_decimal, display_table_mode)
+            table_seq_no += 1
+
+        if push_vals:
+            add_table_section(doc, f"Table {table_seq_no}: Push Button Display : NET Metering Mode", push_vals, meter_type, energy_decimal, display_table_mode)
+            table_seq_no += 1
+
+        if batt_vals:
+            add_table_section(doc, f"Table {table_seq_no}: Auto and Push Mode Display (Battery) : NET Metering Mode", batt_vals, meter_type, energy_decimal, display_table_mode)
+            table_seq_no += 1
+
+        if diag_vals:
+            add_table_section(doc, f"Table {table_seq_no}: Diagnostic Mode Display : NET Metering Mode", diag_vals, meter_type, energy_decimal, display_table_mode)
+            table_seq_no += 1
+
+        if test_vals:
+            add_table_section(doc, f"Table {table_seq_no}: Test Mode Display :", test_vals, meter_type, energy_decimal, display_table_mode)
+            table_seq_no += 1
+
+        if tamper_vals:
+            add_table_section(doc, f"Table {table_seq_no}: Present Tamper Status Display :", tamper_vals, meter_type, energy_decimal, display_table_mode, add_break=False)
+            table_seq_no += 1
+            
+
+    doc.add_heading("Note: ", level=2)
     if 9999 in auto_vals and 9999 in push_vals:
         para = doc.add_paragraph(f"1.  In the Auto Mode Display and Push Mode Display tables, present tamper status display parameter was normally hidden and if tamper present continuously for {tamper_time} then status showing as per the above table (Present Tamper Status Display) for respective tamper.")    
     elif 9999 in auto_vals:
@@ -833,7 +1079,7 @@ def generate_doc():
     elif 9999 in push_vals:
         para = doc.add_paragraph(f"1.  In the Push Mode Display table, present tamper status display parameter was normally hidden and if tamper present continuously for {tamper_time} then status showing as per the above table (Present Tamper Status Display) for respective tamper.")
     else:
-        para = doc.add_paragraph(f"1.  In the Push Mode Display table, present tamper status display parameter was normally hidden and if tamper present continuously for {tamper_time} then status showing as above table for respective tamper.")
+        para = doc.add_paragraph(f"1.  Present tamper status display parameter was normally hidden and if tamper present continuously for {tamper_time} then status showing as above table for respective tamper.")
     
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     para = doc.add_paragraph("2.")  
@@ -866,12 +1112,26 @@ def generate_doc():
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
 
-    doc.add_heading(f"\nAUTO MODE-- (Auto Scrolling, Refer TABLE-{refer_table_seq_no}): ", level=3)
+    if display_table_mode == "0":
+        doc.add_heading(f"\nAUTO MODE-- (Auto Scrolling, Refer TABLE-{refer_table_seq_no}): ", level=3)
+    elif display_table_mode == "1":
+        if batt_vals:
+            new_refer_table_seq_no = refer_table_seq_no + 4
+        else:
+            new_refer_table_seq_no = refer_table_seq_no + 3
+        doc.add_heading(f"\nAUTO MODE-- (Auto Scrolling, Refer TABLE-{refer_table_seq_no} & TABLE-{new_refer_table_seq_no}): ", level=3)
     para = doc.add_paragraph(auto_txt.get())
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     refer_table_seq_no += 1
 
-    doc.add_heading(f"\nPUSH MODE-- (Scroll with Push Button, Refer TABLE-{refer_table_seq_no}): ", level=3)
+    if display_table_mode == "0":
+        doc.add_heading(f"\nPUSH MODE-- (Scroll with Push Button, Refer TABLE-{refer_table_seq_no}): ", level=3)
+    elif display_table_mode == "1":
+        if batt_vals:
+            new_refer_table_seq_no = refer_table_seq_no + 4
+        else:
+            new_refer_table_seq_no = refer_table_seq_no + 3
+        doc.add_heading(f"\nPUSH MODE-- (Scroll with Push Button, Refer TABLE-{refer_table_seq_no} & TABLE-{new_refer_table_seq_no}): ", level=3)
     para = doc.add_paragraph(push_txt.get())
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     refer_table_seq_no += 1
@@ -880,13 +1140,27 @@ def generate_doc():
         refer_table_seq_no_temp = refer_table_seq_no
         refer_table_seq_no += 1
 
-    doc.add_heading(f"\nDIAGNOSTIC MODE-- (High resolution display, Refer TABLE-{refer_table_seq_no}): ", level=3)
+    if display_table_mode == "0":
+        doc.add_heading(f"\nDIAGNOSTIC MODE-- (High resolution display, Refer TABLE-{refer_table_seq_no}): ", level=3)
+    elif display_table_mode == "1":
+        if batt_vals:
+            new_refer_table_seq_no = refer_table_seq_no + 4
+        else:
+            new_refer_table_seq_no = refer_table_seq_no + 3
+        doc.add_heading(f"\nDIAGNOSTIC MODE-- (High resolution display, Refer TABLE-{refer_table_seq_no} & TABLE-{new_refer_table_seq_no}): ", level=3)
     para = doc.add_paragraph(diag_txt.get())
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     refer_table_seq_no += 1
 
     if test_vals:
-        doc.add_heading(f"\nTEST MODE—(Test Mode Display, Refer TABLE-{refer_table_seq_no}): ", level=3)
+        if display_table_mode == "0":
+            doc.add_heading(f"\nTEST MODE—(Test Mode Display, Refer TABLE-{refer_table_seq_no}): ", level=3)
+        elif display_table_mode == "1":
+            if batt_vals:
+                new_refer_table_seq_no = refer_table_seq_no + 4
+            else:
+                new_refer_table_seq_no = refer_table_seq_no + 3
+            doc.add_heading(f"\nTEST MODE—(Test Mode Display, Refer TABLE-{new_refer_table_seq_no}): ", level=3)
         refer_table_seq_no += 1
     else:
         doc.add_heading(f"\nTEST MODE—(Test Mode Display): ", level=3)
@@ -894,20 +1168,23 @@ def generate_doc():
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
     if batt_vals: 
-        doc.add_heading(f"\nUnder Power OFF condition—(Battery Mode Display: Refer TABLE-{refer_table_seq_no_temp}): ", level=3)
+        if display_table_mode == "0":
+            doc.add_heading(f"\nUnder Power OFF condition—(Battery Mode Display: Refer TABLE-{refer_table_seq_no_temp}): ", level=3)
+        elif display_table_mode == "1":
+            new_refer_table_seq_no = refer_table_seq_no_temp + 4
+            doc.add_heading(f"\nUnder Power OFF condition—(Battery Mode Display: Refer TABLE-{refer_table_seq_no_temp} & TABLE-{new_refer_table_seq_no}): ", level=3)
     else: 
         doc.add_heading(f"\nUnder Power OFF condition: ", level=3)
     para = doc.add_paragraph(batt_txt.get())
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
-    if test_vals:
-        add_page_break(doc)
-        add_table_section(doc, f"Table {table_seq_no}: Relay Disconnect Reason (Present Status):", [3301, 3302, 3303, 3304, 3305], meter_type, energy_decimal)
-        table_seq_no += 1
+    if 3132 in test_vals:
         # add_page_break(doc)
-        table_seq_no = insert_error_tables(doc, test_vals, table_seq_no)
+        add_table_section(doc, f"Table {table_seq_no}: Relay Disconnect Reason (Present Status):", [3301, 3302, 3303, 3304, 3305], meter_type, energy_decimal, display_table_mode, add_break=False)
+        table_seq_no += 1
+    table_seq_no = insert_error_tables(doc, test_vals, table_seq_no)
 
-    doc.add_heading("\nLCD Glass Description: ", level=3)
+    doc.add_heading("\nLCD Glass Description: ", level=2)
     para = doc.add_picture(os.path.join(base_folder, "Template images", "LCD_Glass_Description_3P-Pro.png"), width=Inches(5.0))
     # Center align the picture
     last_paragraph = doc.paragraphs[-1]  # the paragraph where the picture was added
@@ -964,11 +1241,37 @@ def generate_doc():
     elif bell_icon == "1":
         para7.add_run(" Sign indicates any tamper exist in the meter.")
 
-    if(meter_type == "3P-Pro WC 10-60A" or meter_type == "3P-Pro WC 20-100A"):
+    if(meter_type == "3P-Pro WC 10-60A" or meter_type == "3P-Pro WC (Torrent Specific) 10-60A" or meter_type == "3P-Pro WC 20-100A"):
         para8 = doc.add_paragraph("8.  ")
         run = para8.add_run()
         run.add_picture(os.path.join(base_folder, "Template images", "relay.jpg"), width=Inches(0.3))
         para8.add_run(" Sign indicates relay connect/disconnect status.")
+
+    doc.add_heading("\n Revision History: ", level=2)
+    table = doc.add_table(rows=1, cols=3)
+    table.alignment = WD_TABLE_ALIGNMENT.LEFT
+    table.autofit = True
+    table.style = 'Table Grid'
+
+    set_column_widths(table, [Inches(1.0), Inches(1.5), Inches(4.0)])
+    hdr_cells = table.rows[0].cells
+    headers = ["Rev. No.", "Date", "Revision Description"]
+    for cell, text in zip(hdr_cells, headers):
+        run = cell.paragraphs[0].add_run(text)
+        run.bold = True
+        run.font.size = Pt(14)
+        cell.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+    rows = [(revision_var.get(), date_var.get(), "Initial")]
+
+    for rev_number, date, description in rows:
+        row = table.add_row().cells
+        row[0].text = rev_number
+        row[1].text = date
+        row[2].text = description
+        row[0].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
+        row[1].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
+        row[2].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
 
 
     # === Save DOCX ===
@@ -978,17 +1281,18 @@ def generate_doc():
 
     doc.save(output_path)
 
-    pdf_path = get_pdf_path(output_path)
-    pdf_message = ""
-    try:
-        converter = convert_docx_to_pdf(output_path, pdf_path)
-        pdf_message = f"\nPDF created using {converter}:\n{pdf_path}"
-    except Exception as exc:
-        pdf_message = f"\nPDF conversion failed:\n{exc}"
+    # pdf_path = get_pdf_path(output_path)
+    # pdf_message = ""
+    # try:
+    #     converter = convert_docx_to_pdf(output_path, pdf_path)
+    #     pdf_message = f"\nPDF created using {converter}:\n{pdf_path}"
+    # except Exception as exc:
+    #     pdf_message = f"\nPDF conversion failed:\n{exc}"
 
     messagebox.showinfo(
         "Success",
-        f"Word file created:\n{output_path}{pdf_message}"
+        # f"Word file created:\n{output_path}{pdf_message}"
+        f"Word file created:\n{output_path}"
     )
 
 
@@ -1019,14 +1323,19 @@ meter_type_combo.grid(row=0, column=3, padx=5, sticky="w")
 # Date input with calendar picker (right side)
 ctk.CTkLabel(top_frame, text="Date:").grid(row=0, column=4, padx=30, sticky="w")
 date_var = tk.StringVar()
-date_entry = DateEntry(top_frame, textvariable=date_var, date_pattern="dd-mm-yyyy", width=30)
+date_entry = DateEntry(top_frame, textvariable=date_var, date_pattern="dd-mm-yyyy", width=15)
 date_entry.grid(row=0, column=5, padx=5, sticky="w")
 
 # Revision Number (right side)
 ctk.CTkLabel(top_frame, text="Rev. No:").grid(row=0, column=6, padx=40, sticky="w")
 revision_var = tk.StringVar(value="00")
-revision_combo = ctk.CTkComboBox(top_frame, variable=revision_var, values=["00", "01", "02", "03"], width=80)
+revision_combo = ctk.CTkComboBox(top_frame, variable=revision_var, values=["00", "01", "02", "03"], width=65)
 revision_combo.grid(row=0, column=7, padx=5, sticky="w")
+
+ctk.CTkLabel(top_frame, text="Project Code").grid(row=0, column=8, padx=30, sticky="w")
+project_code_var = tk.StringVar(value="G3P_DC21")
+project_code_entry = ctk.CTkEntry(top_frame, textvariable=project_code_var, width=120)
+project_code_entry.grid(row=0, column=9, padx=5, sticky="w")
 
 
 # === Dual listbox UI ===
@@ -1078,7 +1387,7 @@ def create_dual_listbox(frame, title, items):
     ttk.Label(frame, text="Input String:").grid(row=1, column=1, padx=5, sticky="e")
     
     input_hex_string = tk.StringVar()
-    input_string = ttk.Entry(frame, textvariable=input_hex_string, width=90)
+    input_string = ttk.Entry(frame, textvariable=input_hex_string, width=80)
     input_string.grid(row=1, column=2, padx=10, pady=5)
     input_string.insert(0, "")
     
