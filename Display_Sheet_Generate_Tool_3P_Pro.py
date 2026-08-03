@@ -119,7 +119,7 @@ DISPLAY_STRINGS_XML = "display_strings.xml"
 # Global variables for folder paths
 image_folders = {
     "3P-Pro WC 10-60A": os.path.join(base_folder, "3P Pro WC Display Forward Mode"),
-    "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(base_folder, "3P Pro WC Display Torrent Specific"),
+    "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(base_folder, "3P Pro WC Display Torrent Specific Forward Mode"),
 }
 
 
@@ -494,7 +494,7 @@ def add_page_number(paragraph):
 
 # === Function to set base folder dynamically ===
 def choose_base_folder():
-    global base_folder, image_folders
+    global base_folder, image_folders, image_folders_net
     # , template_path
 
     folder = filedialog.askdirectory(title="Select Base Folder")
@@ -506,7 +506,13 @@ def choose_base_folder():
 
     image_folders = {
         "3P-Pro WC 10-60A": os.path.join(base_folder, "3P Pro WC Display Forward Mode"),
-        "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(base_folder, "3P Pro WC Display Torrent Specific"),
+        "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(base_folder, "3P Pro WC Display Torrent Specific Forward Mode"),
+        # "3P-Pro WC 20-100A" : os.path.join(base_folder, "3P Pro WC Display"),
+    }
+
+    image_folders_net = {
+        "3P-Pro WC 10-60A": os.path.join(base_folder, "3P Pro WC Display NET Mode"),
+        "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(base_folder, "3P Pro WC Display Torrent Specific NET Mode"),
         # "3P-Pro WC 20-100A" : os.path.join(base_folder, "3P Pro WC Display"),
     }
 
@@ -597,7 +603,10 @@ def create_table(doc, values, meter_type, energy_decimal, display_table_mode):
         run.bold = True
         run.font.size = Pt(14)
 
-    folder = image_folders[meter_type]
+    if display_table_mode == "1":
+        folder = image_folders_net[meter_type]
+    elif display_table_mode == "0":
+        folder = image_folders[meter_type]
     idx = 1
     for dec in values:
         filename = f"{dec:04d}"
@@ -680,7 +689,7 @@ def forward_create_table(doc, values, meter_type, energy_decimal, display_table_
             matches = glob.glob(os.path.join(folder, f"{filename}_*.[jp][pn]g"))
 
         if display_table_mode == "1":
-            if "ex" not in param_name:
+            if "ex" not in param_name and "net active" not in param_name and "net apparent" not in param_name:
                 if matches:
                     for img_path in matches:
                         row = table.add_row().cells
