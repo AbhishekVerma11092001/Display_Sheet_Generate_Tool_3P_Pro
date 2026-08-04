@@ -1547,7 +1547,14 @@ tamper_items = [f"{dec:04d} - {desc}" for dec, desc in tamper_predefined_names_n
 saved_display_strings = load_display_strings()
 
 
-def restore_saved_selection(input_var, listbox, payload, available_items):
+def restore_saved_selection(input_var, listbox, payload, available_items, payload_name=None):
+    if payload_name in ("auto", "push"):
+        tamper_payload = saved_display_strings.get("tamper_string", "")
+        if tamper_payload:
+            tamper_body = extract_payload_body(tamper_payload)
+            if tamper_body and tamper_body in payload:
+                payload = payload.replace(tamper_body, "270F")
+
     body = extract_payload_body(payload)
     input_var.set(body)
 
@@ -1592,12 +1599,12 @@ test_tab = ttk.Frame(notebook)
 notebook.add(test_tab, text="Test Mode Selection")
 test_available, test_selected, test_input_hex_string  = create_dual_listbox(test_tab, "Test Mode Selection", test_items)
 
-restore_saved_selection(auto_input_hex_string, auto_selected, saved_display_strings.get("auto_string", ""), default_items)
-restore_saved_selection(push_input_hex_string, push_selected, saved_display_strings.get("push_string", ""), default_items)
-restore_saved_selection(tamper_input_hex_string, tamper_selected, saved_display_strings.get("tamper_string", ""), tamper_items)
-restore_saved_selection(battery_input_hex_string, battery_selected, saved_display_strings.get("batt_string", ""), default_items)
-restore_saved_selection(diag_input_hex_string, diag_selected, saved_display_strings.get("diag_string", ""), diag_items)
-restore_saved_selection(test_input_hex_string, test_selected, saved_display_strings.get("test_string", ""), test_items)
+restore_saved_selection(auto_input_hex_string, auto_selected, saved_display_strings.get("auto_string", ""), default_items, "auto")
+restore_saved_selection(push_input_hex_string, push_selected, saved_display_strings.get("push_string", ""), default_items, "push")
+restore_saved_selection(tamper_input_hex_string, tamper_selected, saved_display_strings.get("tamper_string", ""), tamper_items, "tamper")
+restore_saved_selection(battery_input_hex_string, battery_selected, saved_display_strings.get("batt_string", ""), default_items, "battery")
+restore_saved_selection(diag_input_hex_string, diag_selected, saved_display_strings.get("diag_string", ""), diag_items, "diag")
+restore_saved_selection(test_input_hex_string, test_selected, saved_display_strings.get("test_string", ""), test_items, "test")
 
 # Output file
 output_var = tk.StringVar(value=os.path.join(base_folder, "Display_Parameters_report.docx"))
