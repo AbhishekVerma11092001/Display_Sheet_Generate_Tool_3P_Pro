@@ -616,6 +616,10 @@ def create_table(doc, values, meter_type, energy_decimal, display_table_mode):
     for dec in values:
         filename = f"{dec:04d}"
 
+        # Skip creating a row for NET individual mode when the file name is 0137
+        if display_table_mode == "1" and filename == "0137":
+            continue
+
         # Get parameter name from XML mapping
         param_name = predefined_names_new.get(dec, "").lower()
         forward_display_text = forward_display_text_mapping.get(dec, "")
@@ -706,7 +710,7 @@ def forward_create_table(doc, values, meter_type, energy_decimal, display_table_
                         run.add_picture(img_path, width=Inches(4.0))
                         desc_para = row[2].paragraphs[0]
                         desc_para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-                        add_formatted_runs(desc_para, net_display_text)
+                        add_formatted_runs(desc_para, forward_display_text)
                     idx += 1
                 else:
                     row = table.add_row().cells
@@ -717,7 +721,7 @@ def forward_create_table(doc, values, meter_type, energy_decimal, display_table_
                     row[1].text = f"Image {filename} not found"
                     desc_para = row[2].paragraphs[0]
                     desc_para.alignment = WD_ALIGN_PARAGRAPH.CENTER
-                    add_formatted_runs(desc_para, net_display_text)
+                    add_formatted_runs(desc_para, forward_display_text)
                     idx += 1
 
 class InputDialog(simpledialog.Dialog):

@@ -20,15 +20,15 @@
 		<Item id="16">[size=13]Present Day[/size]</Item>
 		<Item id="17">[size=13]Current Month Power ON Duration[/size]</Item>
 		<Item id="18">[size=13]Current Month Power OFF Duration[/size]</Item>
-		<Item id="19">[size=13]Fundamental Active Energy Import[/size]</Item>
+		<Item id="19">[size=13]Fundamental Active Energy[/size]</Item>
 		<Item id="20">[size=13]Fundamental Active Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="21">[size=13]Fundamental Apparent Energy Import[/size]</Item>
+		<Item id="21">[size=13]Fundamental Apparent Energy[/size]</Item>
 		<Item id="22">[size=13]Fundamental Apparent Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="23">[size=13]Meter Constant[/size]</Item>
-		<Item id="24">[size=13]Cumulative MD kW Import[/size]</Item>
-		<Item id="25">[size=13]Cumulative MD kVA Import[/size]</Item>
-		<Item id="26">[size=13]Rising Demand kW Import[/size]&#xA;with elapsed time</Item>
-		<Item id="27">[size=13]Rising Demand kVA Import[/size]&#xA;with elapsed time</Item>
+		<Item id="24">[size=13]Cumulative MD kW[/size]</Item>
+		<Item id="25">[size=13]Cumulative MD kVA[/size]</Item>
+		<Item id="26">[size=13]Rising Demand kW[/size]&#xA;with elapsed time</Item>
+		<Item id="27">[size=13]Rising Demand kVA[/size]&#xA;with elapsed time</Item>
 		<Item id="28">[size=13]Cumulative MD kW Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="29">[size=13]Cumulative MD kVA Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="30">[size=13]Rising Demand kW Export[/size]&#xA;with elapsed time&#xA;(Visible in NET metering mode)</Item>
@@ -131,19 +131,19 @@
 		<Item id="134">[size=13]First Tamper Restoration[/size]</Item>
 		<Item id="135">[size=13]First Tamper Restoration Date[/size]</Item>
 		<Item id="136">[size=13]First Tamper Restoration Time[/size]</Item>
-		<Item id="137">[size=13]Reverse Energy[/size]&#xA;(Visible only in Forward mode)</Item>
-		<Item id="201">[size=13]MD Reactive Lag Import (Q1)[/size]</Item>
-		<Item id="202">[size=13]MD Reactive Lag Import (Q1) Date[/size]</Item>
-		<Item id="203">[size=13]MD Reactive Lag Import (Q1) Time[/size]</Item>
+		<Item id="137">[size=13]Reverse Energy[/size]</Item>
+		<Item id="201">[size=13]MD Reactive Lag (Q1)[/size]</Item>
+		<Item id="202">[size=13]MD Reactive Lag (Q1) Date[/size]</Item>
+		<Item id="203">[size=13]MD Reactive Lag (Q1) Time[/size]</Item>
 		<Item id="204">[size=13]MD Reactive Lead Export (Q2)[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="205">[size=13]MD Reactive Lead Export (Q2) Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="206">[size=13]MD Reactive Lead Export (Q2) Time[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="207">[size=13]MD Reactive Lag Export (Q3)[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="208">[size=13]MD Reactive Lag Export (Q3) Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="209">[size=13]MD Reactive Lag Export (Q3) Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="210">[size=13]MD Reactive Lead Import (Q4)[/size]</Item>
-		<Item id="211">[size=13]MD Reactive Lead Import (Q4) Date[/size]</Item>
-		<Item id="212">[size=13]MD Reactive Lead Import (Q4) Time[/size]</Item>
+		<Item id="210">[size=13]MD Reactive Lead (Q4)[/size]</Item>
+		<Item id="211">[size=13]MD Reactive Lead (Q4) Date[/size]</Item>
+		<Item id="212">[size=13]MD Reactive Lead (Q4) Time[/size]</Item>
 		<Item id="213">[size=13]Second Last Tamper Occurrence[/size]</Item>
 		<Item id="214">[size=13]Second Last Tamper Occurrence Date[/size]</Item>
 		<Item id="215">[size=13]Second Last Tamper Occurrence Time[/size]</Item>
@@ -168,38 +168,38 @@
 		<Item id="266">[size=13]Last Bill B-Phase Max % THD in Current[/size]</Item>
 		<Item id="267">[size=13]Last Bill B-Phase Max % THD in Current Date[/size]</Item>
 		<Item id="268">[size=13]Last Bill B-Phase Max % THD in Current Time[/size]</Item>
-		<Item id="301">[size=13]Cumulative Active Energy Import[/size]</Item>
+		<Item id="301">[size=13]Cumulative Active Energy[/size]</Item>
 		<Item id="302">[size=13]Cumulative Active Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="303">[size=13]Cumulative Apparent Energy Import[/size]</Item>
+		<Item id="303">[size=13]Cumulative Apparent Energy[/size]</Item>
 		<Item id="304">[size=13]Cumulative Apparent Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="305">[size=13]Cumulative Reactive Energy Lag Import (Q1)[/size]</Item>
+		<Item id="305">[size=13]Cumulative Reactive Energy Lag (Q1)[/size]</Item>
 		<Item id="306">[size=13]Cumulative Reactive Energy Lead Export (Q2)[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="307">[size=13]Cumulative Reactive Energy Lag Export (Q3)[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="308">[size=13]Cumulative Reactive Energy Lead Import (Q4)[/size]</Item>
+		<Item id="308">[size=13]Cumulative Reactive Energy Lead (Q4)[/size]</Item>
 		<Item id="309">[size=13]Net Active Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
 		<Item id="310">[size=13]Net Apparent Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
-		<Item id="311">[size=13]Current Month MD-KW Import[/size]</Item>
-		<Item id="312">[size=13]Current Month MD-KW Import Occurrence Date[/size]</Item>
-		<Item id="313">[size=13]Current Month MD-KW Import Occurrence Time[/size]</Item>
+		<Item id="311">[size=13]Current Month MD-KW[/size]</Item>
+		<Item id="312">[size=13]Current Month MD-KW Occurrence Date[/size]</Item>
+		<Item id="313">[size=13]Current Month MD-KW Occurrence Time[/size]</Item>
 		<Item id="314">[size=13]Current Month MD-KW Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="315">[size=13]Current Month MD-KW Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="316">[size=13]Current Month MD-KW Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="317">[size=13]Current Month MD-KVA Import[/size]</Item>
-		<Item id="318">[size=13]Current Month MD-KVA Import Occurrence Date[/size]</Item>
-		<Item id="319">[size=13]Current Month MD-KVA Import Occurrence Time[/size]</Item>
+		<Item id="317">[size=13]Current Month MD-KVA[/size]</Item>
+		<Item id="318">[size=13]Current Month MD-KVA Occurrence Date[/size]</Item>
+		<Item id="319">[size=13]Current Month MD-KVA Occurrence Time[/size]</Item>
 		<Item id="320">[size=13]Current Month MD-KVA Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="321">[size=13]Current Month MD-KVA Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="322">[size=13]Current Month MD-KVA Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="323">[size=13]Current Month Average Power Factor Import[/size]</Item>
+		<Item id="323">[size=13]Current Month Average Power Factor[/size]</Item>
 		<Item id="324">[size=13]Current Month Average Power Factor Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="325">[size=13]Cumulative Active Energy Import[/size]&#xA;(TOD-1)</Item>
-		<Item id="326">[size=13]Cumulative Active Energy Import[/size]&#xA;(TOD-2)</Item>
-		<Item id="327">[size=13]Cumulative Active Energy Import[/size]&#xA;(TOD-3)</Item>
-		<Item id="328">[size=13]Cumulative Active Energy Import[/size]&#xA;(TOD-4)</Item>
-		<Item id="329">[size=13]Cumulative Active Energy Import[/size]&#xA;(TOD-5)</Item>
-		<Item id="330">[size=13]Cumulative Active Energy Import[/size]&#xA;(TOD-6)</Item>
-		<Item id="331">[size=13]Cumulative Active Energy Import[/size]&#xA;(TOD-7)</Item>
-		<Item id="332">[size=13]Cumulative Active Energy Import[/size]&#xA;(TOD-8)</Item>
+		<Item id="325">[size=13]Cumulative Active Energy[/size]&#xA;(TOD-1)</Item>
+		<Item id="326">[size=13]Cumulative Active Energy[/size]&#xA;(TOD-2)</Item>
+		<Item id="327">[size=13]Cumulative Active Energy[/size]&#xA;(TOD-3)</Item>
+		<Item id="328">[size=13]Cumulative Active Energy[/size]&#xA;(TOD-4)</Item>
+		<Item id="329">[size=13]Cumulative Active Energy[/size]&#xA;(TOD-5)</Item>
+		<Item id="330">[size=13]Cumulative Active Energy[/size]&#xA;(TOD-6)</Item>
+		<Item id="331">[size=13]Cumulative Active Energy[/size]&#xA;(TOD-7)</Item>
+		<Item id="332">[size=13]Cumulative Active Energy[/size]&#xA;(TOD-8)</Item>
 		<Item id="333">[size=13]Cumulative Active Energy Export[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="334">[size=13]Cumulative Active Energy Export[/size]&#xA;(TOD-2)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="335">[size=13]Cumulative Active Energy Export[/size]&#xA;(TOD-3)&#xA;(Visible in NET metering mode)</Item>
@@ -208,14 +208,14 @@
 		<Item id="338">[size=13]Cumulative Active Energy Export[/size]&#xA;(TOD-6)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="339">[size=13]Cumulative Active Energy Export[/size]&#xA;(TOD-7)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="340">[size=13]Cumulative Active Energy Export[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
-		<Item id="341">[size=13]Cumulative Apparent Energy Import[/size]&#xA;(TOD-1)</Item>
-		<Item id="342">[size=13]Cumulative Apparent Energy Import[/size]&#xA;(TOD-2)</Item>
-		<Item id="343">[size=13]Cumulative Apparent Energy Import[/size]&#xA;(TOD-3)</Item>
-		<Item id="344">[size=13]Cumulative Apparent Energy Import[/size]&#xA;(TOD-4)</Item>
-		<Item id="345">[size=13]Cumulative Apparent Energy Import[/size]&#xA;(TOD-5)</Item>
-		<Item id="346">[size=13]Cumulative Apparent Energy Import[/size]&#xA;(TOD-6)</Item>
-		<Item id="347">[size=13]Cumulative Apparent Energy Import[/size]&#xA;(TOD-7)</Item>
-		<Item id="348">[size=13]Cumulative Apparent Energy Import[/size]&#xA;(TOD-8)</Item>
+		<Item id="341">[size=13]Cumulative Apparent Energy[/size]&#xA;(TOD-1)</Item>
+		<Item id="342">[size=13]Cumulative Apparent Energy[/size]&#xA;(TOD-2)</Item>
+		<Item id="343">[size=13]Cumulative Apparent Energy[/size]&#xA;(TOD-3)</Item>
+		<Item id="344">[size=13]Cumulative Apparent Energy[/size]&#xA;(TOD-4)</Item>
+		<Item id="345">[size=13]Cumulative Apparent Energy[/size]&#xA;(TOD-5)</Item>
+		<Item id="346">[size=13]Cumulative Apparent Energy[/size]&#xA;(TOD-6)</Item>
+		<Item id="347">[size=13]Cumulative Apparent Energy[/size]&#xA;(TOD-7)</Item>
+		<Item id="348">[size=13]Cumulative Apparent Energy[/size]&#xA;(TOD-8)</Item>
 		<Item id="349">[size=13]Cumulative Apparent Energy Export[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="350">[size=13]Cumulative Apparent Energy Export[/size]&#xA;(TOD-2)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="351">[size=13]Cumulative Apparent Energy Export[/size]&#xA;(TOD-3)&#xA;(Visible in NET metering mode)</Item>
@@ -224,14 +224,14 @@
 		<Item id="354">[size=13]Cumulative Apparent Energy Export[/size]&#xA;(TOD-6)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="355">[size=13]Cumulative Apparent Energy Export[/size]&#xA;(TOD-7)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="356">[size=13]Cumulative Apparent Energy Export[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
-		<Item id="357">[size=13]Cumulative Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-1)</Item>
-		<Item id="358">[size=13]Cumulative Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-2)</Item>
-		<Item id="359">[size=13]Cumulative Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-3)</Item>
-		<Item id="360">[size=13]Cumulative Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-4)</Item>
-		<Item id="361">[size=13]Cumulative Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-5)</Item>
-		<Item id="362">[size=13]Cumulative Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-6)</Item>
-		<Item id="363">[size=13]Cumulative Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-7)</Item>
-		<Item id="364">[size=13]Cumulative Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-8)</Item>
+		<Item id="357">[size=13]Cumulative Reactive Energy Lag (Q1)[/size]&#xA;(TOD-1)</Item>
+		<Item id="358">[size=13]Cumulative Reactive Energy Lag (Q1)[/size]&#xA;(TOD-2)</Item>
+		<Item id="359">[size=13]Cumulative Reactive Energy Lag (Q1)[/size]&#xA;(TOD-3)</Item>
+		<Item id="360">[size=13]Cumulative Reactive Energy Lag (Q1)[/size]&#xA;(TOD-4)</Item>
+		<Item id="361">[size=13]Cumulative Reactive Energy Lag (Q1)[/size]&#xA;(TOD-5)</Item>
+		<Item id="362">[size=13]Cumulative Reactive Energy Lag (Q1)[/size]&#xA;(TOD-6)</Item>
+		<Item id="363">[size=13]Cumulative Reactive Energy Lag (Q1)[/size]&#xA;(TOD-7)</Item>
+		<Item id="364">[size=13]Cumulative Reactive Energy Lag (Q1)[/size]&#xA;(TOD-8)</Item>
 		<Item id="365">[size=13]Cumulative Reactive Energy Lead Export (Q2)[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="366">[size=13]Cumulative Reactive Energy Lead Export (Q2)[/size]&#xA;(TOD-2)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="367">[size=13]Cumulative Reactive Energy Lead Export (Q2)[/size]&#xA;(TOD-3)&#xA;(Visible in NET metering mode)</Item>
@@ -248,38 +248,38 @@
 		<Item id="378">[size=13]Cumulative Reactive Energy Lag Export (Q3)[/size]&#xA;(TOD-6)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="379">[size=13]Cumulative Reactive Energy Lag Export (Q3)[/size]&#xA;(TOD-7)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="380">[size=13]Cumulative Reactive Energy Lag Export (Q3)[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
-		<Item id="381">[size=13]Cumulative Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-1)</Item>
-		<Item id="382">[size=13]Cumulative Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-2)</Item>
-		<Item id="383">[size=13]Cumulative Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-3)</Item>
-		<Item id="384">[size=13]Cumulative Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-4)</Item>
-		<Item id="385">[size=13]Cumulative Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-5)</Item>
-		<Item id="386">[size=13]Cumulative Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-6)</Item>
-		<Item id="387">[size=13]Cumulative Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-7)</Item>
-		<Item id="388">[size=13]Cumulative Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-8)</Item>
-		<Item id="389">[size=13]Current Month MD-KW Import[/size]&#xA;(TOD-1)</Item>
-		<Item id="390">[size=13]Current Month MD-KW Import Occurrence Date[/size]&#xA;(TOD-1)</Item>
-		<Item id="391">[size=13]Current Month MD-KW Import Occurrence Time[/size]&#xA;(TOD-1)</Item>
-		<Item id="392">[size=13]Current Month MD-KW Import[/size]&#xA;(TOD-2)</Item>
-		<Item id="393">[size=13]Current Month MD-KW Import Occurrence Date[/size]&#xA;(TOD-2)</Item>
-		<Item id="394">[size=13]Current Month MD-KW Import Occurrence Time[/size]&#xA;(TOD-2)</Item>
-		<Item id="395">[size=13]Current Month MD-KW Import[/size]&#xA;(TOD-3)</Item>
-		<Item id="396">[size=13]Current Month MD-KW Import Occurrence Date[/size]&#xA;(TOD-3)</Item>
-		<Item id="397">[size=13]Current Month MD-KW Import Occurrence Time[/size]&#xA;(TOD-3)</Item>
-		<Item id="398">[size=13]Current Month MD-KW Import[/size]&#xA;(TOD-4)</Item>
-		<Item id="399">[size=13]Current Month MD-KW Import Occurrence Date[/size]&#xA;(TOD-4)</Item>
-		<Item id="400">[size=13]Current Month MD-KW Import Occurrence Time[/size]&#xA;(TOD-4)</Item>
-		<Item id="401">[size=13]Current Month MD-KW Import[/size]&#xA;(TOD-5)</Item>
-		<Item id="402">[size=13]Current Month MD-KW Import Occurrence Date[/size]&#xA;(TOD-5)</Item>
-		<Item id="403">[size=13]Current Month MD-KW Import Occurrence Time[/size]&#xA;(TOD-5)</Item>
-		<Item id="404">[size=13]Current Month MD-KW Import[/size]&#xA;(TOD-6)</Item>
-		<Item id="405">[size=13]Current Month MD-KW Import Occurrence Date[/size]&#xA;(TOD-6)</Item>
-		<Item id="406">[size=13]Current Month MD-KW Import Occurrence Time[/size]&#xA;(TOD-6)</Item>
-		<Item id="407">[size=13]Current Month MD-KW Import[/size]&#xA;(TOD-7)</Item>
-		<Item id="408">[size=13]Current Month MD-KW Import Occurrence Date[/size]&#xA;(TOD-7)</Item>
-		<Item id="409">[size=13]Current Month MD-KW Import Occurrence Time[/size]&#xA;(TOD-7)</Item>
-		<Item id="410">[size=13]Current Month MD-KW Import[/size]&#xA;(TOD-8)</Item>
-		<Item id="411">[size=13]Current Month MD-KW Import Occurrence Date[/size]&#xA;(TOD-8)</Item>
-		<Item id="412">[size=13]Current Month MD-KW Import Occurrence Time[/size]&#xA;(TOD-8)</Item>
+		<Item id="381">[size=13]Cumulative Reactive Energy Lead (Q4)[/size]&#xA;(TOD-1)</Item>
+		<Item id="382">[size=13]Cumulative Reactive Energy Lead (Q4)[/size]&#xA;(TOD-2)</Item>
+		<Item id="383">[size=13]Cumulative Reactive Energy Lead (Q4)[/size]&#xA;(TOD-3)</Item>
+		<Item id="384">[size=13]Cumulative Reactive Energy Lead (Q4)[/size]&#xA;(TOD-4)</Item>
+		<Item id="385">[size=13]Cumulative Reactive Energy Lead (Q4)[/size]&#xA;(TOD-5)</Item>
+		<Item id="386">[size=13]Cumulative Reactive Energy Lead (Q4)[/size]&#xA;(TOD-6)</Item>
+		<Item id="387">[size=13]Cumulative Reactive Energy Lead (Q4)[/size]&#xA;(TOD-7)</Item>
+		<Item id="388">[size=13]Cumulative Reactive Energy Lead (Q4)[/size]&#xA;(TOD-8)</Item>
+		<Item id="389">[size=13]Current Month MD-KW[/size]&#xA;(TOD-1)</Item>
+		<Item id="390">[size=13]Current Month MD-KW Occurrence Date[/size]&#xA;(TOD-1)</Item>
+		<Item id="391">[size=13]Current Month MD-KW Occurrence Time[/size]&#xA;(TOD-1)</Item>
+		<Item id="392">[size=13]Current Month MD-KW[/size]&#xA;(TOD-2)</Item>
+		<Item id="393">[size=13]Current Month MD-KW Occurrence Date[/size]&#xA;(TOD-2)</Item>
+		<Item id="394">[size=13]Current Month MD-KW Occurrence Time[/size]&#xA;(TOD-2)</Item>
+		<Item id="395">[size=13]Current Month MD-KW[/size]&#xA;(TOD-3)</Item>
+		<Item id="396">[size=13]Current Month MD-KW Occurrence Date[/size]&#xA;(TOD-3)</Item>
+		<Item id="397">[size=13]Current Month MD-KW Occurrence Time[/size]&#xA;(TOD-3)</Item>
+		<Item id="398">[size=13]Current Month MD-KW[/size]&#xA;(TOD-4)</Item>
+		<Item id="399">[size=13]Current Month MD-KW Occurrence Date[/size]&#xA;(TOD-4)</Item>
+		<Item id="400">[size=13]Current Month MD-KW Occurrence Time[/size]&#xA;(TOD-4)</Item>
+		<Item id="401">[size=13]Current Month MD-KW[/size]&#xA;(TOD-5)</Item>
+		<Item id="402">[size=13]Current Month MD-KW Occurrence Date[/size]&#xA;(TOD-5)</Item>
+		<Item id="403">[size=13]Current Month MD-KW Occurrence Time[/size]&#xA;(TOD-5)</Item>
+		<Item id="404">[size=13]Current Month MD-KW[/size]&#xA;(TOD-6)</Item>
+		<Item id="405">[size=13]Current Month MD-KW Occurrence Date[/size]&#xA;(TOD-6)</Item>
+		<Item id="406">[size=13]Current Month MD-KW Occurrence Time[/size]&#xA;(TOD-6)</Item>
+		<Item id="407">[size=13]Current Month MD-KW[/size]&#xA;(TOD-7)</Item>
+		<Item id="408">[size=13]Current Month MD-KW Occurrence Date[/size]&#xA;(TOD-7)</Item>
+		<Item id="409">[size=13]Current Month MD-KW Occurrence Time[/size]&#xA;(TOD-7)</Item>
+		<Item id="410">[size=13]Current Month MD-KW[/size]&#xA;(TOD-8)</Item>
+		<Item id="411">[size=13]Current Month MD-KW Occurrence Date[/size]&#xA;(TOD-8)</Item>
+		<Item id="412">[size=13]Current Month MD-KW Occurrence Time[/size]&#xA;(TOD-8)</Item>
 		<Item id="413">[size=13]Current Month MD-KW Export[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="414">[size=13]Current Month MD-KW Export Occurrence Date[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="415">[size=13]Current Month MD-KW Export Occurrence Time[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
@@ -304,30 +304,30 @@
 		<Item id="434">[size=13]Current Month MD-KW Export[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="435">[size=13]Current Month MD-KW Export Occurrence Date[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="436">[size=13]Current Month MD-KW Export Occurrence Time[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
-		<Item id="437">[size=13]Current Month MD-KVA Import[/size]&#xA;(TOD-1)</Item>
-		<Item id="438">[size=13]Current Month MD-KVA Import Occurrence Date[/size]&#xA;(TOD-1)</Item>
-		<Item id="439">[size=13]Current Month MD-KVA Import Occurrence Time[/size]&#xA;(TOD-1)</Item>
-		<Item id="440">[size=13]Current Month MD-KVA Import[/size]&#xA;(TOD-2)</Item>
-		<Item id="441">[size=13]Current Month MD-KVA Import Occurrence Date[/size]&#xA;(TOD-2)</Item>
-		<Item id="442">[size=13]Current Month MD-KVA Import Occurrence Time[/size]&#xA;(TOD-2)</Item>
-		<Item id="443">[size=13]Current Month MD-KVA Import[/size]&#xA;(TOD-3)</Item>
-		<Item id="444">[size=13]Current Month MD-KVA Import Occurrence Date[/size]&#xA;(TOD-3)</Item>
-		<Item id="445">[size=13]Current Month MD-KVA Import Occurrence Time[/size]&#xA;(TOD-3)</Item>
-		<Item id="446">[size=13]Current Month MD-KVA Import[/size]&#xA;(TOD-4)</Item>
-		<Item id="447">[size=13]Current Month MD-KVA Import Occurrence Date[/size]&#xA;(TOD-4)</Item>
-		<Item id="448">[size=13]Current Month MD-KVA Import Occurrence Time[/size]&#xA;(TOD-4)</Item>
-		<Item id="449">[size=13]Current Month MD-KVA Import[/size]&#xA;(TOD-5)</Item>
-		<Item id="450">[size=13]Current Month MD-KVA Import Occurrence Date[/size]&#xA;(TOD-5)</Item>
-		<Item id="451">[size=13]Current Month MD-KVA Import Occurrence Time[/size]&#xA;(TOD-5)</Item>
-		<Item id="452">[size=13]Current Month MD-KVA Import[/size]&#xA;(TOD-6)</Item>
-		<Item id="453">[size=13]Current Month MD-KVA Import Occurrence Date[/size]&#xA;(TOD-6)</Item>
-		<Item id="454">[size=13]Current Month MD-KVA Import Occurrence Time[/size]&#xA;(TOD-6)</Item>
-		<Item id="455">[size=13]Current Month MD-KVA Import[/size]&#xA;(TOD-7)</Item>
-		<Item id="456">[size=13]Current Month MD-KVA Import Occurrence Date[/size]&#xA;(TOD-7)</Item>
-		<Item id="457">[size=13]Current Month MD-KVA Import Occurrence Time[/size]&#xA;(TOD-7)</Item>
-		<Item id="458">[size=13]Current Month MD-KVA Import[/size]&#xA;(TOD-8)</Item>
-		<Item id="459">[size=13]Current Month MD-KVA Import Occurrence Date[/size]&#xA;(TOD-8)</Item>
-		<Item id="460">[size=13]Current Month MD-KVA Import Occurrence Time[/size]&#xA;(TOD-8)</Item>
+		<Item id="437">[size=13]Current Month MD-KVA[/size]&#xA;(TOD-1)</Item>
+		<Item id="438">[size=13]Current Month MD-KVA Occurrence Date[/size]&#xA;(TOD-1)</Item>
+		<Item id="439">[size=13]Current Month MD-KVA Occurrence Time[/size]&#xA;(TOD-1)</Item>
+		<Item id="440">[size=13]Current Month MD-KVA[/size]&#xA;(TOD-2)</Item>
+		<Item id="441">[size=13]Current Month MD-KVA Occurrence Date[/size]&#xA;(TOD-2)</Item>
+		<Item id="442">[size=13]Current Month MD-KVA Occurrence Time[/size]&#xA;(TOD-2)</Item>
+		<Item id="443">[size=13]Current Month MD-KVA[/size]&#xA;(TOD-3)</Item>
+		<Item id="444">[size=13]Current Month MD-KVA Occurrence Date[/size]&#xA;(TOD-3)</Item>
+		<Item id="445">[size=13]Current Month MD-KVA Occurrence Time[/size]&#xA;(TOD-3)</Item>
+		<Item id="446">[size=13]Current Month MD-KVA[/size]&#xA;(TOD-4)</Item>
+		<Item id="447">[size=13]Current Month MD-KVA Occurrence Date[/size]&#xA;(TOD-4)</Item>
+		<Item id="448">[size=13]Current Month MD-KVA Occurrence Time[/size]&#xA;(TOD-4)</Item>
+		<Item id="449">[size=13]Current Month MD-KVA[/size]&#xA;(TOD-5)</Item>
+		<Item id="450">[size=13]Current Month MD-KVA Occurrence Date[/size]&#xA;(TOD-5)</Item>
+		<Item id="451">[size=13]Current Month MD-KVA Occurrence Time[/size]&#xA;(TOD-5)</Item>
+		<Item id="452">[size=13]Current Month MD-KVA[/size]&#xA;(TOD-6)</Item>
+		<Item id="453">[size=13]Current Month MD-KVA Occurrence Date[/size]&#xA;(TOD-6)</Item>
+		<Item id="454">[size=13]Current Month MD-KVA Occurrence Time[/size]&#xA;(TOD-6)</Item>
+		<Item id="455">[size=13]Current Month MD-KVA[/size]&#xA;(TOD-7)</Item>
+		<Item id="456">[size=13]Current Month MD-KVA Occurrence Date[/size]&#xA;(TOD-7)</Item>
+		<Item id="457">[size=13]Current Month MD-KVA Occurrence Time[/size]&#xA;(TOD-7)</Item>
+		<Item id="458">[size=13]Current Month MD-KVA[/size]&#xA;(TOD-8)</Item>
+		<Item id="459">[size=13]Current Month MD-KVA Occurrence Date[/size]&#xA;(TOD-8)</Item>
+		<Item id="460">[size=13]Current Month MD-KVA Occurrence Time[/size]&#xA;(TOD-8)</Item>
 		<Item id="461">[size=13]Current Month MD-KVA Export[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="462">[size=13]Current Month MD-KVA Export Occurrence Date[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="463">[size=13]Current Month MD-KVA Export Occurrence Time[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
@@ -368,38 +368,38 @@
 		<Item id="498">[size=13]Current Month Average Power Factor-Export[/size]&#xA;(TOD-6)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="499">[size=13]Current Month Average Power Factor-Export[/size]&#xA;(TOD-7)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="500">[size=13]Current Month Average Power Factor-Export[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
-		<Item id="501">[size=13]Last Bill Active Energy Import[/size]</Item>
+		<Item id="501">[size=13]Last Bill Active Energy[/size]</Item>
 		<Item id="502">[size=13]Last Bill Active Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="503">[size=13]Last Bill Apparent Energy Import[/size]</Item>
+		<Item id="503">[size=13]Last Bill Apparent Energy[/size]</Item>
 		<Item id="504">[size=13]Last Bill Apparent Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="505">[size=13]Last Bill Reactive Energy Lag Import (Q1)[/size]</Item>
+		<Item id="505">[size=13]Last Bill Reactive Energy Lag (Q1)[/size]</Item>
 		<Item id="506">[size=13]Last Bill Reactive Energy Lead Export (Q2)[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="507">[size=13]Last Bill Reactive Energy Lag Export (Q3)[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="508">[size=13]Last Bill Reactive Energy Lead Import (Q4)[/size]</Item>
+		<Item id="508">[size=13]Last Bill Reactive Energy Lead (Q4)[/size]</Item>
 		<Item id="509">[size=13]Last Bill Net Active Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
 		<Item id="510">[size=13]Last Bill Net Apparent Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
-		<Item id="511">[size=13]Last Bill MD-KW Import[/size]</Item>
-		<Item id="512">[size=13]Last Bill MD-KW Import Occurrence Date[/size]</Item>
-		<Item id="513">[size=13]Last Bill MD-KW Import Occurrence Time[/size]</Item>
+		<Item id="511">[size=13]Last Bill MD-KW[/size]</Item>
+		<Item id="512">[size=13]Last Bill MD-KW Occurrence Date[/size]</Item>
+		<Item id="513">[size=13]Last Bill MD-KW Occurrence Time[/size]</Item>
 		<Item id="514">[size=13]Last Bill MD-KW Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="515">[size=13]Last Bill MD-KW Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="516">[size=13]Last Bill MD-KW Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="517">[size=13]Last Bill MD-KVA Import[/size]</Item>
-		<Item id="518">[size=13]Last Bill MD-KVA Import Occurrence Date[/size]</Item>
-		<Item id="519">[size=13]Last Bill MD-KVA Import Occurrence Time[/size]</Item>
+		<Item id="517">[size=13]Last Bill MD-KVA[/size]</Item>
+		<Item id="518">[size=13]Last Bill MD-KVA Occurrence Date[/size]</Item>
+		<Item id="519">[size=13]Last Bill MD-KVA Occurrence Time[/size]</Item>
 		<Item id="520">[size=13]Last Bill MD-KVA Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="521">[size=13]Last Bill MD-KVA Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="522">[size=13]Last Bill MD-KVA Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="523">[size=13]Last Bill Average PF Import[/size]</Item>
+		<Item id="523">[size=13]Last Bill Average PF[/size]</Item>
 		<Item id="524">[size=13]Last Bill Average PF Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="525">[size=13]Last Bill Active Energy Import[/size]&#xA;(TOD-1)</Item>
-		<Item id="526">[size=13]Last Bill Active Energy Import[/size]&#xA;(TOD-2)</Item>
-		<Item id="527">[size=13]Last Bill Active Energy Import[/size]&#xA;(TOD-3)</Item>
-		<Item id="528">[size=13]Last Bill Active Energy Import[/size]&#xA;(TOD-4)</Item>
-		<Item id="529">[size=13]Last Bill Active Energy Import[/size]&#xA;(TOD-5)</Item>
-		<Item id="530">[size=13]Last Bill Active Energy Import[/size]&#xA;(TOD-6)</Item>
-		<Item id="531">[size=13]Last Bill Active Energy Import[/size]&#xA;(TOD-7)</Item>
-		<Item id="532">[size=13]Last Bill Active Energy Import[/size]&#xA;(TOD-8)</Item>
+		<Item id="525">[size=13]Last Bill Active Energy[/size]&#xA;(TOD-1)</Item>
+		<Item id="526">[size=13]Last Bill Active Energy[/size]&#xA;(TOD-2)</Item>
+		<Item id="527">[size=13]Last Bill Active Energy[/size]&#xA;(TOD-3)</Item>
+		<Item id="528">[size=13]Last Bill Active Energy[/size]&#xA;(TOD-4)</Item>
+		<Item id="529">[size=13]Last Bill Active Energy[/size]&#xA;(TOD-5)</Item>
+		<Item id="530">[size=13]Last Bill Active Energy[/size]&#xA;(TOD-6)</Item>
+		<Item id="531">[size=13]Last Bill Active Energy[/size]&#xA;(TOD-7)</Item>
+		<Item id="532">[size=13]Last Bill Active Energy[/size]&#xA;(TOD-8)</Item>
 		<Item id="533">[size=13]Last Bill Active Energy Export[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="534">[size=13]Last Bill Active Energy Export[/size]&#xA;(TOD-2)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="535">[size=13]Last Bill Active Energy Export[/size]&#xA;(TOD-3)&#xA;(Visible in NET metering mode)</Item>
@@ -408,14 +408,14 @@
 		<Item id="538">[size=13]Last Bill Active Energy Export[/size]&#xA;(TOD-6)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="539">[size=13]Last Bill Active Energy Export[/size]&#xA;(TOD-7)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="540">[size=13]Last Bill Active Energy Export[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
-		<Item id="541">[size=13]Last Bill Apparent Energy Import[/size]&#xA;(TOD-1)</Item>
-		<Item id="542">[size=13]Last Bill Apparent Energy Import[/size]&#xA;(TOD-2)</Item>
-		<Item id="543">[size=13]Last Bill Apparent Energy Import[/size]&#xA;(TOD-3)</Item>
-		<Item id="544">[size=13]Last Bill Apparent Energy Import[/size]&#xA;(TOD-4)</Item>
-		<Item id="545">[size=13]Last Bill Apparent Energy Import[/size]&#xA;(TOD-5)</Item>
-		<Item id="546">[size=13]Last Bill Apparent Energy Import[/size]&#xA;(TOD-6)</Item>
-		<Item id="547">[size=13]Last Bill Apparent Energy Import[/size]&#xA;(TOD-7)</Item>
-		<Item id="548">[size=13]Last Bill Apparent Energy Import[/size]&#xA;(TOD-8)</Item>
+		<Item id="541">[size=13]Last Bill Apparent Energy[/size]&#xA;(TOD-1)</Item>
+		<Item id="542">[size=13]Last Bill Apparent Energy[/size]&#xA;(TOD-2)</Item>
+		<Item id="543">[size=13]Last Bill Apparent Energy[/size]&#xA;(TOD-3)</Item>
+		<Item id="544">[size=13]Last Bill Apparent Energy[/size]&#xA;(TOD-4)</Item>
+		<Item id="545">[size=13]Last Bill Apparent Energy[/size]&#xA;(TOD-5)</Item>
+		<Item id="546">[size=13]Last Bill Apparent Energy[/size]&#xA;(TOD-6)</Item>
+		<Item id="547">[size=13]Last Bill Apparent Energy[/size]&#xA;(TOD-7)</Item>
+		<Item id="548">[size=13]Last Bill Apparent Energy[/size]&#xA;(TOD-8)</Item>
 		<Item id="549">[size=13]Last Bill Apparent Energy Export[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="550">[size=13]Last Bill Apparent Energy Export[/size]&#xA;(TOD-2)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="551">[size=13]Last Bill Apparent Energy Export[/size]&#xA;(TOD-3)&#xA;(Visible in NET metering mode)</Item>
@@ -424,14 +424,14 @@
 		<Item id="554">[size=13]Last Bill Apparent Energy Export[/size]&#xA;(TOD-6)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="555">[size=13]Last Bill Apparent Energy Export[/size]&#xA;(TOD-7)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="556">[size=13]Last Bill Apparent Energy Export[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
-		<Item id="557">[size=13]Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-1)</Item>
-		<Item id="558">[size=13]Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-2)</Item>
-		<Item id="559">[size=13]Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-3)</Item>
-		<Item id="560">[size=13]Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-4)</Item>
-		<Item id="561">[size=13]Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-5)</Item>
-		<Item id="562">[size=13]Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-6)</Item>
-		<Item id="563">[size=13]Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-7)</Item>
-		<Item id="564">[size=13]Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-8)</Item>
+		<Item id="557">[size=13]Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-1)</Item>
+		<Item id="558">[size=13]Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-2)</Item>
+		<Item id="559">[size=13]Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-3)</Item>
+		<Item id="560">[size=13]Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-4)</Item>
+		<Item id="561">[size=13]Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-5)</Item>
+		<Item id="562">[size=13]Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-6)</Item>
+		<Item id="563">[size=13]Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-7)</Item>
+		<Item id="564">[size=13]Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-8)</Item>
 		<Item id="565">[size=13]Last Bill Reactive Energy Lead Export (Q2)[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="566">[size=13]Last Bill Reactive Energy Lead Export (Q2)[/size]&#xA;(TOD-2)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="567">[size=13]Last Bill Reactive Energy Lead Export (Q2)[/size]&#xA;(TOD-3)&#xA;(Visible in NET metering mode)</Item>
@@ -448,38 +448,38 @@
 		<Item id="578">[size=13]Last Bill Reactive Energy Lag Export (Q3)[/size]&#xA;(TOD-6)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="579">[size=13]Last Bill Reactive Energy Lag Export (Q3)[/size]&#xA;(TOD-7)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="580">[size=13]Last Bill Reactive Energy Lag Export (Q3)[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
-		<Item id="581">[size=13]Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-1)</Item>
-		<Item id="582">[size=13]Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-2)</Item>
-		<Item id="583">[size=13]Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-3)</Item>
-		<Item id="584">[size=13]Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-4)</Item>
-		<Item id="585">[size=13]Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-5)</Item>
-		<Item id="586">[size=13]Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-6)</Item>
-		<Item id="587">[size=13]Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-7)</Item>
-		<Item id="588">[size=13]Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-8)</Item>
-		<Item id="589">[size=13]Last Bill MD-KW Import[/size]&#xA;(TOD-1)</Item>
-		<Item id="590">[size=13]Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-1)</Item>
-		<Item id="591">[size=13]Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-1)</Item>
-		<Item id="592">[size=13]Last Bill MD-KW Import[/size]&#xA;(TOD-2)</Item>
-		<Item id="593">[size=13]Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-2)</Item>
-		<Item id="594">[size=13]Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-2)</Item>
-		<Item id="595">[size=13]Last Bill MD-KW Import[/size]&#xA;(TOD-3)</Item>
-		<Item id="596">[size=13]Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-3)</Item>
-		<Item id="597">[size=13]Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-3)</Item>
-		<Item id="598">[size=13]Last Bill MD-KW Import[/size]&#xA;(TOD-4)</Item>
-		<Item id="599">[size=13]Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-4)</Item>
-		<Item id="600">[size=13]Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-4)</Item>
-		<Item id="601">[size=13]Last Bill MD-KW Import[/size]&#xA;(TOD-5)</Item>
-		<Item id="602">[size=13]Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-5)</Item>
-		<Item id="603">[size=13]Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-5)</Item>
-		<Item id="604">[size=13]Last Bill MD-KW Import[/size]&#xA;(TOD-6)</Item>
-		<Item id="605">[size=13]Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-6)</Item>
-		<Item id="606">[size=13]Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-6)</Item>
-		<Item id="607">[size=13]Last Bill MD-KW Import[/size]&#xA;(TOD-7)</Item>
-		<Item id="608">[size=13]Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-7)</Item>
-		<Item id="609">[size=13]Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-7)</Item>
-		<Item id="610">[size=13]Last Bill MD-KW Import[/size]&#xA;(TOD-8)</Item>
-		<Item id="611">[size=13]Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-8)</Item>
-		<Item id="612">[size=13]Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-8)</Item>
+		<Item id="581">[size=13]Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-1)</Item>
+		<Item id="582">[size=13]Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-2)</Item>
+		<Item id="583">[size=13]Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-3)</Item>
+		<Item id="584">[size=13]Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-4)</Item>
+		<Item id="585">[size=13]Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-5)</Item>
+		<Item id="586">[size=13]Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-6)</Item>
+		<Item id="587">[size=13]Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-7)</Item>
+		<Item id="588">[size=13]Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-8)</Item>
+		<Item id="589">[size=13]Last Bill MD-KW[/size]&#xA;(TOD-1)</Item>
+		<Item id="590">[size=13]Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-1)</Item>
+		<Item id="591">[size=13]Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-1)</Item>
+		<Item id="592">[size=13]Last Bill MD-KW[/size]&#xA;(TOD-2)</Item>
+		<Item id="593">[size=13]Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-2)</Item>
+		<Item id="594">[size=13]Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-2)</Item>
+		<Item id="595">[size=13]Last Bill MD-KW[/size]&#xA;(TOD-3)</Item>
+		<Item id="596">[size=13]Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-3)</Item>
+		<Item id="597">[size=13]Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-3)</Item>
+		<Item id="598">[size=13]Last Bill MD-KW[/size]&#xA;(TOD-4)</Item>
+		<Item id="599">[size=13]Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-4)</Item>
+		<Item id="600">[size=13]Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-4)</Item>
+		<Item id="601">[size=13]Last Bill MD-KW[/size]&#xA;(TOD-5)</Item>
+		<Item id="602">[size=13]Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-5)</Item>
+		<Item id="603">[size=13]Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-5)</Item>
+		<Item id="604">[size=13]Last Bill MD-KW[/size]&#xA;(TOD-6)</Item>
+		<Item id="605">[size=13]Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-6)</Item>
+		<Item id="606">[size=13]Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-6)</Item>
+		<Item id="607">[size=13]Last Bill MD-KW[/size]&#xA;(TOD-7)</Item>
+		<Item id="608">[size=13]Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-7)</Item>
+		<Item id="609">[size=13]Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-7)</Item>
+		<Item id="610">[size=13]Last Bill MD-KW[/size]&#xA;(TOD-8)</Item>
+		<Item id="611">[size=13]Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-8)</Item>
+		<Item id="612">[size=13]Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-8)</Item>
 		<Item id="613">[size=13]Last Bill MD-KW Export[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="614">[size=13]Last Bill MD-KW Export Occurrence Date[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="615">[size=13]Last Bill MD-KW Export Occurrence Time[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
@@ -504,30 +504,30 @@
 		<Item id="634">[size=13]Last Bill MD-KW Export[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="635">[size=13]Last Bill MD-KW Export Occurrence Date[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="636">[size=13]Last Bill MD-KW Export Occurrence Time[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
-		<Item id="637">[size=13]Last Bill MD-KVA Import[/size]&#xA;(TOD-1)</Item>
-		<Item id="638">[size=13]Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-1)</Item>
-		<Item id="639">[size=13]Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-1)</Item>
-		<Item id="640">[size=13]Last Bill MD-KVA Import[/size]&#xA;(TOD-2)</Item>
-		<Item id="641">[size=13]Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-2)</Item>
-		<Item id="642">[size=13]Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-2)</Item>
-		<Item id="643">[size=13]Last Bill MD-KVA Import[/size]&#xA;(TOD-3)</Item>
-		<Item id="644">[size=13]Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-3)</Item>
-		<Item id="645">[size=13]Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-3)</Item>
-		<Item id="646">[size=13]Last Bill MD-KVA Import[/size]&#xA;(TOD-4)</Item>
-		<Item id="647">[size=13]Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-4)</Item>
-		<Item id="648">[size=13]Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-4)</Item>
-		<Item id="649">[size=13]Last Bill MD-KVA Import[/size]&#xA;(TOD-5)</Item>
-		<Item id="650">[size=13]Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-5)</Item>
-		<Item id="651">[size=13]Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-5)</Item>
-		<Item id="652">[size=13]Last Bill MD-KVA Import[/size]&#xA;(TOD-6)</Item>
-		<Item id="653">[size=13]Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-6)</Item>
-		<Item id="654">[size=13]Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-6)</Item>
-		<Item id="655">[size=13]Last Bill MD-KVA Import[/size]&#xA;(TOD-7)</Item>
-		<Item id="656">[size=13]Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-7)</Item>
-		<Item id="657">[size=13]Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-7)</Item>
-		<Item id="658">[size=13]Last Bill MD-KVA Import[/size]&#xA;(TOD-8)</Item>
-		<Item id="659">[size=13]Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-8)</Item>
-		<Item id="660">[size=13]Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-8)</Item>
+		<Item id="637">[size=13]Last Bill MD-KVA[/size]&#xA;(TOD-1)</Item>
+		<Item id="638">[size=13]Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-1)</Item>
+		<Item id="639">[size=13]Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-1)</Item>
+		<Item id="640">[size=13]Last Bill MD-KVA[/size]&#xA;(TOD-2)</Item>
+		<Item id="641">[size=13]Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-2)</Item>
+		<Item id="642">[size=13]Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-2)</Item>
+		<Item id="643">[size=13]Last Bill MD-KVA[/size]&#xA;(TOD-3)</Item>
+		<Item id="644">[size=13]Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-3)</Item>
+		<Item id="645">[size=13]Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-3)</Item>
+		<Item id="646">[size=13]Last Bill MD-KVA[/size]&#xA;(TOD-4)</Item>
+		<Item id="647">[size=13]Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-4)</Item>
+		<Item id="648">[size=13]Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-4)</Item>
+		<Item id="649">[size=13]Last Bill MD-KVA[/size]&#xA;(TOD-5)</Item>
+		<Item id="650">[size=13]Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-5)</Item>
+		<Item id="651">[size=13]Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-5)</Item>
+		<Item id="652">[size=13]Last Bill MD-KVA[/size]&#xA;(TOD-6)</Item>
+		<Item id="653">[size=13]Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-6)</Item>
+		<Item id="654">[size=13]Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-6)</Item>
+		<Item id="655">[size=13]Last Bill MD-KVA[/size]&#xA;(TOD-7)</Item>
+		<Item id="656">[size=13]Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-7)</Item>
+		<Item id="657">[size=13]Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-7)</Item>
+		<Item id="658">[size=13]Last Bill MD-KVA[/size]&#xA;(TOD-8)</Item>
+		<Item id="659">[size=13]Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-8)</Item>
+		<Item id="660">[size=13]Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-8)</Item>
 		<Item id="661">[size=13]Last Bill MD-KVA Export[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="662">[size=13]Last Bill MD-KVA Export Occurrence Date[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="663">[size=13]Last Bill MD-KVA Export Occurrence Time[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
@@ -568,38 +568,38 @@
 		<Item id="698">[size=13]Last Bill Average Power Factor Export[/size]&#xA;(TOD-6)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="699">[size=13]Last Bill Average Power Factor Export[/size]&#xA;(TOD-7)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="700">[size=13]Last Bill Average Power Factor Export[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
-		<Item id="701">[size=13]Second Last Bill Active Energy Import[/size]</Item>
+		<Item id="701">[size=13]Second Last Bill Active Energy[/size]</Item>
 		<Item id="702">[size=13]Second Last Bill Active Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="703">[size=13]Second Last Bill Apparent Energy Import[/size]</Item>
+		<Item id="703">[size=13]Second Last Bill Apparent Energy[/size]</Item>
 		<Item id="704">[size=13]Second Last Bill Apparent Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="705">[size=13]Second Last Bill Reactive Energy Lag Import (Q1)[/size]</Item>
+		<Item id="705">[size=13]Second Last Bill Reactive Energy Lag (Q1)[/size]</Item>
 		<Item id="706">[size=13]Second Last Bill Reactive Energy Lead Export (Q2)[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="707">[size=13]Second Last Bill Reactive Energy Lag Export (Q3)[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="708">[size=13]Second Last Bill Reactive Energy Lead Import (Q4)[/size]</Item>
+		<Item id="708">[size=13]Second Last Bill Reactive Energy Lead (Q4)[/size]</Item>
 		<Item id="709">[size=13]Second Last Bill Net Active Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
 		<Item id="710">[size=13]Second Last Bill Net Apparent Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
-		<Item id="711">[size=13]Second Last Bill MD-KW Import[/size]</Item>
-		<Item id="712">[size=13]Second Last Bill MD-KW Import Occurrence Date[/size]</Item>
-		<Item id="713">[size=13]Second Last Bill MD-KW Import Occurrence Time[/size]</Item>
+		<Item id="711">[size=13]Second Last Bill MD-KW[/size]</Item>
+		<Item id="712">[size=13]Second Last Bill MD-KW Occurrence Date[/size]</Item>
+		<Item id="713">[size=13]Second Last Bill MD-KW Occurrence Time[/size]</Item>
 		<Item id="714">[size=13]Second Last Bill MD-KW Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="715">[size=13]Second Last Bill MD-KW Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="716">[size=13]Second Last Bill MD-KW Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="717">[size=13]Second Last Bill MD-KVA Import[/size]</Item>
-		<Item id="718">[size=13]Second Last Bill MD-KVA Import Occurrence Date[/size]</Item>
-		<Item id="719">[size=13]Second Last Bill MD-KVA Import Occurrence Time[/size]</Item>
+		<Item id="717">[size=13]Second Last Bill MD-KVA[/size]</Item>
+		<Item id="718">[size=13]Second Last Bill MD-KVA Occurrence Date[/size]</Item>
+		<Item id="719">[size=13]Second Last Bill MD-KVA Occurrence Time[/size]</Item>
 		<Item id="720">[size=13]Second Last Bill MD-KVA Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="721">[size=13]Second Last Bill MD-KVA Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="722">[size=13]Second Last Bill MD-KVA Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="723">[size=13]Second Last Bill Average PF Import[/size]</Item>
+		<Item id="723">[size=13]Second Last Bill Average PF[/size]</Item>
 		<Item id="724">[size=13]Second Last Bill Average PF Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="725">[size=13]Second Last Bill Active Energy Import[/size]&#xA;(TOD-1)</Item>
-		<Item id="726">[size=13]Second Last Bill Active Energy Import[/size]&#xA;(TOD-2)</Item>
-		<Item id="727">[size=13]Second Last Bill Active Energy Import[/size]&#xA;(TOD-3)</Item>
-		<Item id="728">[size=13]Second Last Bill Active Energy Import[/size]&#xA;(TOD-4)</Item>
-		<Item id="729">[size=13]Second Last Bill Active Energy Import[/size]&#xA;(TOD-5)</Item>
-		<Item id="730">[size=13]Second Last Bill Active Energy Import[/size]&#xA;(TOD-6)</Item>
-		<Item id="731">[size=13]Second Last Bill Active Energy Import[/size]&#xA;(TOD-7)</Item>
-		<Item id="732">[size=13]Second Last Bill Active Energy Import[/size]&#xA;(TOD-8)</Item>
+		<Item id="725">[size=13]Second Last Bill Active Energy[/size]&#xA;(TOD-1)</Item>
+		<Item id="726">[size=13]Second Last Bill Active Energy[/size]&#xA;(TOD-2)</Item>
+		<Item id="727">[size=13]Second Last Bill Active Energy[/size]&#xA;(TOD-3)</Item>
+		<Item id="728">[size=13]Second Last Bill Active Energy[/size]&#xA;(TOD-4)</Item>
+		<Item id="729">[size=13]Second Last Bill Active Energy[/size]&#xA;(TOD-5)</Item>
+		<Item id="730">[size=13]Second Last Bill Active Energy[/size]&#xA;(TOD-6)</Item>
+		<Item id="731">[size=13]Second Last Bill Active Energy[/size]&#xA;(TOD-7)</Item>
+		<Item id="732">[size=13]Second Last Bill Active Energy[/size]&#xA;(TOD-8)</Item>
 		<Item id="733">[size=13]Second Last Bill Active Energy Export[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="734">[size=13]Second Last Bill Active Energy Export[/size]&#xA;(TOD-2)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="735">[size=13]Second Last Bill Active Energy Export[/size]&#xA;(TOD-3)&#xA;(Visible in NET metering mode)</Item>
@@ -608,14 +608,14 @@
 		<Item id="738">[size=13]Second Last Bill Active Energy Export[/size]&#xA;(TOD-6)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="739">[size=13]Second Last Bill Active Energy Export[/size]&#xA;(TOD-7)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="740">[size=13]Second Last Bill Active Energy Export[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
-		<Item id="741">[size=13]Second Last Bill Apparent Energy Import[/size]&#xA;(TOD-1)</Item>
-		<Item id="742">[size=13]Second Last Bill Apparent Energy Import[/size]&#xA;(TOD-2)</Item>
-		<Item id="743">[size=13]Second Last Bill Apparent Energy Import[/size]&#xA;(TOD-3)</Item>
-		<Item id="744">[size=13]Second Last Bill Apparent Energy Import[/size]&#xA;(TOD-4)</Item>
-		<Item id="745">[size=13]Second Last Bill Apparent Energy Import[/size]&#xA;(TOD-5)</Item>
-		<Item id="746">[size=13]Second Last Bill Apparent Energy Import[/size]&#xA;(TOD-6)</Item>
-		<Item id="747">[size=13]Second Last Bill Apparent Energy Import[/size]&#xA;(TOD-7)</Item>
-		<Item id="748">[size=13]Second Last Bill Apparent Energy Import[/size]&#xA;(TOD-8)</Item>
+		<Item id="741">[size=13]Second Last Bill Apparent Energy[/size]&#xA;(TOD-1)</Item>
+		<Item id="742">[size=13]Second Last Bill Apparent Energy[/size]&#xA;(TOD-2)</Item>
+		<Item id="743">[size=13]Second Last Bill Apparent Energy[/size]&#xA;(TOD-3)</Item>
+		<Item id="744">[size=13]Second Last Bill Apparent Energy[/size]&#xA;(TOD-4)</Item>
+		<Item id="745">[size=13]Second Last Bill Apparent Energy[/size]&#xA;(TOD-5)</Item>
+		<Item id="746">[size=13]Second Last Bill Apparent Energy[/size]&#xA;(TOD-6)</Item>
+		<Item id="747">[size=13]Second Last Bill Apparent Energy[/size]&#xA;(TOD-7)</Item>
+		<Item id="748">[size=13]Second Last Bill Apparent Energy[/size]&#xA;(TOD-8)</Item>
 		<Item id="749">[size=13]Second Last Bill Apparent Energy Export[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="750">[size=13]Second Last Bill Apparent Energy Export[/size]&#xA;(TOD-2)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="751">[size=13]Second Last Bill Apparent Energy Export[/size]&#xA;(TOD-3)&#xA;(Visible in NET metering mode)</Item>
@@ -624,14 +624,14 @@
 		<Item id="754">[size=13]Second Last Bill Apparent Energy Export[/size]&#xA;(TOD-6)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="755">[size=13]Second Last Bill Apparent Energy Export[/size]&#xA;(TOD-7)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="756">[size=13]Second Last Bill Apparent Energy Export[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
-		<Item id="757">[size=13]Second Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-1)</Item>
-		<Item id="758">[size=13]Second Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-2)</Item>
-		<Item id="759">[size=13]Second Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-3)</Item>
-		<Item id="760">[size=13]Second Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-4)</Item>
-		<Item id="761">[size=13]Second Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-5)</Item>
-		<Item id="762">[size=13]Second Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-6)</Item>
-		<Item id="763">[size=13]Second Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-7)</Item>
-		<Item id="764">[size=13]Second Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-8)</Item>
+		<Item id="757">[size=13]Second Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-1)</Item>
+		<Item id="758">[size=13]Second Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-2)</Item>
+		<Item id="759">[size=13]Second Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-3)</Item>
+		<Item id="760">[size=13]Second Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-4)</Item>
+		<Item id="761">[size=13]Second Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-5)</Item>
+		<Item id="762">[size=13]Second Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-6)</Item>
+		<Item id="763">[size=13]Second Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-7)</Item>
+		<Item id="764">[size=13]Second Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-8)</Item>
 		<Item id="765">[size=13]Second Last Bill Reactive Energy Lead Export (Q2)[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="766">[size=13]Second Last Bill Reactive Energy Lead Export (Q2)[/size]&#xA;(TOD-2)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="767">[size=13]Second Last Bill Reactive Energy Lead Export (Q2)[/size]&#xA;(TOD-3)&#xA;(Visible in NET metering mode)</Item>
@@ -648,38 +648,38 @@
 		<Item id="778">[size=13]Second Last Bill Reactive Energy Lag Export (Q3)[/size]&#xA;(TOD-6)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="779">[size=13]Second Last Bill Reactive Energy Lag Export (Q3)[/size]&#xA;(TOD-7)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="780">[size=13]Second Last Bill Reactive Energy Lag Export (Q3)[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
-		<Item id="781">[size=13]Second Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-1)</Item>
-		<Item id="782">[size=13]Second Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-2)</Item>
-		<Item id="783">[size=13]Second Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-3)</Item>
-		<Item id="784">[size=13]Second Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-4)</Item>
-		<Item id="785">[size=13]Second Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-5)</Item>
-		<Item id="786">[size=13]Second Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-6)</Item>
-		<Item id="787">[size=13]Second Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-7)</Item>
-		<Item id="788">[size=13]Second Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-8)</Item>
-		<Item id="789">[size=13]Second Last Bill MD-KW Import[/size]&#xA;(TOD-1)</Item>
-		<Item id="790">[size=13]Second Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-1)</Item>
-		<Item id="791">[size=13]Second Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-1)</Item>
-		<Item id="792">[size=13]Second Last Bill MD-KW Import[/size]&#xA;(TOD-2)</Item>
-		<Item id="793">[size=13]Second Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-2)</Item>
-		<Item id="794">[size=13]Second Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-2)</Item>
-		<Item id="795">[size=13]Second Last Bill MD-KW Import[/size]&#xA;(TOD-3)</Item>
-		<Item id="796">[size=13]Second Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-3)</Item>
-		<Item id="797">[size=13]Second Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-3)</Item>
-		<Item id="798">[size=13]Second Last Bill MD-KW Import[/size]&#xA;(TOD-4)</Item>
-		<Item id="799">[size=13]Second Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-4)</Item>
-		<Item id="800">[size=13]Second Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-4)</Item>
-		<Item id="801">[size=13]Second Last Bill MD-KW Import[/size]&#xA;(TOD-5)</Item>
-		<Item id="802">[size=13]Second Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-5)</Item>
-		<Item id="803">[size=13]Second Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-5)</Item>
-		<Item id="804">[size=13]Second Last Bill MD-KW Import[/size]&#xA;(TOD-6)</Item>
-		<Item id="805">[size=13]Second Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-6)</Item>
-		<Item id="806">[size=13]Second Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-6)</Item>
-		<Item id="807">[size=13]Second Last Bill MD-KW Import[/size]&#xA;(TOD-7)</Item>
-		<Item id="808">[size=13]Second Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-7)</Item>
-		<Item id="809">[size=13]Second Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-7)</Item>
-		<Item id="810">[size=13]Second Last Bill MD-KW Import[/size]&#xA;(TOD-8)</Item>
-		<Item id="811">[size=13]Second Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-8)</Item>
-		<Item id="812">[size=13]Second Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-8)</Item>
+		<Item id="781">[size=13]Second Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-1)</Item>
+		<Item id="782">[size=13]Second Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-2)</Item>
+		<Item id="783">[size=13]Second Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-3)</Item>
+		<Item id="784">[size=13]Second Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-4)</Item>
+		<Item id="785">[size=13]Second Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-5)</Item>
+		<Item id="786">[size=13]Second Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-6)</Item>
+		<Item id="787">[size=13]Second Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-7)</Item>
+		<Item id="788">[size=13]Second Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-8)</Item>
+		<Item id="789">[size=13]Second Last Bill MD-KW[/size]&#xA;(TOD-1)</Item>
+		<Item id="790">[size=13]Second Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-1)</Item>
+		<Item id="791">[size=13]Second Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-1)</Item>
+		<Item id="792">[size=13]Second Last Bill MD-KW[/size]&#xA;(TOD-2)</Item>
+		<Item id="793">[size=13]Second Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-2)</Item>
+		<Item id="794">[size=13]Second Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-2)</Item>
+		<Item id="795">[size=13]Second Last Bill MD-KW[/size]&#xA;(TOD-3)</Item>
+		<Item id="796">[size=13]Second Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-3)</Item>
+		<Item id="797">[size=13]Second Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-3)</Item>
+		<Item id="798">[size=13]Second Last Bill MD-KW[/size]&#xA;(TOD-4)</Item>
+		<Item id="799">[size=13]Second Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-4)</Item>
+		<Item id="800">[size=13]Second Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-4)</Item>
+		<Item id="801">[size=13]Second Last Bill MD-KW[/size]&#xA;(TOD-5)</Item>
+		<Item id="802">[size=13]Second Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-5)</Item>
+		<Item id="803">[size=13]Second Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-5)</Item>
+		<Item id="804">[size=13]Second Last Bill MD-KW[/size]&#xA;(TOD-6)</Item>
+		<Item id="805">[size=13]Second Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-6)</Item>
+		<Item id="806">[size=13]Second Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-6)</Item>
+		<Item id="807">[size=13]Second Last Bill MD-KW[/size]&#xA;(TOD-7)</Item>
+		<Item id="808">[size=13]Second Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-7)</Item>
+		<Item id="809">[size=13]Second Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-7)</Item>
+		<Item id="810">[size=13]Second Last Bill MD-KW[/size]&#xA;(TOD-8)</Item>
+		<Item id="811">[size=13]Second Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-8)</Item>
+		<Item id="812">[size=13]Second Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-8)</Item>
 		<Item id="813">[size=13]Second Last Bill MD-KW Export[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="814">[size=13]Second Last Bill MD-KW Export Occurrence Date[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="815">[size=13]Second Last Bill MD-KW Export Occurrence Time[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
@@ -704,30 +704,30 @@
 		<Item id="834">[size=13]Second Last Bill MD-KW Export[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="835">[size=13]Second Last Bill MD-KW Export Occurrence Date[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="836">[size=13]Second Last Bill MD-KW Export Occurrence Time[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
-		<Item id="837">[size=13]Second Last Bill MD-KVA Import[/size]&#xA;(TOD-1)</Item>
-		<Item id="838">[size=13]Second Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-1)</Item>
-		<Item id="839">[size=13]Second Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-1)</Item>
-		<Item id="840">[size=13]Second Last Bill MD-KVA Import[/size]&#xA;(TOD-2)</Item>
-		<Item id="841">[size=13]Second Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-2)</Item>
-		<Item id="842">[size=13]Second Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-2)</Item>
-		<Item id="843">[size=13]Second Last Bill MD-KVA Import[/size]&#xA;(TOD-3)</Item>
-		<Item id="844">[size=13]Second Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-3)</Item>
-		<Item id="845">[size=13]Second Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-3)</Item>
-		<Item id="846">[size=13]Second Last Bill MD-KVA Import[/size]&#xA;(TOD-4)</Item>
-		<Item id="847">[size=13]Second Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-4)</Item>
-		<Item id="848">[size=13]Second Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-4)</Item>
-		<Item id="849">[size=13]Second Last Bill MD-KVA Import[/size]&#xA;(TOD-5)</Item>
-		<Item id="850">[size=13]Second Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-5)</Item>
-		<Item id="851">[size=13]Second Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-5)</Item>
-		<Item id="852">[size=13]Second Last Bill MD-KVA Import[/size]&#xA;(TOD-6)</Item>
-		<Item id="853">[size=13]Second Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-6)</Item>
-		<Item id="854">[size=13]Second Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-6)</Item>
-		<Item id="855">[size=13]Second Last Bill MD-KVA Import[/size]&#xA;(TOD-7)</Item>
-		<Item id="856">[size=13]Second Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-7)</Item>
-		<Item id="857">[size=13]Second Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-7)</Item>
-		<Item id="858">[size=13]Second Last Bill MD-KVA Import[/size]&#xA;(TOD-8)</Item>
-		<Item id="859">[size=13]Second Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-8)</Item>
-		<Item id="860">[size=13]Second Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-8)</Item>
+		<Item id="837">[size=13]Second Last Bill MD-KVA[/size]&#xA;(TOD-1)</Item>
+		<Item id="838">[size=13]Second Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-1)</Item>
+		<Item id="839">[size=13]Second Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-1)</Item>
+		<Item id="840">[size=13]Second Last Bill MD-KVA[/size]&#xA;(TOD-2)</Item>
+		<Item id="841">[size=13]Second Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-2)</Item>
+		<Item id="842">[size=13]Second Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-2)</Item>
+		<Item id="843">[size=13]Second Last Bill MD-KVA[/size]&#xA;(TOD-3)</Item>
+		<Item id="844">[size=13]Second Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-3)</Item>
+		<Item id="845">[size=13]Second Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-3)</Item>
+		<Item id="846">[size=13]Second Last Bill MD-KVA[/size]&#xA;(TOD-4)</Item>
+		<Item id="847">[size=13]Second Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-4)</Item>
+		<Item id="848">[size=13]Second Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-4)</Item>
+		<Item id="849">[size=13]Second Last Bill MD-KVA[/size]&#xA;(TOD-5)</Item>
+		<Item id="850">[size=13]Second Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-5)</Item>
+		<Item id="851">[size=13]Second Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-5)</Item>
+		<Item id="852">[size=13]Second Last Bill MD-KVA[/size]&#xA;(TOD-6)</Item>
+		<Item id="853">[size=13]Second Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-6)</Item>
+		<Item id="854">[size=13]Second Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-6)</Item>
+		<Item id="855">[size=13]Second Last Bill MD-KVA[/size]&#xA;(TOD-7)</Item>
+		<Item id="856">[size=13]Second Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-7)</Item>
+		<Item id="857">[size=13]Second Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-7)</Item>
+		<Item id="858">[size=13]Second Last Bill MD-KVA[/size]&#xA;(TOD-8)</Item>
+		<Item id="859">[size=13]Second Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-8)</Item>
+		<Item id="860">[size=13]Second Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-8)</Item>
 		<Item id="861">[size=13]Second Last Bill MD-KVA Export[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="862">[size=13]Second Last Bill MD-KVA Export Occurrence Date[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="863">[size=13]Second Last Bill MD-KVA Export Occurrence Time[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
@@ -768,38 +768,38 @@
 		<Item id="898">[size=13]Second Last Bill Average Power Factor Export[/size]&#xA;(TOD-6)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="899">[size=13]Second Last Bill Average Power Factor Export[/size]&#xA;(TOD-7)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="900">[size=13]Second Last Bill Average Power Factor Export[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
-		<Item id="901">[size=13]Third Last Bill Active Energy Import[/size]</Item>
+		<Item id="901">[size=13]Third Last Bill Active Energy[/size]</Item>
 		<Item id="902">[size=13]Third Last Bill Active Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="903">[size=13]Third Last Bill Apparent Energy Import[/size]</Item>
+		<Item id="903">[size=13]Third Last Bill Apparent Energy[/size]</Item>
 		<Item id="904">[size=13]Third Last Bill Apparent Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="905">[size=13]Third Last Bill Reactive Energy Lag Import (Q1)[/size]</Item>
+		<Item id="905">[size=13]Third Last Bill Reactive Energy Lag (Q1)[/size]</Item>
 		<Item id="906">[size=13]Third Last Bill Reactive Energy Lead Export (Q2)[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="907">[size=13]Third Last Bill Reactive Energy Lag Export (Q3)[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="908">[size=13]Third Last Bill Reactive Energy Lead Import (Q4)[/size]</Item>
+		<Item id="908">[size=13]Third Last Bill Reactive Energy Lead (Q4)[/size]</Item>
 		<Item id="909">[size=13]Third Last Bill Net Active Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
 		<Item id="910">[size=13]Third Last Bill Net Apparent Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
-		<Item id="911">[size=13]Third Last Bill MD-KW Import[/size]</Item>
-		<Item id="912">[size=13]Third Last Bill MD-KW Import Occurrence Date[/size]</Item>
-		<Item id="913">[size=13]Third Last Bill MD-KW Import Occurrence Time[/size]</Item>
+		<Item id="911">[size=13]Third Last Bill MD-KW[/size]</Item>
+		<Item id="912">[size=13]Third Last Bill MD-KW Occurrence Date[/size]</Item>
+		<Item id="913">[size=13]Third Last Bill MD-KW Occurrence Time[/size]</Item>
 		<Item id="914">[size=13]Third Last Bill MD-KW Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="915">[size=13]Third Last Bill MD-KW Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="916">[size=13]Third Last Bill MD-KW Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="917">[size=13]Third Last Bill MD-KVA Import[/size]</Item>
-		<Item id="918">[size=13]Third Last Bill MD-KVA Import Occurrence Date[/size]</Item>
-		<Item id="919">[size=13]Third Last Bill MD-KVA Import Occurrence Time[/size]</Item>
+		<Item id="917">[size=13]Third Last Bill MD-KVA[/size]</Item>
+		<Item id="918">[size=13]Third Last Bill MD-KVA Occurrence Date[/size]</Item>
+		<Item id="919">[size=13]Third Last Bill MD-KVA Occurrence Time[/size]</Item>
 		<Item id="920">[size=13]Third Last Bill MD-KVA Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="921">[size=13]Third Last Bill MD-KVA Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="922">[size=13]Third Last Bill MD-KVA Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="923">[size=13]Third Last Bill Average PF Import[/size]</Item>
+		<Item id="923">[size=13]Third Last Bill Average PF[/size]</Item>
 		<Item id="924">[size=13]Third Last Bill Average PF Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="925">[size=13]Third Last Bill Active Energy Import[/size]&#xA;(TOD-1)</Item>
-		<Item id="926">[size=13]Third Last Bill Active Energy Import[/size]&#xA;(TOD-2)</Item>
-		<Item id="927">[size=13]Third Last Bill Active Energy Import[/size]&#xA;(TOD-3)</Item>
-		<Item id="928">[size=13]Third Last Bill Active Energy Import[/size]&#xA;(TOD-4)</Item>
-		<Item id="929">[size=13]Third Last Bill Active Energy Import[/size]&#xA;(TOD-5)</Item>
-		<Item id="930">[size=13]Third Last Bill Active Energy Import[/size]&#xA;(TOD-6)</Item>
-		<Item id="931">[size=13]Third Last Bill Active Energy Import[/size]&#xA;(TOD-7)</Item>
-		<Item id="932">[size=13]Third Last Bill Active Energy Import[/size]&#xA;(TOD-8)</Item>
+		<Item id="925">[size=13]Third Last Bill Active Energy[/size]&#xA;(TOD-1)</Item>
+		<Item id="926">[size=13]Third Last Bill Active Energy[/size]&#xA;(TOD-2)</Item>
+		<Item id="927">[size=13]Third Last Bill Active Energy[/size]&#xA;(TOD-3)</Item>
+		<Item id="928">[size=13]Third Last Bill Active Energy[/size]&#xA;(TOD-4)</Item>
+		<Item id="929">[size=13]Third Last Bill Active Energy[/size]&#xA;(TOD-5)</Item>
+		<Item id="930">[size=13]Third Last Bill Active Energy[/size]&#xA;(TOD-6)</Item>
+		<Item id="931">[size=13]Third Last Bill Active Energy[/size]&#xA;(TOD-7)</Item>
+		<Item id="932">[size=13]Third Last Bill Active Energy[/size]&#xA;(TOD-8)</Item>
 		<Item id="933">[size=13]Third Last Bill Active Energy Export[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="934">[size=13]Third Last Bill Active Energy Export[/size]&#xA;(TOD-2)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="935">[size=13]Third Last Bill Active Energy Export[/size]&#xA;(TOD-3)&#xA;(Visible in NET metering mode)</Item>
@@ -808,14 +808,14 @@
 		<Item id="938">[size=13]Third Last Bill Active Energy Export[/size]&#xA;(TOD-6)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="939">[size=13]Third Last Bill Active Energy Export[/size]&#xA;(TOD-7)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="940">[size=13]Third Last Bill Active Energy Export[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
-		<Item id="941">[size=13]Third Last Bill Apparent Energy Import[/size]&#xA;(TOD-1)</Item>
-		<Item id="942">[size=13]Third Last Bill Apparent Energy Import[/size]&#xA;(TOD-2)</Item>
-		<Item id="943">[size=13]Third Last Bill Apparent Energy Import[/size]&#xA;(TOD-3)</Item>
-		<Item id="944">[size=13]Third Last Bill Apparent Energy Import[/size]&#xA;(TOD-4)</Item>
-		<Item id="945">[size=13]Third Last Bill Apparent Energy Import[/size]&#xA;(TOD-5)</Item>
-		<Item id="946">[size=13]Third Last Bill Apparent Energy Import[/size]&#xA;(TOD-6)</Item>
-		<Item id="947">[size=13]Third Last Bill Apparent Energy Import[/size]&#xA;(TOD-7)</Item>
-		<Item id="948">[size=13]Third Last Bill Apparent Energy Import[/size]&#xA;(TOD-8)</Item>
+		<Item id="941">[size=13]Third Last Bill Apparent Energy[/size]&#xA;(TOD-1)</Item>
+		<Item id="942">[size=13]Third Last Bill Apparent Energy[/size]&#xA;(TOD-2)</Item>
+		<Item id="943">[size=13]Third Last Bill Apparent Energy[/size]&#xA;(TOD-3)</Item>
+		<Item id="944">[size=13]Third Last Bill Apparent Energy[/size]&#xA;(TOD-4)</Item>
+		<Item id="945">[size=13]Third Last Bill Apparent Energy[/size]&#xA;(TOD-5)</Item>
+		<Item id="946">[size=13]Third Last Bill Apparent Energy[/size]&#xA;(TOD-6)</Item>
+		<Item id="947">[size=13]Third Last Bill Apparent Energy[/size]&#xA;(TOD-7)</Item>
+		<Item id="948">[size=13]Third Last Bill Apparent Energy[/size]&#xA;(TOD-8)</Item>
 		<Item id="949">[size=13]Third Last Bill Apparent Energy Export[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="950">[size=13]Third Last Bill Apparent Energy Export[/size]&#xA;(TOD-2)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="951">[size=13]Third Last Bill Apparent Energy Export[/size]&#xA;(TOD-3)&#xA;(Visible in NET metering mode)</Item>
@@ -824,14 +824,14 @@
 		<Item id="954">[size=13]Third Last Bill Apparent Energy Export[/size]&#xA;(TOD-6)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="955">[size=13]Third Last Bill Apparent Energy Export[/size]&#xA;(TOD-7)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="956">[size=13]Third Last Bill Apparent Energy Export[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
-		<Item id="957">[size=13]Third Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-1)</Item>
-		<Item id="958">[size=13]Third Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-2)</Item>
-		<Item id="959">[size=13]Third Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-3)</Item>
-		<Item id="960">[size=13]Third Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-4)</Item>
-		<Item id="961">[size=13]Third Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-5)</Item>
-		<Item id="962">[size=13]Third Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-6)</Item>
-		<Item id="963">[size=13]Third Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-7)</Item>
-		<Item id="964">[size=13]Third Last Bill Reactive Energy Lag Import (Q1)[/size]&#xA;(TOD-8)</Item>
+		<Item id="957">[size=13]Third Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-1)</Item>
+		<Item id="958">[size=13]Third Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-2)</Item>
+		<Item id="959">[size=13]Third Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-3)</Item>
+		<Item id="960">[size=13]Third Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-4)</Item>
+		<Item id="961">[size=13]Third Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-5)</Item>
+		<Item id="962">[size=13]Third Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-6)</Item>
+		<Item id="963">[size=13]Third Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-7)</Item>
+		<Item id="964">[size=13]Third Last Bill Reactive Energy Lag (Q1)[/size]&#xA;(TOD-8)</Item>
 		<Item id="965">[size=13]Third Last Bill Reactive Energy Lead Export (Q2)[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="966">[size=13]Third Last Bill Reactive Energy Lead Export (Q2)[/size]&#xA;(TOD-2)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="967">[size=13]Third Last Bill Reactive Energy Lead Export (Q2)[/size]&#xA;(TOD-3)&#xA;(Visible in NET metering mode)</Item>
@@ -848,38 +848,38 @@
 		<Item id="978">[size=13]Third Last Bill Reactive Energy Lag Export (Q3)[/size]&#xA;(TOD-6)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="979">[size=13]Third Last Bill Reactive Energy Lag Export (Q3)[/size]&#xA;(TOD-7)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="980">[size=13]Third Last Bill Reactive Energy Lag Export (Q3)[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
-		<Item id="981">[size=13]Third Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-1)</Item>
-		<Item id="982">[size=13]Third Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-2)</Item>
-		<Item id="983">[size=13]Third Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-3)</Item>
-		<Item id="984">[size=13]Third Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-4)</Item>
-		<Item id="985">[size=13]Third Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-5)</Item>
-		<Item id="986">[size=13]Third Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-6)</Item>
-		<Item id="987">[size=13]Third Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-7)</Item>
-		<Item id="988">[size=13]Third Last Bill Reactive Energy Lead Import (Q4)[/size]&#xA;(TOD-8)</Item>
-		<Item id="989">[size=13]Third Last Bill MD-KW Import[/size]&#xA;(TOD-1)</Item>
-		<Item id="990">[size=13]Third Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-1)</Item>
-		<Item id="991">[size=13]Third Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-1)</Item>
-		<Item id="992">[size=13]Third Last Bill MD-KW Import[/size]&#xA;(TOD-2)</Item>
-		<Item id="993">[size=13]Third Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-2)</Item>
-		<Item id="994">[size=13]Third Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-2)</Item>
-		<Item id="995">[size=13]Third Last Bill MD-KW Import[/size]&#xA;(TOD-3)</Item>
-		<Item id="996">[size=13]Third Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-3)</Item>
-		<Item id="997">[size=13]Third Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-3)</Item>
-		<Item id="998">[size=13]Third Last Bill MD-KW Import[/size]&#xA;(TOD-4)</Item>
-		<Item id="999">[size=13]Third Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-4)</Item>
-		<Item id="1000">[size=13]Third Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-4)</Item>
-		<Item id="1001">[size=13]Third Last Bill MD-KW Import[/size]&#xA;(TOD-5)</Item>
-		<Item id="1002">[size=13]Third Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-5)</Item>
-		<Item id="1003">[size=13]Third Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-5)</Item>
-		<Item id="1004">[size=13]Third Last Bill MD-KW Import[/size]&#xA;(TOD-6)</Item>
-		<Item id="1005">[size=13]Third Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-6)</Item>
-		<Item id="1006">[size=13]Third Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-6)</Item>
-		<Item id="1007">[size=13]Third Last Bill MD-KW Import[/size]&#xA;(TOD-7)</Item>
-		<Item id="1008">[size=13]Third Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-7)</Item>
-		<Item id="1009">[size=13]Third Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-7)</Item>
-		<Item id="1010">[size=13]Third Last Bill MD-KW Import[/size]&#xA;(TOD-8)</Item>
-		<Item id="1011">[size=13]Third Last Bill MD-KW Import Occurrence Date[/size]&#xA;(TOD-8)</Item>
-		<Item id="1012">[size=13]Third Last Bill MD-KW Import Occurrence Time[/size]&#xA;(TOD-8)</Item>
+		<Item id="981">[size=13]Third Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-1)</Item>
+		<Item id="982">[size=13]Third Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-2)</Item>
+		<Item id="983">[size=13]Third Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-3)</Item>
+		<Item id="984">[size=13]Third Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-4)</Item>
+		<Item id="985">[size=13]Third Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-5)</Item>
+		<Item id="986">[size=13]Third Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-6)</Item>
+		<Item id="987">[size=13]Third Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-7)</Item>
+		<Item id="988">[size=13]Third Last Bill Reactive Energy Lead (Q4)[/size]&#xA;(TOD-8)</Item>
+		<Item id="989">[size=13]Third Last Bill MD-KW[/size]&#xA;(TOD-1)</Item>
+		<Item id="990">[size=13]Third Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-1)</Item>
+		<Item id="991">[size=13]Third Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-1)</Item>
+		<Item id="992">[size=13]Third Last Bill MD-KW[/size]&#xA;(TOD-2)</Item>
+		<Item id="993">[size=13]Third Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-2)</Item>
+		<Item id="994">[size=13]Third Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-2)</Item>
+		<Item id="995">[size=13]Third Last Bill MD-KW[/size]&#xA;(TOD-3)</Item>
+		<Item id="996">[size=13]Third Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-3)</Item>
+		<Item id="997">[size=13]Third Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-3)</Item>
+		<Item id="998">[size=13]Third Last Bill MD-KW[/size]&#xA;(TOD-4)</Item>
+		<Item id="999">[size=13]Third Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-4)</Item>
+		<Item id="1000">[size=13]Third Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-4)</Item>
+		<Item id="1001">[size=13]Third Last Bill MD-KW[/size]&#xA;(TOD-5)</Item>
+		<Item id="1002">[size=13]Third Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-5)</Item>
+		<Item id="1003">[size=13]Third Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-5)</Item>
+		<Item id="1004">[size=13]Third Last Bill MD-KW[/size]&#xA;(TOD-6)</Item>
+		<Item id="1005">[size=13]Third Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-6)</Item>
+		<Item id="1006">[size=13]Third Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-6)</Item>
+		<Item id="1007">[size=13]Third Last Bill MD-KW[/size]&#xA;(TOD-7)</Item>
+		<Item id="1008">[size=13]Third Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-7)</Item>
+		<Item id="1009">[size=13]Third Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-7)</Item>
+		<Item id="1010">[size=13]Third Last Bill MD-KW[/size]&#xA;(TOD-8)</Item>
+		<Item id="1011">[size=13]Third Last Bill MD-KW Occurrence Date[/size]&#xA;(TOD-8)</Item>
+		<Item id="1012">[size=13]Third Last Bill MD-KW Occurrence Time[/size]&#xA;(TOD-8)</Item>
 		<Item id="1013">[size=13]Third Last Bill MD-KW Export[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1014">[size=13]Third Last Bill MD-KW Export Occurrence Date[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1015">[size=13]Third Last Bill MD-KW Export Occurrence Time[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
@@ -904,30 +904,30 @@
 		<Item id="1034">[size=13]Third Last Bill MD-KW Export[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1035">[size=13]Third Last Bill MD-KW Export Occurrence Date[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1036">[size=13]Third Last Bill MD-KW Export Occurrence Time[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1037">[size=13]Third Last Bill MD-KVA Import[/size]&#xA;(TOD-1)</Item>
-		<Item id="1038">[size=13]Third Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-1)</Item>
-		<Item id="1039">[size=13]Third Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-1)</Item>
-		<Item id="1040">[size=13]Third Last Bill MD-KVA Import[/size]&#xA;(TOD-2)</Item>
-		<Item id="1041">[size=13]Third Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-2)</Item>
-		<Item id="1042">[size=13]Third Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-2)</Item>
-		<Item id="1043">[size=13]Third Last Bill MD-KVA Import[/size]&#xA;(TOD-3)</Item>
-		<Item id="1044">[size=13]Third Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-3)</Item>
-		<Item id="1045">[size=13]Third Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-3)</Item>
-		<Item id="1046">[size=13]Third Last Bill MD-KVA Import[/size]&#xA;(TOD-4)</Item>
-		<Item id="1047">[size=13]Third Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-4)</Item>
-		<Item id="1048">[size=13]Third Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-4)</Item>
-		<Item id="1049">[size=13]Third Last Bill MD-KVA Import[/size]&#xA;(TOD-5)</Item>
-		<Item id="1050">[size=13]Third Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-5)</Item>
-		<Item id="1051">[size=13]Third Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-5)</Item>
-		<Item id="1052">[size=13]Third Last Bill MD-KVA Import[/size]&#xA;(TOD-6)</Item>
-		<Item id="1053">[size=13]Third Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-6)</Item>
-		<Item id="1054">[size=13]Third Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-6)</Item>
-		<Item id="1055">[size=13]Third Last Bill MD-KVA Import[/size]&#xA;(TOD-7)</Item>
-		<Item id="1056">[size=13]Third Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-7)</Item>
-		<Item id="1057">[size=13]Third Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-7)</Item>
-		<Item id="1058">[size=13]Third Last Bill MD-KVA Import[/size]&#xA;(TOD-8)</Item>
-		<Item id="1059">[size=13]Third Last Bill MD-KVA Import Occurrence Date[/size]&#xA;(TOD-8)</Item>
-		<Item id="1060">[size=13]Third Last Bill MD-KVA Import Occurrence Time[/size]&#xA;(TOD-8)</Item>
+		<Item id="1037">[size=13]Third Last Bill MD-KVA[/size]&#xA;(TOD-1)</Item>
+		<Item id="1038">[size=13]Third Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-1)</Item>
+		<Item id="1039">[size=13]Third Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-1)</Item>
+		<Item id="1040">[size=13]Third Last Bill MD-KVA[/size]&#xA;(TOD-2)</Item>
+		<Item id="1041">[size=13]Third Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-2)</Item>
+		<Item id="1042">[size=13]Third Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-2)</Item>
+		<Item id="1043">[size=13]Third Last Bill MD-KVA[/size]&#xA;(TOD-3)</Item>
+		<Item id="1044">[size=13]Third Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-3)</Item>
+		<Item id="1045">[size=13]Third Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-3)</Item>
+		<Item id="1046">[size=13]Third Last Bill MD-KVA[/size]&#xA;(TOD-4)</Item>
+		<Item id="1047">[size=13]Third Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-4)</Item>
+		<Item id="1048">[size=13]Third Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-4)</Item>
+		<Item id="1049">[size=13]Third Last Bill MD-KVA[/size]&#xA;(TOD-5)</Item>
+		<Item id="1050">[size=13]Third Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-5)</Item>
+		<Item id="1051">[size=13]Third Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-5)</Item>
+		<Item id="1052">[size=13]Third Last Bill MD-KVA[/size]&#xA;(TOD-6)</Item>
+		<Item id="1053">[size=13]Third Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-6)</Item>
+		<Item id="1054">[size=13]Third Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-6)</Item>
+		<Item id="1055">[size=13]Third Last Bill MD-KVA[/size]&#xA;(TOD-7)</Item>
+		<Item id="1056">[size=13]Third Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-7)</Item>
+		<Item id="1057">[size=13]Third Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-7)</Item>
+		<Item id="1058">[size=13]Third Last Bill MD-KVA[/size]&#xA;(TOD-8)</Item>
+		<Item id="1059">[size=13]Third Last Bill MD-KVA Occurrence Date[/size]&#xA;(TOD-8)</Item>
+		<Item id="1060">[size=13]Third Last Bill MD-KVA Occurrence Time[/size]&#xA;(TOD-8)</Item>
 		<Item id="1061">[size=13]Third Last Bill MD-KVA Export[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1062">[size=13]Third Last Bill MD-KVA Export Occurrence Date[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1063">[size=13]Third Last Bill MD-KVA Export Occurrence Time[/size]&#xA;(TOD-1)&#xA;(Visible in NET metering mode)</Item>
@@ -968,221 +968,221 @@
 		<Item id="1098">[size=13]Third Last Bill Average Power Factor Export[/size]&#xA;(TOD-6)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1099">[size=13]Third Last Bill Average Power Factor Export[/size]&#xA;(TOD-7)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1100">[size=13]Third Last Bill Average Power Factor Export[/size]&#xA;(TOD-8)&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1101">[size=13]4th Last Bill Active Energy Import[/size]</Item>
+		<Item id="1101">[size=13]4th Last Bill Active Energy[/size]</Item>
 		<Item id="1102">[size=13]4th Last Bill Active Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1103">[size=13]4th Last Bill Apparent Energy Import[/size]</Item>
+		<Item id="1103">[size=13]4th Last Bill Apparent Energy[/size]</Item>
 		<Item id="1104">[size=13]4th Last Bill Apparent Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1105">[size=13]4th Last Bill Reactive Energy Lag Import (Q1)[/size]</Item>
+		<Item id="1105">[size=13]4th Last Bill Reactive Energy Lag (Q1)[/size]</Item>
 		<Item id="1106">[size=13]4th Last Bill Reactive Energy Lead Export (Q2)[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1107">[size=13]4th Last Bill Reactive Energy Lag Export (Q3)[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1108">[size=13]4th Last Bill Reactive Energy Lead Import (Q4)[/size]</Item>
+		<Item id="1108">[size=13]4th Last Bill Reactive Energy Lead (Q4)[/size]</Item>
 		<Item id="1109">[size=13]4th Last Bill Net Active Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1110">[size=13]4th Last Bill Net Apparent Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1111">[size=13]4th Last Bill MD-KW Import[/size]</Item>
-		<Item id="1112">[size=13]4th Last Bill MD-KW Import Occurrence Date[/size]</Item>
-		<Item id="1113">[size=13]4th Last Bill MD-KW Import Occurrence Time[/size]</Item>
+		<Item id="1111">[size=13]4th Last Bill MD-KW[/size]</Item>
+		<Item id="1112">[size=13]4th Last Bill MD-KW Occurrence Date[/size]</Item>
+		<Item id="1113">[size=13]4th Last Bill MD-KW Occurrence Time[/size]</Item>
 		<Item id="1114">[size=13]4th Last Bill MD-KW Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1115">[size=13]4th Last Bill MD-KW Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1116">[size=13]4th Last Bill MD-KW Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1117">[size=13]4th Last Bill MD-KVA Import[/size]</Item>
-		<Item id="1118">[size=13]4th Last Bill MD-KVA Import Occurrence Date[/size]</Item>
-		<Item id="1119">[size=13]4th Last Bill MD-KVA Import Occurrence Time[/size]</Item>
+		<Item id="1117">[size=13]4th Last Bill MD-KVA[/size]</Item>
+		<Item id="1118">[size=13]4th Last Bill MD-KVA Occurrence Date[/size]</Item>
+		<Item id="1119">[size=13]4th Last Bill MD-KVA Occurrence Time[/size]</Item>
 		<Item id="1120">[size=13]4th Last Bill MD-KVA Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1121">[size=13]4th Last Bill MD-KVA Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1122">[size=13]4th Last Bill MD-KVA Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1123">[size=13]4th Last Bill Average PF Import[/size]</Item>
+		<Item id="1123">[size=13]4th Last Bill Average PF[/size]</Item>
 		<Item id="1124">[size=13]4th Last Bill Average PF Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1301">[size=13]5th Last Bill Active Energy Import[/size]</Item>
+		<Item id="1301">[size=13]5th Last Bill Active Energy[/size]</Item>
 		<Item id="1302">[size=13]5th Last Bill Active Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1303">[size=13]5th Last Bill Apparent Energy Import[/size]</Item>
+		<Item id="1303">[size=13]5th Last Bill Apparent Energy[/size]</Item>
 		<Item id="1304">[size=13]5th Last Bill Apparent Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1305">[size=13]5th Last Bill Reactive Energy Lag Import (Q1)[/size]</Item>
+		<Item id="1305">[size=13]5th Last Bill Reactive Energy Lag (Q1)[/size]</Item>
 		<Item id="1306">[size=13]5th Last Bill Reactive Energy Lead Export (Q2)[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1307">[size=13]5th Last Bill Reactive Energy Lag Export (Q3)[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1308">[size=13]5th Last Bill Reactive Energy Lead Import (Q4)[/size]</Item>
+		<Item id="1308">[size=13]5th Last Bill Reactive Energy Lead (Q4)[/size]</Item>
 		<Item id="1309">[size=13]5th Last Bill Net Active Energy&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1310">[size=13]5th Last Bill Net Apparent Energy&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1311">[size=13]5th Last Bill MD-KW Import[/size]</Item>
-		<Item id="1312">[size=13]5th Last Bill MD-KW Import Occurrence Date[/size]</Item>
-		<Item id="1313">[size=13]5th Last Bill MD-KW Import Occurrence Time[/size]</Item>
+		<Item id="1311">[size=13]5th Last Bill MD-KW[/size]</Item>
+		<Item id="1312">[size=13]5th Last Bill MD-KW Occurrence Date[/size]</Item>
+		<Item id="1313">[size=13]5th Last Bill MD-KW Occurrence Time[/size]</Item>
 		<Item id="1314">[size=13]5th Last Bill MD-KW Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1315">[size=13]5th Last Bill MD-KW Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1316">[size=13]5th Last Bill MD-KW Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1317">[size=13]5th Last Bill MD-KVA Import[/size]</Item>
-		<Item id="1318">[size=13]5th Last Bill MD-KVA Import Occurrence Date[/size]</Item>
-		<Item id="1319">[size=13]5th Last Bill MD-KVA Import Occurrence Time[/size]</Item>
+		<Item id="1317">[size=13]5th Last Bill MD-KVA[/size]</Item>
+		<Item id="1318">[size=13]5th Last Bill MD-KVA Occurrence Date[/size]</Item>
+		<Item id="1319">[size=13]5th Last Bill MD-KVA Occurrence Time[/size]</Item>
 		<Item id="1320">[size=13]5th Last Bill MD-KVA Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1321">[size=13]5th Last Bill MD-KVA Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1322">[size=13]5th Last Bill MD-KVA Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1323">[size=13]5th Last Bill Average PF Import[/size]</Item>
+		<Item id="1323">[size=13]5th Last Bill Average PF[/size]</Item>
 		<Item id="1324">[size=13]5th Last Bill Average PF Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1501">[size=13]6th Last Bill Active Energy Import[/size]</Item>
+		<Item id="1501">[size=13]6th Last Bill Active Energy[/size]</Item>
 		<Item id="1502">[size=13]6th Last Bill Active Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1503">[size=13]6th Last Bill Apparent Energy Import[/size]</Item>
+		<Item id="1503">[size=13]6th Last Bill Apparent Energy[/size]</Item>
 		<Item id="1504">[size=13]6th Last Bill Apparent Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1505">[size=13]6th Last Bill Reactive Energy Lag Import (Q1)[/size]</Item>
+		<Item id="1505">[size=13]6th Last Bill Reactive Energy Lag (Q1)[/size]</Item>
 		<Item id="1506">[size=13]6th Last Bill Reactive Energy Lead Export (Q2)[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1507">[size=13]6th Last Bill Reactive Energy Lag Export (Q3)[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1508">[size=13]6th Last Bill Reactive Energy Lead Import (Q4)[/size]</Item>
+		<Item id="1508">[size=13]6th Last Bill Reactive Energy Lead (Q4)[/size]</Item>
 		<Item id="1509">[size=13]6th Last Bill Net Active Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1510">[size=13]6th Last Bill Net Apparent Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1511">[size=13]6th Last Bill MD-KW Import[/size]</Item>
-		<Item id="1512">[size=13]6th Last Bill MD-KW Import Occurrence Date[/size]</Item>
-		<Item id="1513">[size=13]6th Last Bill MD-KW Import Occurrence Time[/size]</Item>
+		<Item id="1511">[size=13]6th Last Bill MD-KW[/size]</Item>
+		<Item id="1512">[size=13]6th Last Bill MD-KW Occurrence Date[/size]</Item>
+		<Item id="1513">[size=13]6th Last Bill MD-KW Occurrence Time[/size]</Item>
 		<Item id="1514">[size=13]6th Last Bill MD-KW Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1515">[size=13]6th Last Bill MD-KW Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1516">[size=13]6th Last Bill MD-KW Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1517">[size=13]6th Last Bill MD-KVA Import[/size]</Item>
-		<Item id="1518">[size=13]6th Last Bill MD-KVA Import Occurrence Date[/size]</Item>
-		<Item id="1519">[size=13]6th Last Bill MD-KVA Import Occurrence Time[/size]</Item>
+		<Item id="1517">[size=13]6th Last Bill MD-KVA[/size]</Item>
+		<Item id="1518">[size=13]6th Last Bill MD-KVA Occurrence Date[/size]</Item>
+		<Item id="1519">[size=13]6th Last Bill MD-KVA Occurrence Time[/size]</Item>
 		<Item id="1520">[size=13]6th Last Bill MD-KVA Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1521">[size=13]6th Last Bill MD-KVA Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1522">[size=13]6th Last Bill MD-KVA Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1523">[size=13]6th Last Bill Average PF Import[/size]</Item>
+		<Item id="1523">[size=13]6th Last Bill Average PF[/size]</Item>
 		<Item id="1524">[size=13]6th Last Bill Average PF Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1701">[size=13]7th Last Bill Active Energy Import[/size]</Item>
+		<Item id="1701">[size=13]7th Last Bill Active Energy[/size]</Item>
 		<Item id="1702">[size=13]7th Last Bill Active Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1703">[size=13]7th Last Bill Apparent Energy Import[/size]</Item>
+		<Item id="1703">[size=13]7th Last Bill Apparent Energy[/size]</Item>
 		<Item id="1704">[size=13]7th Last Bill Apparent Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1705">[size=13]7th Last Bill Reactive Energy Lag Import (Q1)[/size]</Item>
+		<Item id="1705">[size=13]7th Last Bill Reactive Energy Lag (Q1)[/size]</Item>
 		<Item id="1706">[size=13]7th Last Bill Reactive Energy Lead Export (Q2)[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1707">[size=13]7th Last Bill Reactive Energy Lag Export (Q3)[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1708">[size=13]7th Last Bill Reactive Energy Lead Import (Q4)[/size]</Item>
+		<Item id="1708">[size=13]7th Last Bill Reactive Energy Lead (Q4)[/size]</Item>
 		<Item id="1709">[size=13]7th Last Bill Net Active Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1710">[size=13]7th Last Bill Net Apparent Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1711">[size=13]7th Last Bill MD-KW Import[/size]</Item>
-		<Item id="1712">[size=13]7th Last Bill MD-KW Import Occurrence Date[/size]</Item>
-		<Item id="1713">[size=13]7th Last Bill MD-KW Import Occurrence Time[/size]</Item>
+		<Item id="1711">[size=13]7th Last Bill MD-KW[/size]</Item>
+		<Item id="1712">[size=13]7th Last Bill MD-KW Occurrence Date[/size]</Item>
+		<Item id="1713">[size=13]7th Last Bill MD-KW Occurrence Time[/size]</Item>
 		<Item id="1714">[size=13]7th Last Bill MD-KW Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1715">[size=13]7th Last Bill MD-KW Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1716">[size=13]7th Last Bill MD-KW Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1717">[size=13]7th Last Bill MD-KVA Import[/size]</Item>
-		<Item id="1718">[size=13]7th Last Bill MD-KVA Import Occurrence Date[/size]</Item>
-		<Item id="1719">[size=13]7th Last Bill MD-KVA Import Occurrence Time[/size]</Item>
+		<Item id="1717">[size=13]7th Last Bill MD-KVA[/size]</Item>
+		<Item id="1718">[size=13]7th Last Bill MD-KVA Occurrence Date[/size]</Item>
+		<Item id="1719">[size=13]7th Last Bill MD-KVA Occurrence Time[/size]</Item>
 		<Item id="1720">[size=13]7th Last Bill MD-KVA Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1721">[size=13]7th Last Bill MD-KVA Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1722">[size=13]7th Last Bill MD-KVA Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1723">[size=13]7th Last Bill Average PF Import[/size]</Item>
+		<Item id="1723">[size=13]7th Last Bill Average PF[/size]</Item>
 		<Item id="1724">[size=13]7th Last Bill Average PF Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1901">[size=13]8th Last Bill Active Energy Import[/size]</Item>
+		<Item id="1901">[size=13]8th Last Bill Active Energy[/size]</Item>
 		<Item id="1902">[size=13]8th Last Bill Active Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1903">[size=13]8th Last Bill Apparent Energy Import[/size]</Item>
+		<Item id="1903">[size=13]8th Last Bill Apparent Energy[/size]</Item>
 		<Item id="1904">[size=13]8th Last Bill Apparent Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1905">[size=13]8th Last Bill Reactive Energy Lag Import (Q1)[/size]</Item>
+		<Item id="1905">[size=13]8th Last Bill Reactive Energy Lag (Q1)[/size]</Item>
 		<Item id="1906">[size=13]8th Last Bill Reactive Energy Lead Export (Q2)[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1907">[size=13]8th Last Bill Reactive Energy Lag Export (Q3)[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1908">[size=13]8th Last Bill Reactive Energy Lead Import (Q4)[/size]</Item>
+		<Item id="1908">[size=13]8th Last Bill Reactive Energy Lead (Q4)[/size]</Item>
 		<Item id="1909">[size=13]8th Last Bill Net Active Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1910">[size=13]8th Last Bill Net Apparent Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1911">[size=13]8th Last Bill MD-KW Import[/size]</Item>
-		<Item id="1912">[size=13]8th Last Bill MD-KW Import Occurrence Date[/size]</Item>
-		<Item id="1913">[size=13]8th Last Bill MD-KW Import Occurrence Time[/size]</Item>
+		<Item id="1911">[size=13]8th Last Bill MD-KW[/size]</Item>
+		<Item id="1912">[size=13]8th Last Bill MD-KW Occurrence Date[/size]</Item>
+		<Item id="1913">[size=13]8th Last Bill MD-KW Occurrence Time[/size]</Item>
 		<Item id="1914">[size=13]8th Last Bill MD-KW Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1915">[size=13]8th Last Bill MD-KW Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1916">[size=13]8th Last Bill MD-KW Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1917">[size=13]8th Last Bill MD-KVA Import[/size]</Item>
-		<Item id="1918">[size=13]8th Last Bill MD-KVA Import Occurrence Date[/size]</Item>
-		<Item id="1919">[size=13]8th Last Bill MD-KVA Import Occurrence Time[/size]</Item>
+		<Item id="1917">[size=13]8th Last Bill MD-KVA[/size]</Item>
+		<Item id="1918">[size=13]8th Last Bill MD-KVA Occurrence Date[/size]</Item>
+		<Item id="1919">[size=13]8th Last Bill MD-KVA Occurrence Time[/size]</Item>
 		<Item id="1920">[size=13]8th Last Bill MD-KVA Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1921">[size=13]8th Last Bill MD-KVA Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="1922">[size=13]8th Last Bill MD-KVA Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="1923">[size=13]8th Last Bill Average PF Import[/size]</Item>
+		<Item id="1923">[size=13]8th Last Bill Average PF[/size]</Item>
 		<Item id="1924">[size=13]8th Last Bill Average PF Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2101">[size=13]9th Last Bill Active Energy Import[/size]</Item>
+		<Item id="2101">[size=13]9th Last Bill Active Energy[/size]</Item>
 		<Item id="2102">[size=13]9th Last Bill Active Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2103">[size=13]9th Last Bill Apparent Energy Import[/size]</Item>
+		<Item id="2103">[size=13]9th Last Bill Apparent Energy[/size]</Item>
 		<Item id="2104">[size=13]9th Last Bill Apparent Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2105">[size=13]9th Last Bill Reactive Energy Lag Import (Q1)[/size]</Item>
+		<Item id="2105">[size=13]9th Last Bill Reactive Energy Lag (Q1)[/size]</Item>
 		<Item id="2106">[size=13]9th Last Bill Reactive Energy Lead Export (Q2)[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2107">[size=13]9th Last Bill Reactive Energy Lag Export (Q3)[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2108">[size=13]9th Last Bill Reactive Energy Lead Import (Q4)[/size]</Item>
+		<Item id="2108">[size=13]9th Last Bill Reactive Energy Lead (Q4)[/size]</Item>
 		<Item id="2109">[size=13]9th Last Bill Net Active Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2110">[size=13]9th Last Bill Net Apparent Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2111">[size=13]9th Last Bill MD-KW Import[/size]</Item>
-		<Item id="2112">[size=13]9th Last Bill MD-KW Import Occurrence Date[/size]</Item>
-		<Item id="2113">[size=13]9th Last Bill MD-KW Import Occurrence Time[/size]</Item>
+		<Item id="2111">[size=13]9th Last Bill MD-KW[/size]</Item>
+		<Item id="2112">[size=13]9th Last Bill MD-KW Occurrence Date[/size]</Item>
+		<Item id="2113">[size=13]9th Last Bill MD-KW Occurrence Time[/size]</Item>
 		<Item id="2114">[size=13]9th Last Bill MD-KW Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2115">[size=13]9th Last Bill MD-KW Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2116">[size=13]9th Last Bill MD-KW Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2117">[size=13]9th Last Bill MD-KVA Import[/size]</Item>
-		<Item id="2118">[size=13]9th Last Bill MD-KVA Import Occurrence Date[/size]</Item>
-		<Item id="2119">[size=13]9th Last Bill MD-KVA Import Occurrence Time[/size]</Item>
+		<Item id="2117">[size=13]9th Last Bill MD-KVA[/size]</Item>
+		<Item id="2118">[size=13]9th Last Bill MD-KVA Occurrence Date[/size]</Item>
+		<Item id="2119">[size=13]9th Last Bill MD-KVA Occurrence Time[/size]</Item>
 		<Item id="2120">[size=13]9th Last Bill MD-KVA Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2121">[size=13]9th Last Bill MD-KVA Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2122">[size=13]9th Last Bill MD-KVA Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2123">[size=13]9th Last Bill Average PF Import[/size]</Item>
+		<Item id="2123">[size=13]9th Last Bill Average PF[/size]</Item>
 		<Item id="2124">[size=13]9th Last Bill Average PF Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2301">[size=13]10th Last Bill Active Energy Import[/size]</Item>
+		<Item id="2301">[size=13]10th Last Bill Active Energy[/size]</Item>
 		<Item id="2302">[size=13]10th Last Bill Active Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2303">[size=13]10th Last Bill Apparent Energy Import[/size]</Item>
+		<Item id="2303">[size=13]10th Last Bill Apparent Energy[/size]</Item>
 		<Item id="2304">[size=13]10th Last Bill Apparent Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2305">[size=13]10th Last Bill Reactive Energy Lag Import (Q1)[/size]</Item>
+		<Item id="2305">[size=13]10th Last Bill Reactive Energy Lag (Q1)[/size]</Item>
 		<Item id="2306">[size=13]10th Last Bill Reactive Energy Lead Export (Q2)[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2307">[size=13]10th Last Bill Reactive Energy Lag Export (Q3)[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2308">[size=13]10th Last Bill Reactive Energy Lead Import (Q4)[/size]</Item>
+		<Item id="2308">[size=13]10th Last Bill Reactive Energy Lead (Q4)[/size]</Item>
 		<Item id="2309">[size=13]10th Last Bill Net Active Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2310">[size=13]10th Last Bill Net Apparent Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2311">[size=13]10th Last Bill MD-KW Import[/size]</Item>
-		<Item id="2312">[size=13]10th Last Bill MD-KW Import Occurrence Date[/size]</Item>
-		<Item id="2313">[size=13]10th Last Bill MD-KW Import Occurrence Time[/size]</Item>
+		<Item id="2311">[size=13]10th Last Bill MD-KW[/size]</Item>
+		<Item id="2312">[size=13]10th Last Bill MD-KW Occurrence Date[/size]</Item>
+		<Item id="2313">[size=13]10th Last Bill MD-KW Occurrence Time[/size]</Item>
 		<Item id="2314">[size=13]10th Last Bill MD-KW Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2315">[size=13]10th Last Bill MD-KW Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2316">[size=13]10th Last Bill MD-KW Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2317">[size=13]10th Last Bill MD-KVA Import[/size]</Item>
-		<Item id="2318">[size=13]10th Last Bill MD-KVA Import Occurrence Date[/size]</Item>
-		<Item id="2319">[size=13]10th Last Bill MD-KVA Import Occurrence Time[/size]</Item>
+		<Item id="2317">[size=13]10th Last Bill MD-KVA[/size]</Item>
+		<Item id="2318">[size=13]10th Last Bill MD-KVA Occurrence Date[/size]</Item>
+		<Item id="2319">[size=13]10th Last Bill MD-KVA Occurrence Time[/size]</Item>
 		<Item id="2320">[size=13]10th Last Bill MD-KVA Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2321">[size=13]10th Last Bill MD-KVA Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2322">[size=13]10th Last Bill MD-KVA Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2323">[size=13]10th Last Bill Average PF Import[/size]</Item>
+		<Item id="2323">[size=13]10th Last Bill Average PF[/size]</Item>
 		<Item id="2324">[size=13]10th Last Bill Average PF Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2501">[size=13]11th Last Bill Active Energy Import[/size]</Item>
+		<Item id="2501">[size=13]11th Last Bill Active Energy[/size]</Item>
 		<Item id="2502">[size=13]11th Last Bill Active Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2503">[size=13]11th Last Bill Apparent Energy Import[/size]</Item>
+		<Item id="2503">[size=13]11th Last Bill Apparent Energy[/size]</Item>
 		<Item id="2504">[size=13]11th Last Bill Apparent Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2505">[size=13]11th Last Bill Reactive Energy Lag Import (Q1)[/size]</Item>
+		<Item id="2505">[size=13]11th Last Bill Reactive Energy Lag (Q1)[/size]</Item>
 		<Item id="2506">[size=13]11th Last Bill Reactive Energy Lead Export (Q2)[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2507">[size=13]11th Last Bill Reactive Energy Lag Export (Q3)[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2508">[size=13]11th Last Bill Reactive Energy Lead Import (Q4)[/size]</Item>
+		<Item id="2508">[size=13]11th Last Bill Reactive Energy Lead (Q4)[/size]</Item>
 		<Item id="2509">[size=13]11th Last Bill Net Active Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2510">[size=13]11th Last Bill Net Apparent Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2511">[size=13]11th Last Bill MD-KW Import[/size]</Item>
-		<Item id="2512">[size=13]11th Last Bill MD-KW Import Occurrence Date[/size]</Item>
-		<Item id="2513">[size=13]11th Last Bill MD-KW Import Occurrence Time[/size]</Item>
+		<Item id="2511">[size=13]11th Last Bill MD-KW[/size]</Item>
+		<Item id="2512">[size=13]11th Last Bill MD-KW Occurrence Date[/size]</Item>
+		<Item id="2513">[size=13]11th Last Bill MD-KW Occurrence Time[/size]</Item>
 		<Item id="2514">[size=13]11th Last Bill MD-KW Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2515">[size=13]11th Last Bill MD-KW Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2516">[size=13]11th Last Bill MD-KW Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2517">[size=13]11th Last Bill MD-KVA Import[/size]</Item>
-		<Item id="2518">[size=13]11th Last Bill MD-KVA Import Occurrence Date[/size]</Item>
-		<Item id="2519">[size=13]11th Last Bill MD-KVA Import Occurrence Time[/size]</Item>
+		<Item id="2517">[size=13]11th Last Bill MD-KVA[/size]</Item>
+		<Item id="2518">[size=13]11th Last Bill MD-KVA Occurrence Date[/size]</Item>
+		<Item id="2519">[size=13]11th Last Bill MD-KVA Occurrence Time[/size]</Item>
 		<Item id="2520">[size=13]11th Last Bill MD-KVA Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2521">[size=13]11th Last Bill MD-KVA Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2522">[size=13]11th Last Bill MD-KVA Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2523">[size=13]11th Last Bill Average PF Import[/size]</Item>
+		<Item id="2523">[size=13]11th Last Bill Average PF[/size]</Item>
 		<Item id="2524">[size=13]11th Last Bill Average PF Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2701">[size=13]12th Last Bill Active Energy Import[/size]</Item>
+		<Item id="2701">[size=13]12th Last Bill Active Energy[/size]</Item>
 		<Item id="2702">[size=13]12th Last Bill Active Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2703">[size=13]12th Last Bill Apparent Energy Import[/size]</Item>
+		<Item id="2703">[size=13]12th Last Bill Apparent Energy[/size]</Item>
 		<Item id="2704">[size=13]12th Last Bill Apparent Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2705">[size=13]12th Last Bill Reactive Energy Lag Import (Q1)[/size]</Item>
+		<Item id="2705">[size=13]12th Last Bill Reactive Energy Lag (Q1)[/size]</Item>
 		<Item id="2706">[size=13]12th Last Bill Reactive Energy Lead Export (Q2)&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2707">[size=13]12th Last Bill Reactive Energy Lag Export (Q3)&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2708">[size=13]12th Last Bill Reactive Energy Lead Import (Q4)[/size]</Item>
+		<Item id="2708">[size=13]12th Last Bill Reactive Energy Lead (Q4)[/size]</Item>
 		<Item id="2709">[size=13]12th Last Bill Net Active Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2710">[size=13]12th Last Bill Net Apparent Energy[/size]&#xA;If Import is Greater than Export : IM&#xA;If Import is Less than Export : EP&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2711">[size=13]12th Last Bill MD-KW Import[/size]</Item>
-		<Item id="2712">[size=13]12th Last Bill MD-KW Import Occurrence Date[/size]</Item>
-		<Item id="2713">[size=13]12th Last Bill MD-KW Import Occurrence Time[/size]</Item>
+		<Item id="2711">[size=13]12th Last Bill MD-KW[/size]</Item>
+		<Item id="2712">[size=13]12th Last Bill MD-KW Occurrence Date[/size]</Item>
+		<Item id="2713">[size=13]12th Last Bill MD-KW Occurrence Time[/size]</Item>
 		<Item id="2714">[size=13]12th Last Bill MD-KW Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2715">[size=13]12th Last Bill MD-KW Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2716">[size=13]12th Last Bill MD-KW Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2717">[size=13]12th Last Bill MD-KVA Import[/size]</Item>
-		<Item id="2718">[size=13]12th Last Bill MD-KVA Import Occurrence Date[/size]</Item>
-		<Item id="2719">[size=13]12th Last Bill MD-KVA Import Occurrence Time[/size]</Item>
+		<Item id="2717">[size=13]12th Last Bill MD-KVA[/size]</Item>
+		<Item id="2718">[size=13]12th Last Bill MD-KVA Occurrence Date[/size]</Item>
+		<Item id="2719">[size=13]12th Last Bill MD-KVA Occurrence Time[/size]</Item>
 		<Item id="2720">[size=13]12th Last Bill MD-KVA Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2721">[size=13]12th Last Bill MD-KVA Export Occurrence Date[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="2722">[size=13]12th Last Bill MD-KVA Export Occurrence Time[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="2723">[size=13]12th Last Bill Average PF Import[/size]</Item>
+		<Item id="2723">[size=13]12th Last Bill Average PF[/size]</Item>
 		<Item id="2724">[size=13]12th Last Bill Average PF Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="3001">[size=13]Voltage Phase Sequence Tamper Status[/size]</Item>
 		<Item id="3002">[size=13]Current Sequence Reverse Tamper Status[/size]</Item>
@@ -1237,13 +1237,13 @@
 		<Item id="3074">[size=13]ESD Tamper Count[/size]</Item>
 		<Item id="3075">[size=13]Module Cover Open Tamper Count[/size]</Item>
 		<Item id="3076">[size=13]Terminal cover open Tamper Count[/size]</Item>
-		<Item id="3101">[size=13]High Resolution Active Energy Import[/size]</Item>
+		<Item id="3101">[size=13]High Resolution Active Energy[/size]</Item>
 		<Item id="3102">[size=13]High Resolution Active Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="3103">[size=13]High Resolution Reactive Energy Lag Import (Q1)[/size]</Item>
+		<Item id="3103">[size=13]High Resolution Reactive Energy Lag (Q1)[/size]</Item>
 		<Item id="3104">[size=13]High Resolution Reactive Energy Lead Export (Q2)[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="3105">[size=13]High Resolution Reactive Energy Lag Export (Q3)[/size]&#xA;(Visible in NET metering mode)</Item>
-		<Item id="3106">[size=13]High Resolution Reactive Energy Lead Import (Q4)[/size]</Item>
-		<Item id="3107">[size=13]High Resolution Apparent Energy Import[/size]</Item>
+		<Item id="3106">[size=13]High Resolution Reactive Energy Lead (Q4)[/size]</Item>
+		<Item id="3107">[size=13]High Resolution Apparent Energy[/size]</Item>
 		<Item id="3108">[size=13]High Resolution Apparent Energy Export[/size]&#xA;(Visible in NET metering mode)</Item>
 		<Item id="3109">[size=13]High Resolution R-Phase Active Power[/size]</Item>
 		<Item id="3110">[size=13]High Resolution Y-Phase Active Power[/size]</Item>
@@ -1456,7 +1456,7 @@
 		<Item id="134">[size=13]First Tamper Restoration[/size]</Item>
 		<Item id="135">[size=13]First Tamper Restoration Date[/size]</Item>
 		<Item id="136">[size=13]First Tamper Restoration Time[/size]</Item>
-		<Item id="137">[size=13]Reverse Energy[/size]&#xA;(Visible only in Forward mode)</Item>
+		<Item id="137">[size=13]Reverse Energy[/size]</Item>
 		<Item id="201">[size=13]MD Reactive Lag Import (Q1)[/size]</Item>
 		<Item id="202">[size=13]MD Reactive Lag Import (Q1) Date[/size]</Item>
 		<Item id="203">[size=13]MD Reactive Lag Import (Q1) Time[/size]</Item>
