@@ -15,6 +15,8 @@ from docx.enum.text import WD_BREAK
 from datetime import datetime
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
+import subprocess
+import Profile_Object_Selection as ProfileSelection
 
 
 # 🔴 SET EXPIRY DATE HERE
@@ -120,12 +122,14 @@ DISPLAY_STRINGS_XML = "display_strings.xml"
 image_folders = {
     "3P-Pro WC 10-60A": os.path.join(base_folder, "3P Pro WC Display Forward Mode"),
     "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(base_folder, "3P Pro WC Display Torrent Specific Forward Mode"),
+    "3P Pro LTCT 5-10A": os.path.join(base_folder, "3P Pro LTCT 5-10A Display Forward Mode")
 }
 
 image_folders_net = {
     "3P-Pro WC 10-60A": os.path.join(base_folder, "3P Pro WC Display NET Mode"),
     "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(base_folder, "3P Pro WC Display Torrent Specific NET Mode"),
     # "3P-Pro WC 20-100A" : os.path.join(base_folder, "3P Pro WC Display"),
+    "3P Pro LTCT 5-10A": os.path.join(base_folder, "3P Pro LTCT 5-10A Display NET Mode")
 }
 
 def get_display_strings_xml_path():
@@ -370,6 +374,7 @@ GPRS_ERROR_ROWS = [
     ("17.", "Internal Diagnostic Purpose", "Err 16"),
     ("18.", "Internal Diagnostic Purpose", "Err 17"),
     ("19.", "Internal Diagnostic Purpose", "Err 18"),
+    ("20.", "Internal Diagnostic Purpose", "Err 98"),
 ]
 
 RF_ERROR_ROWS = [
@@ -383,15 +388,15 @@ RF_ERROR_ROWS = [
 ]
 
 
-def add_table_section(doc, title, values, meter_type, energy_decimal, display_table_mode, add_break=True):
+def add_table_section(doc, title, values, meter_type, energy_decimal, display_table_mode, batt_var, add_break=True):
     add_underlined_heading(doc, title, level=2)
-    create_table(doc, values, meter_type, energy_decimal, display_table_mode)
+    create_table(doc, values, meter_type, energy_decimal, display_table_mode, batt_var)
     if add_break:
         add_page_break(doc)
 
-def forward_add_table_section(doc, title, values, meter_type, energy_decimal, display_table_mode, add_break=True):
+def forward_add_table_section(doc, title, values, meter_type, energy_decimal, display_table_mode, batt_var, add_break=True):
     add_underlined_heading(doc, title, level=2)
-    forward_create_table(doc, values, meter_type, energy_decimal, display_table_mode)
+    forward_create_table(doc, values, meter_type, energy_decimal, display_table_mode, batt_var)
     if add_break:
         add_page_break(doc)
 
@@ -512,13 +517,14 @@ def choose_base_folder():
     image_folders = {
         "3P-Pro WC 10-60A": os.path.join(base_folder, "3P Pro WC Display Forward Mode"),
         "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(base_folder, "3P Pro WC Display Torrent Specific Forward Mode"),
-        # "3P-Pro WC 20-100A" : os.path.join(base_folder, "3P Pro WC Display"),
+        "3P Pro LTCT 5-10A": os.path.join(base_folder, "3P Pro LTCT 5-10A Display Forward Mode")
     }
 
     image_folders_net = {
         "3P-Pro WC 10-60A": os.path.join(base_folder, "3P Pro WC Display NET Mode"),
         "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(base_folder, "3P Pro WC Display Torrent Specific NET Mode"),
         # "3P-Pro WC 20-100A" : os.path.join(base_folder, "3P Pro WC Display"),
+        "3P Pro LTCT 5-10A": os.path.join(base_folder, "3P Pro LTCT 5-10A Display NET Mode")
     }
 
     # Update meter type combobox values
@@ -590,7 +596,7 @@ def add_formatted_runs(paragraph, text):
 
 
 # === Table creation in docx ===
-def create_table(doc, values, meter_type, energy_decimal, display_table_mode):
+def create_table(doc, values, meter_type, energy_decimal, display_table_mode, batt_var):
     table = doc.add_table(rows=1, cols=3)
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
     table.allow_autofit = False
@@ -609,9 +615,15 @@ def create_table(doc, values, meter_type, energy_decimal, display_table_mode):
         run.font.size = Pt(14)
 
     if display_table_mode == "1":
-        folder = image_folders_net[meter_type]
+        if batt_var == "1":
+            folder = os.path.join(image_folders_net[meter_type], "Battery Mode")
+        else:
+            folder = image_folders_net[meter_type]
     elif display_table_mode == "0":
-        folder = image_folders[meter_type]
+        if batt_var == "1":
+            folder = os.path.join(image_folders[meter_type], "Battery Mode")
+        else:
+            folder = image_folders[meter_type]
     idx = 1
     for dec in values:
         filename = f"{dec:04d}"
@@ -663,7 +675,7 @@ def create_table(doc, values, meter_type, energy_decimal, display_table_mode):
             idx += 1
 
 
-def forward_create_table(doc, values, meter_type, energy_decimal, display_table_mode):
+def forward_create_table(doc, values, meter_type, energy_decimal, display_table_mode, batt_var):
     table = doc.add_table(rows=1, cols=3)
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
     table.allow_autofit = False
@@ -681,7 +693,10 @@ def forward_create_table(doc, values, meter_type, energy_decimal, display_table_
         run.bold = True
         run.font.size = Pt(14)
 
-    folder = image_folders[meter_type]
+    if batt_var == "1":
+        folder = os.path.join(image_folders[meter_type], "Battery Mode")
+    else:
+        folder = image_folders[meter_type]
     idx = 1
     for dec in values:
         filename = f"{dec:04d}"
@@ -792,12 +807,63 @@ def get_user_inputs(root):
 
     return energy_decimal, display_lock, bell_icon, tamper_time, display_table_mode
 
+def generate_hex_string():
+    global auto_string, push_string, tamper_string, batt_string, diag_string, test_string
+        
+    auto_vals = [int(item.split(" - ")[0]) for item in auto_selected.get(0, tk.END)]
+    push_vals = [int(item.split(" - ")[0]) for item in push_selected.get(0, tk.END)]
+    tamper_vals = [int(item.split(" - ")[0]) for item in tamper_selected.get(0, tk.END)]
+    batt_vals = [int(item.split(" - ")[0]) for item in battery_selected.get(0, tk.END)]
+    diag_vals = [int(item.split(" - ")[0]) for item in diag_selected.get(0, tk.END)]
+    test_vals = [int(item.split(" - ")[0]) for item in test_selected.get(0, tk.END)]
+
+    auto_input_string = auto_input_hex_string.get().strip()
+    if not validate_hex_input_string(auto_input_string, "Auto"):
+        return
+
+    push_input_string = push_input_hex_string.get().strip()
+    if not validate_hex_input_string(push_input_string, "Push"):
+        return
+
+    tamper_input_string = tamper_input_hex_string.get().strip()
+    if not validate_hex_input_string(tamper_input_string, "Tamper"):
+        return
+
+    battery_input_string = battery_input_hex_string.get().strip()
+    if not validate_hex_input_string(battery_input_string, "Battery"):
+        return
+
+    diag_input_string = diag_input_hex_string.get().strip()
+    if not validate_hex_input_string(diag_input_string, "Diagnostic"):
+        return
+
+    test_input_string = test_input_hex_string.get().strip()
+    if not validate_hex_input_string(test_input_string, "Test"):
+        return
+
+    tamper_payload = build_hex_payload(tamper_vals)
+    auto_string.set(build_hex_payload(auto_vals, replacement_payload=tamper_payload))
+    push_string.set(build_hex_payload(push_vals, replacement_payload=tamper_payload))
+    tamper_string.set(tamper_payload)
+    batt_string.set(build_hex_payload(batt_vals))
+    diag_string.set(build_hex_payload(diag_vals))
+    test_string.set(build_hex_payload(test_vals))
+
+    save_display_strings({
+        "auto_string": auto_string.get(),
+        "push_string": push_string.get(),
+        "tamper_string": tamper_string.get(),
+        "batt_string": batt_string.get(),
+        "diag_string": diag_string.get(),
+        "test_string": test_string.get(),
+    })
 
 # === Generate document === 
 def generate_doc():
-    global auto_string, push_string, diag_string, test_string
+    global auto_string, push_string, tamper_string, batt_string, diag_string, test_string
     table_seq_no = 1
     refer_table_seq_no = 1
+    batt_var = "0"  # Initialize batt_var to "0" (not in battery mode)
     if not base_folder:
         messagebox.showerror("Error", "Please select a Base Folder first")
         return
@@ -820,6 +886,14 @@ def generate_doc():
 
     push_input_string = push_input_hex_string.get().strip()
     if not validate_hex_input_string(push_input_string, "Push"):
+        return
+
+    tamper_input_string = tamper_input_hex_string.get().strip()
+    if not validate_hex_input_string(tamper_input_string, "Tamper"):
+        return
+
+    battery_input_string = battery_input_hex_string.get().strip()
+    if not validate_hex_input_string(battery_input_string, "Battery"):
         return
 
     diag_input_string = diag_input_hex_string.get().strip()
@@ -967,7 +1041,7 @@ def generate_doc():
     run.bold = True
     run = para.add_run("Display Parameter ")
     run = para.add_run(project_code_var.get())
-    run.font.size = Pt(12)
+    run.font.size = Pt(13)
 
     cell = table.cell(1, 2)   # Row=1, Col=2
     para = cell.paragraphs[0]
@@ -1024,68 +1098,74 @@ def generate_doc():
 
     if display_table_mode == "0":
         if auto_vals:
-            add_table_section(doc, f"Table {table_seq_no}: Auto Scroll Display :", auto_vals, meter_type, energy_decimal, display_table_mode)
+            add_table_section(doc, f"Table {table_seq_no}: Auto Scroll Display :", auto_vals, meter_type, energy_decimal, display_table_mode, batt_var)
             table_seq_no += 1
 
         if push_vals:
-            add_table_section(doc, f"Table {table_seq_no}: Push Button Display :", push_vals, meter_type, energy_decimal, display_table_mode)
+            add_table_section(doc, f"Table {table_seq_no}: Push Button Display :", push_vals, meter_type, energy_decimal, display_table_mode, batt_var)
             table_seq_no += 1
 
         if batt_vals:
-            add_table_section(doc, f"Table {table_seq_no}: Auto and Push Mode Display (Battery)", batt_vals, meter_type, energy_decimal, display_table_mode)
+            batt_var = "1"
+            add_table_section(doc, f"Table {table_seq_no}: Auto and Push Mode Display (Battery)", batt_vals, meter_type, energy_decimal, display_table_mode, batt_var)
+            batt_var = "0"  # Reset batt_var to "0" after battery mode table
             table_seq_no += 1
 
         if diag_vals:
-            add_table_section(doc, f"Table {table_seq_no}: Diagnostic Mode Display :", diag_vals, meter_type, energy_decimal, display_table_mode)
+            add_table_section(doc, f"Table {table_seq_no}: Diagnostic Mode Display :", diag_vals, meter_type, energy_decimal, display_table_mode, batt_var)
             table_seq_no += 1
 
         if test_vals:
-            add_table_section(doc, f"Table {table_seq_no}: Test Mode Display :", test_vals, meter_type, energy_decimal, display_table_mode)
+            add_table_section(doc, f"Table {table_seq_no}: Test Mode Display :", test_vals, meter_type, energy_decimal, display_table_mode, batt_var)
             table_seq_no += 1
 
         if tamper_vals:
-            add_table_section(doc, f"Table {table_seq_no}: Present Tamper Status Display :", tamper_vals, meter_type, energy_decimal, display_table_mode, add_break=False)
+            add_table_section(doc, f"Table {table_seq_no}: Present Tamper Status Display :", tamper_vals, meter_type, energy_decimal, display_table_mode, batt_var, add_break=False)
             table_seq_no += 1
 
     elif display_table_mode == "1":
         if auto_vals:
-            forward_add_table_section(doc, f"Table {table_seq_no}: Auto Scroll Display : Forwarded Mode", auto_vals, meter_type, energy_decimal, display_table_mode)
+            forward_add_table_section(doc, f"Table {table_seq_no}: Auto Scroll Display : Forwarded Mode", auto_vals, meter_type, energy_decimal, display_table_mode, batt_var)
             table_seq_no += 1
 
         if push_vals:
-            forward_add_table_section(doc, f"Table {table_seq_no}: Push Button Display : Forwarded Mode", push_vals, meter_type, energy_decimal, display_table_mode)
+            forward_add_table_section(doc, f"Table {table_seq_no}: Push Button Display : Forwarded Mode", push_vals, meter_type, energy_decimal, display_table_mode, batt_var)
             table_seq_no += 1
 
         if batt_vals:
-            forward_add_table_section(doc, f"Table {table_seq_no}: Auto and Push Mode Display (Battery) : Forwarded Mode", batt_vals, meter_type, energy_decimal, display_table_mode)
+            batt_var = "1"
+            forward_add_table_section(doc, f"Table {table_seq_no}: Auto and Push Mode Display (Battery) : Forwarded Mode", batt_vals, meter_type, energy_decimal, display_table_mode, batt_var)
+            batt_var = "0"  # Reset batt_var to "0" after battery mode table
             table_seq_no += 1
 
         if diag_vals:
-            forward_add_table_section(doc, f"Table {table_seq_no}: Diagnostic Mode Display : Forwarded Mode", diag_vals, meter_type, energy_decimal, display_table_mode)
+            forward_add_table_section(doc, f"Table {table_seq_no}: Diagnostic Mode Display : Forwarded Mode", diag_vals, meter_type, energy_decimal, display_table_mode, batt_var)
             table_seq_no += 1
 
         if auto_vals:
-            add_table_section(doc, f"Table {table_seq_no}: Auto Scroll Display : NET Metering Mode", auto_vals, meter_type, energy_decimal, display_table_mode)
+            add_table_section(doc, f"Table {table_seq_no}: Auto Scroll Display : NET Metering Mode", auto_vals, meter_type, energy_decimal, display_table_mode, batt_var)
             table_seq_no += 1
 
         if push_vals:
-            add_table_section(doc, f"Table {table_seq_no}: Push Button Display : NET Metering Mode", push_vals, meter_type, energy_decimal, display_table_mode)
+            add_table_section(doc, f"Table {table_seq_no}: Push Button Display : NET Metering Mode", push_vals, meter_type, energy_decimal, display_table_mode, batt_var)
             table_seq_no += 1
 
         if batt_vals:
-            add_table_section(doc, f"Table {table_seq_no}: Auto and Push Mode Display (Battery) : NET Metering Mode", batt_vals, meter_type, energy_decimal, display_table_mode)
+            batt_var = "1"
+            add_table_section(doc, f"Table {table_seq_no}: Auto and Push Mode Display (Battery) : NET Metering Mode", batt_vals, meter_type, energy_decimal, display_table_mode, batt_var)
+            batt_var = "0"  # Reset batt_var to "0" after battery mode table
             table_seq_no += 1
 
         if diag_vals:
-            add_table_section(doc, f"Table {table_seq_no}: Diagnostic Mode Display : NET Metering Mode", diag_vals, meter_type, energy_decimal, display_table_mode)
+            add_table_section(doc, f"Table {table_seq_no}: Diagnostic Mode Display : NET Metering Mode", diag_vals, meter_type, energy_decimal, display_table_mode, batt_var)
             table_seq_no += 1
 
         if test_vals:
-            add_table_section(doc, f"Table {table_seq_no}: Test Mode Display :", test_vals, meter_type, energy_decimal, display_table_mode)
+            add_table_section(doc, f"Table {table_seq_no}: Test Mode Display :", test_vals, meter_type, energy_decimal, display_table_mode, batt_var)
             table_seq_no += 1
 
         if tamper_vals:
-            add_table_section(doc, f"Table {table_seq_no}: Present Tamper Status Display :", tamper_vals, meter_type, energy_decimal, display_table_mode, add_break=False)
+            add_table_section(doc, f"Table {table_seq_no}: Present Tamper Status Display :", tamper_vals, meter_type, energy_decimal, display_table_mode, batt_var, add_break=False)
             table_seq_no += 1
             
 
@@ -1197,8 +1277,8 @@ def generate_doc():
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
     if 3132 in test_vals:
-        # add_page_break(doc)
-        add_table_section(doc, f"Table {table_seq_no}: Relay Disconnect Reason (Present Status):", [3301, 3302, 3303, 3304, 3305], meter_type, energy_decimal, display_table_mode, add_break=False)
+        add_page_break(doc)
+        add_table_section(doc, f"Table {table_seq_no}: Relay Disconnect Reason (Present Status):", [3301, 3302, 3303, 3304, 3305], meter_type, energy_decimal, display_table_mode, batt_var)
         table_seq_no += 1
     table_seq_no = insert_error_tables(doc, test_vals, table_seq_no)
 
@@ -1321,7 +1401,7 @@ ctk.set_default_color_theme("blue")  # Try "green", "dark-blue", etc.
 root = ctk.CTk()
 # root.iconbitmap("logo.ico")
 root.title("3P Pro Meter Display Report Generator V3.0")
-root.geometry("1200x760")
+root.geometry("1200x780")
 root.resizable(False, False)
 
 # === Top Frame ===
@@ -1330,7 +1410,7 @@ top_frame.pack(pady=15, padx=15, fill="x")
 
 # Base Folder (left side)
 ctk.CTkLabel(top_frame, text="Base Folder:", text_color="#1a1a1a").grid(row=0, column=0, padx=5, sticky="w")
-ctk.CTkButton(top_frame, text="Browse Base Folder", fg_color="#1f6aa5", hover_color="#155a8a", command= choose_base_folder).grid(row=0, column=1, padx=5, sticky="w")
+ctk.CTkButton(top_frame, text="Browse Base Folder", fg_color="#a843ec", hover_color="#155a8a", command= choose_base_folder).grid(row=0, column=1, padx=5, sticky="w")
 
 # Meter Type (middle side)
 ctk.CTkLabel(top_frame, text="Meter Type:").grid(row=0, column=2, padx=20, sticky="w")
@@ -1565,7 +1645,7 @@ def restore_saved_selection(input_var, listbox, payload, available_items, payloa
             listbox.insert(tk.END, item)
 
 # Create a frame with fixed size for the notebook
-notebook_frame = tk.Frame(root, width=1080, height=350)
+notebook_frame = tk.Frame(root, width=1080, height=335)
 notebook_frame.pack(padx=10, pady=(0,5))  # adjust pady to reduce gap
 
 # Prevent frame from shrinking to fit notebook
@@ -1645,10 +1725,19 @@ output_frame.pack(pady=5, fill="x")   # This uses pack()
 
 ttk.Label(output_frame, text="Output File:").grid(row=0, column=0, padx=5, sticky="w")
 ttk.Entry(output_frame, textvariable=output_var, width=130).grid(row=0, column=1, padx=30, sticky="w")
-ctk.CTkButton(output_frame, text="Browse", command=choose_output, fg_color="#2196f3").grid(row=0, column=2, padx=30, sticky="w")
+ctk.CTkButton(output_frame, text="Browse", command=choose_output, fg_color="#2dbe9f").grid(row=0, column=2, padx=30, sticky="w")
 
-# Generate button
-ctk.CTkButton(output_frame, text="Generate Report", command=generate_doc, fg_color="#388e3c").grid(row=2, column=2, padx=30, sticky="w")
+# Generate Report button
+ctk.CTkButton(output_frame, text="Generate Report", command=generate_doc, fg_color="#37b63d").grid(row=2, column=2, padx=30, sticky="w")
+
+# Generate Hex String button
+ctk.CTkButton(output_frame, text="Generate Hex String", command=generate_hex_string, fg_color="#4946f1").grid(row=4, column=2, padx=30, sticky="w")
+
+def open_profile_object_selection():
+    script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Profile_Object_Selection.py")
+    subprocess.Popen([sys.executable, script_path], cwd=os.path.dirname(os.path.abspath(__file__)))
+
+ctk.CTkButton(output_frame, text="Profile Objects String", command=open_profile_object_selection, fg_color="#b341a3").grid(row=6, column=2, padx=30, sticky="w")
 
 saved_display_strings = load_display_strings()
 
