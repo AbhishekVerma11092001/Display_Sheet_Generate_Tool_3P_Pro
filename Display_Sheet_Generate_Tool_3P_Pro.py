@@ -16,8 +16,6 @@ from datetime import datetime
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 import subprocess
-import Profile_Object_Selection as ProfileSelection
-
 
 # 🔴 SET EXPIRY DATE HERE
 EXPIRY_DATE = "2026-12-31"   # YYYY-MM-DD
@@ -169,9 +167,21 @@ def save_display_strings(strings):
 
 
 def set_column_widths(table, widths):
-    for col, width in zip(table.columns, widths):
+    for col_idx, width in enumerate(widths):
+        col = table.columns[col_idx]
+        col.width = width
         for cell in col.cells:
             cell.width = width
+
+        for cell in col.cells:
+            tc_pr = cell._tc.get_or_add_tcPr()
+            tc_w = tc_pr.find(qn('w:tcW'))
+            if tc_w is not None:
+                tc_pr.remove(tc_w)
+            new_tc_w = OxmlElement('w:tcW')
+            new_tc_w.set(qn('w:w'), str(int(width.inches * 1440)))
+            new_tc_w.set(qn('w:type'), 'dxa')
+            tc_pr.append(new_tc_w)
 
 
 def add_underlined_heading(doc, text, level=2):
@@ -743,7 +753,7 @@ class InputDialog(simpledialog.Dialog):
     def body(self, master):
         tk.Label(master, text="Energy Decimal :").grid(row=0, column=0, padx=5, pady=5, sticky="w")
         self.energy_var = tk.StringVar(value="1 Decimal Digit")
-        self.energy_combo = ttk.Combobox(master, textvariable=self.energy_var, values=["1 Decimal Digit", "0 Decimal Digit"], state="readonly", width=20)
+        self.energy_combo = ttk.Combobox(master, textvariable=self.energy_var, values=["1 Decimal Digit", "0 Decimal Digit", "2 Decimal Digit"], state="readonly", width=20)
         self.energy_combo.grid(row=0, column=1, padx=5, pady=5)
 
         tk.Label(master, text="Display Lock Feature:").grid(row=1, column=0, padx=5, pady=5, sticky="w")
@@ -751,20 +761,36 @@ class InputDialog(simpledialog.Dialog):
         self.display_lock_combo = ttk.Combobox(master, textvariable=self.display_lock_var, values=["0-No Mode lock", "1-Auto Mode lock", "2-All Mode lock"], state="readonly", width=20)
         self.display_lock_combo.grid(row=1, column=1, padx=5, pady=5)
 
-        tk.Label(master, text="Bell Icon Display :").grid(row=2, column=0, padx=5, pady=5, sticky="w")
+        tk.Label(master, text="Display Required for Lock:").grid(row=2, column=0, padx=5, pady=5, sticky="w")
+        self.display_lock_show_var = tk.StringVar(value="0-Only C-Open Show")
+        self.display_lock_show_combo = ttk.Combobox(master, textvariable=self.display_lock_show_var, values=["0-Only C-Open Show", "1-C-Open Shows With D&T"], state="disabled", width=20)
+        self.display_lock_show_combo.grid(row=2, column=1, padx=5, pady=5)
+
+        def update_lock_show_state(*args):
+            selected_lock = self.display_lock_var.get()
+            if selected_lock in {"1-Auto Mode lock", "2-All Mode lock"}:
+                self.display_lock_show_combo.configure(state="readonly")
+            else:
+                self.display_lock_show_combo.configure(state="disabled")
+                self.display_lock_show_var.set("0-Only C-Open Show")
+
+        self.display_lock_var.trace_add("write", update_lock_show_state)
+        update_lock_show_state()
+
+        tk.Label(master, text="Bell Icon Display :").grid(row=3, column=0, padx=5, pady=5, sticky="w")
         self.bell_icon_var = tk.StringVar(value="0-PSEQ Only")
         self.bell_icon_combo = ttk.Combobox(master, textvariable=self.bell_icon_var, values=["0-PSEQ Only", "1-All Tampers"], state="readonly", width=20)
-        self.bell_icon_combo.grid(row=2, column=1, padx=5, pady=5)
+        self.bell_icon_combo.grid(row=3, column=1, padx=5, pady=5)
 
-        tk.Label(master, text="Tamper Detect Time for Display :").grid(row=3, column=0, padx=5, pady=5, sticky="w")
+        tk.Label(master, text="Tamper Detect Time for Display :").grid(row=4, column=0, padx=5, pady=5, sticky="w")
         self.tamper_time_value = tk.StringVar(value="10 seconds")
         self.tamper_time_var = ttk.Entry(master, textvariable=self.tamper_time_value, width=22)
-        self.tamper_time_var.grid(row=3, column=1, padx=5, pady=5)
+        self.tamper_time_var.grid(row=4, column=1, padx=5, pady=5)
 
-        tk.Label(master, text="Display Table Required :").grid(row=4, column=0, padx=5, pady=5, sticky="w")
+        tk.Label(master, text="Display Table Required :").grid(row=5, column=0, padx=5, pady=5, sticky="w")
         self.display_table_mode_var = tk.StringVar(value="Forward & NET Combined Mode")
         self.display_table_mode_combo = ttk.Combobox(master, textvariable=self.display_table_mode_var, values=["Forward & NET Combined Mode", "Forward & NET Individual Mode"], state="readonly", width=20)
-        self.display_table_mode_combo.grid(row=4, column=1, padx=5, pady=5)
+        self.display_table_mode_combo.grid(row=5, column=1, padx=5, pady=5)
 
         return self.energy_combo
 
@@ -772,6 +798,7 @@ class InputDialog(simpledialog.Dialog):
         self.result = (
             self.energy_var.get().strip(),
             self.display_lock_var.get().strip(),
+            self.display_lock_show_var.get().strip(),
             self.bell_icon_var.get().strip(),
             self.tamper_time_value.get().strip(),
             self.display_table_mode_var.get().strip()
@@ -780,12 +807,14 @@ class InputDialog(simpledialog.Dialog):
 def get_user_inputs(root):
     dialog = InputDialog(root, title="Meter Configuration")
 
-    energy_decimal, display_lock, bell_icon, tamper_time, display_table_mode = dialog.result
+    energy_decimal, display_lock, display_lock_show, bell_icon, tamper_time, display_table_mode = dialog.result
 
     if energy_decimal == "0 Decimal Digit":
         energy_decimal = "0"
     elif energy_decimal == "1 Decimal Digit":
         energy_decimal = "1"
+    elif energy_decimal == "2 Decimal Digit":
+        energy_decimal = "2"
 
     if display_lock == "0-No Mode lock":
         display_lock = "0"
@@ -793,6 +822,11 @@ def get_user_inputs(root):
         display_lock = "1"
     elif display_lock == "2-All Mode lock":
         display_lock = "2"
+
+    if display_lock_show == "0-Only C-Open Show":
+        display_lock_show = "0"
+    elif display_lock_show == "1-C-Open Shows With D&T":
+        display_lock_show = "1"
 
     if bell_icon == "0-PSEQ Only":
         bell_icon = "0"
@@ -805,7 +839,7 @@ def get_user_inputs(root):
         display_table_mode = "1"
 
 
-    return energy_decimal, display_lock, bell_icon, tamper_time, display_table_mode
+    return energy_decimal, display_lock, display_lock_show, bell_icon, tamper_time, display_table_mode
 
 def generate_hex_string():
     global auto_string, push_string, tamper_string, batt_string, diag_string, test_string
@@ -913,8 +947,8 @@ def generate_doc():
     if not diag_vals:
         diag_vals = [92, 3101, 3103, 3106, 3107, 3102, 3105, 3104, 3108]
 
-    energy_decimal, display_lock, bell_icon, tamper_time, display_table_mode = get_user_inputs(root)
-    if energy_decimal is None or display_lock is None or bell_icon is None or tamper_time is None or display_table_mode is None:
+    energy_decimal, display_lock, display_lock_show, bell_icon, tamper_time, display_table_mode = get_user_inputs(root)
+    if energy_decimal is None or display_lock is None or display_lock_show is None or bell_icon is None or tamper_time is None or display_table_mode is None:
         return  # User cancelled or invalid input
 
     tamper_payload = build_hex_payload(tamper_vals)
@@ -1195,15 +1229,46 @@ def generate_doc():
         run = para.add_run(" If top cover open tamper occurred in the meter then only the ") 
         run.add_picture(os.path.join(base_folder, "Template images", "C-Open.jpg"), width=Inches(0.70))
         if display_lock == "1":
-            run = para.add_run("display continuously at LCD when meter power ON at supply or battery. During this time normal auto scroll mode will get stopped.However push parameters will be available in push mode as usual.")
+            if display_lock_show == "0":
+                run = para.add_run("display continuously at LCD when meter power ON at supply or battery. During this time normal auto scroll mode will get stopped.However push parameters will be available in push mode as usual.")
+            elif display_lock_show == "1":        
+                run = para.add_run(" with its Occurrence Date & Time display continuously auto scrolling with respective scrolling time at LCD when meter power ON at supply or battery. During this time normal auto scroll mode will get stopped.However push parameters will be available in push mode as usual.")
         elif display_lock == "2":
-            run = para.add_run("display continuously at LCD when meter power ON at supply or battery, and all other display modes will be disabled.")
-        
-        para = doc.add_picture(os.path.join(base_folder, "Template images", "C-Open-Status.png"), width=Inches(5.0))
-        # Center align the picture
-        last_paragraph = doc.paragraphs[-1]  # the paragraph where the picture was added
-        last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    
+            if display_lock_show == "0":
+                run = para.add_run("display continuously at LCD when meter power ON at supply or battery, and all other display modes will be disabled.")
+            elif display_lock_show == "1":        
+                run = para.add_run(" with its Occurrence Date & Time display continuously auto scrolling with respective scrolling time at LCD when meter power ON at supply or battery, and all other display modes will be disabled.")
+        if display_lock_show == "0":
+            para = doc.add_picture(os.path.join(base_folder, "Template images", "C-Open-Status.png"), width=Inches(5.0))
+            # Center align the picture
+            last_paragraph = doc.paragraphs[-1]  # the paragraph where the picture was added
+            last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        elif display_lock_show == "1":
+            table = doc.add_table(rows=1, cols=2)
+            table.alignment = WD_TABLE_ALIGNMENT.CENTER
+            table.autofit = True
+            table.style = 'Table Grid'
+
+            set_column_widths(table, [Cm(1.3), Cm(12.8)])
+
+            first_row = table.rows[0].cells
+            first_row[0].text = "1"
+            first_row[0].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
+            first_row[1].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
+            first_row[1].paragraphs[0].add_run().add_picture(os.path.join(base_folder, "Template images", "C-Open-Status.png"),width=Inches(5.0))
+
+            second_row = table.add_row().cells
+            second_row[0].text = "2"
+            second_row[0].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
+            second_row[1].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
+            second_row[1].paragraphs[0].add_run().add_picture(os.path.join(base_folder, "Template images", "C-Open-Status-Date.png"),width=Inches(5.0))
+            
+
+            third_row = table.add_row().cells
+            third_row[0].text = "3"
+            third_row[0].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
+            third_row[1].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
+            third_row[1].paragraphs[0].add_run().add_picture(os.path.join(base_folder, "Template images", "C-Open-Status-Time.png"),width=Inches(5.0))    
 
     doc.add_heading("\nDisplay Modes : ", level=2)
     para = doc.add_paragraph("Display parameters are displayed in four different modes called Auto scrolling mode, push button mode, diagnostic mode and test mode.")
@@ -1731,13 +1796,28 @@ ctk.CTkButton(output_frame, text="Browse", command=choose_output, fg_color="#2db
 ctk.CTkButton(output_frame, text="Generate Report", command=generate_doc, fg_color="#37b63d").grid(row=2, column=2, padx=30, sticky="w")
 
 # Generate Hex String button
-ctk.CTkButton(output_frame, text="Generate Hex String", command=generate_hex_string, fg_color="#4946f1").grid(row=4, column=2, padx=30, sticky="w")
+ctk.CTkButton(output_frame, text="Generate Hex String", command=generate_hex_string, fg_color="#4946f1").grid(row=3, column=2, padx=30, sticky="w")
 
 def open_profile_object_selection():
+    # root.withdraw()  # Hide main window
     script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Profile_Object_Selection.py")
-    subprocess.Popen([sys.executable, script_path], cwd=os.path.dirname(os.path.abspath(__file__)))
+    process = subprocess.Popen([sys.executable, script_path], cwd=os.path.dirname(os.path.abspath(__file__)))
+    # process.wait()  # Wait for the subprocess to finish
+    # root.deiconify()  # Show main window again
+    # root.lift()  # Bring window to front
 
-ctk.CTkButton(output_frame, text="Profile Objects String", command=open_profile_object_selection, fg_color="#b341a3").grid(row=6, column=2, padx=30, sticky="w")
+ctk.CTkButton(output_frame, text="WC Profile Objects String", command=open_profile_object_selection, fg_color="#b341a3").grid(row=4, column=2, padx=30, sticky="w")
+
+def open_top_level_string_selection():
+    # root.withdraw()  # Hide main window
+    script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Top_Level_String_Selection.py")
+    process = subprocess.Popen([sys.executable, script_path], cwd=os.path.dirname(os.path.abspath(__file__)))
+    # process.wait()  # Wait for the subprocess to finish
+    # root.deiconify()  # Show main window again
+    # root.lift()  # Bring window to front
+
+ctk.CTkButton(output_frame, text="Top Level String", command=open_top_level_string_selection, fg_color="#A34528").grid(row=5, column=2, padx=30, sticky="w")
+
 
 saved_display_strings = load_display_strings()
 

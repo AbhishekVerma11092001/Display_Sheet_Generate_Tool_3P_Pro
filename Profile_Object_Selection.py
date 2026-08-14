@@ -170,12 +170,14 @@ class ProfileTabbedApp(tk.Tk):
         load_xml_mappings()
         self.title("3P Pro Profile Objects Selection V1.0")
         self.geometry("800x620")
+        self.resizable(False, False)
 
         self.notebook = ttk.Notebook(self)
         self.notebook.pack(fill="both", expand=True, padx=8, pady=8)
 
         self.panels = {}
         self.output_texts = {}
+        self.note_texts = {}
         self.all_profile_objects_text = None
         for name in TAB_NAMES:
             frame = ttk.Frame(self.notebook)
@@ -200,6 +202,13 @@ class ProfileTabbedApp(tk.Tk):
             output_text = tk.Text(right, height=10, width=40)
             output_text.pack(fill="both", padx=6, pady=(0, 6), expand=False)
             self.output_texts[name] = output_text
+
+            if name == "Billing-Profile":
+                ttk.Label(right, text="Note:", font=(None, 10, "bold")).pack(anchor="w", padx=6, pady=(14, 2))
+                ttk.Label(right, text="Maximum Phase wise THD with Date & Time for Voltage").pack(anchor="w", padx=6, pady=(0, 2))
+                ttk.Label(right, text="and Current Objects will be shows value only if it is also").pack(anchor="w", padx=6, pady=(0, 2))
+                ttk.Label(right, text="enabled from Firmware also.").pack(anchor="w", padx=6, pady=(0, 2))
+                
 
         bottom_frame = ttk.Frame(self)
         bottom_frame.pack(fill="x", padx=8, pady=(0, 8))
