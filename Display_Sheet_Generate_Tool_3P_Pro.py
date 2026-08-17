@@ -179,14 +179,14 @@ DISPLAY_STRINGS_XML = "display_strings.xml"
 image_folders = {
     "3P-Pro WC 10-60A": os.path.join(base_folder, "3P Pro WC Display Forward Mode"),
     "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(base_folder, "3P Pro WC Display Torrent Specific Forward Mode"),
-    "3P Pro LTCT 5-10A": os.path.join(base_folder, "3P Pro LTCT 5-10A Display Forward Mode")
+    "3P Pro LTCT 5-10A": os.path.join(base_folder, "3P Pro LTCT Display Forward Mode")
 }
 
 image_folders_net = {
     "3P-Pro WC 10-60A": os.path.join(base_folder, "3P Pro WC Display NET Mode"),
     "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(base_folder, "3P Pro WC Display Torrent Specific NET Mode"),
     # "3P-Pro WC 20-100A" : os.path.join(base_folder, "3P Pro WC Display"),
-    "3P Pro LTCT 5-10A": os.path.join(base_folder, "3P Pro LTCT 5-10A Display NET Mode")
+    "3P Pro LTCT 5-10A": os.path.join(base_folder, "3P Pro LTCT Display NET Mode")
 }
 
 def get_display_strings_xml_path():
@@ -586,14 +586,14 @@ def choose_base_folder():
     image_folders = {
         "3P-Pro WC 10-60A": os.path.join(base_folder, "3P Pro WC Display Forward Mode"),
         "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(base_folder, "3P Pro WC Display Torrent Specific Forward Mode"),
-        "3P Pro LTCT 5-10A": os.path.join(base_folder, "3P Pro LTCT 5-10A Display Forward Mode")
+        "3P Pro LTCT 5-10A": os.path.join(base_folder, "3P Pro LTCT Display Forward Mode")
     }
 
     image_folders_net = {
         "3P-Pro WC 10-60A": os.path.join(base_folder, "3P Pro WC Display NET Mode"),
         "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(base_folder, "3P Pro WC Display Torrent Specific NET Mode"),
         # "3P-Pro WC 20-100A" : os.path.join(base_folder, "3P Pro WC Display"),
-        "3P Pro LTCT 5-10A": os.path.join(base_folder, "3P Pro LTCT 5-10A Display NET Mode")
+        "3P Pro LTCT 5-10A": os.path.join(base_folder, "3P Pro LTCT Display NET Mode")
     }
 
     # Update meter type combobox values
