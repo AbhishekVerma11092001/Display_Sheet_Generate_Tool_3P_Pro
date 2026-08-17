@@ -172,6 +172,23 @@ class ProfileTabbedApp(tk.Tk):
         self.geometry("800x620")
         self.resizable(False, False)
 
+        # Always open the child window in its normal/default view and bring it
+        # to the foreground when launched from the single EXE.
+        self.update_idletasks()
+        screen_w = self.winfo_screenwidth()
+        screen_h = self.winfo_screenheight()
+        win_w = 800
+        win_h = 620
+        pos_x = max((screen_w - win_w) // 2, 0)
+        pos_y = max((screen_h - win_h) // 2, 0)
+        self.geometry(f"{win_w}x{win_h}+{pos_x}+{pos_y}")
+        self.state("normal")
+        self.deiconify()
+        self.lift()
+        self.focus_force()
+        self.after(100, lambda: self.attributes("-topmost", True))
+        self.after(300, lambda: self.attributes("-topmost", False))
+
         self.notebook = ttk.Notebook(self)
         self.notebook.pack(fill="both", expand=True, padx=8, pady=8)
 

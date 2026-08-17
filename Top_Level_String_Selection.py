@@ -429,6 +429,23 @@ root.title("3P Pro Top Level Selection V1.0")
 root.geometry("1100x600")
 root.resizable(False, False)
 
+# Always open in the normal/default view and bring the window to the
+# foreground when launched from the single EXE.
+root.update_idletasks()
+screen_w = root.winfo_screenwidth()
+screen_h = root.winfo_screenheight()
+win_w = 1100
+win_h = 600
+pos_x = max((screen_w - win_w) // 2, 0)
+pos_y = max((screen_h - win_h) // 2, 0)
+root.geometry(f"{win_w}x{win_h}+{pos_x}+{pos_y}")
+root.state("normal")
+root.deiconify()
+root.lift()
+root.focus_force()
+root.after(100, lambda: root.attributes("-topmost", True))
+root.after(300, lambda: root.attributes("-topmost", False))
+
 # === Top Frame ===
 top_frame = ctk.CTkFrame(root, corner_radius=15)
 top_frame.pack(pady=15, padx=15, fill="x")

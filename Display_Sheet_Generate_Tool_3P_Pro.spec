@@ -5,7 +5,7 @@ a = Analysis(
     ['Display_Sheet_Generate_Tool_3P_Pro.py'],
     pathex=[],
     binaries=[],
-    datas=[('logo.ico', '.')],
+    datas=[('logo.ico', '.'), ('Profile_Object_Selection.py', '.'), ('Top_Level_String_Selection.py', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

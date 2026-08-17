@@ -16,6 +16,60 @@ from datetime import datetime
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 import subprocess
+import runpy
+
+
+def run_embedded_script(script_name):
+    """Run a Python child application bundled inside the same PyInstaller EXE."""
+    if getattr(sys, "frozen", False):
+        # PyInstaller --onefile extracts --add-data files to _MEIPASS.
+        script_path = os.path.join(sys._MEIPASS, script_name)
+        working_dir = os.path.dirname(sys.executable)
+    else:
+        script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), script_name)
+        working_dir = os.path.dirname(script_path)
+
+    if not os.path.exists(script_path):
+        messagebox.showerror(
+            "Error",
+            f"Embedded file not found:\n{script_path}"
+        )
+        return
+
+    try:
+        old_argv = sys.argv[:]
+        old_cwd = os.getcwd()
+        sys.argv = [script_path]
+        os.chdir(working_dir)
+        try:
+            runpy.run_path(script_path, run_name="__main__")
+        finally:
+            sys.argv = old_argv
+            os.chdir(old_cwd)
+    except Exception as e:
+        messagebox.showerror(
+            "Error",
+            f"Unable to open {script_name}:\n\n{e}"
+        )
+
+
+def handle_embedded_mode():
+    """Start the requested child GUI when the main EXE is launched with a mode argument."""
+    if len(sys.argv) < 2:
+        return False
+
+    mode_map = {
+        "--profile-object-selection": "Profile_Object_Selection.py",
+        "--top-level-string-selection": "Top_Level_String_Selection.py",
+    }
+
+    script_name = mode_map.get(sys.argv[1])
+    if not script_name:
+        return False
+
+    run_embedded_script(script_name)
+    return True
+
 
 # 🔴 SET EXPIRY DATE HERE
 EXPIRY_DATE = "2026-12-31"   # YYYY-MM-DD
@@ -31,6 +85,11 @@ def check_expiry():
 
 # Call before GUI starts
 check_expiry()
+
+# If this EXE was launched in an embedded-child mode, run that child GUI
+# and stop here so the main Display Sheet GUI is not created as well.
+if handle_embedded_mode():
+    sys.exit(0)
 
 
 try:
@@ -1465,7 +1524,7 @@ ctk.set_default_color_theme("blue")  # Try "green", "dark-blue", etc.
 # === Main Window ===
 root = ctk.CTk()
 # root.iconbitmap("logo.ico")
-root.title("3P Pro Meter Display Report Generator V3.0")
+root.title("3P Pro Meter Display Report Generator V4.0")
 root.geometry("1200x780")
 root.resizable(False, False)
 
@@ -1797,27 +1856,52 @@ ctk.CTkButton(output_frame, text="Generate Report", command=generate_doc, fg_col
 
 # Generate Hex String button
 ctk.CTkButton(output_frame, text="Generate Hex String", command=generate_hex_string, fg_color="#4946f1").grid(row=3, column=2, padx=30, sticky="w")
+child_processes = [] 
 
 def open_profile_object_selection():
-    # root.withdraw()  # Hide main window
-    script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Profile_Object_Selection.py")
-    process = subprocess.Popen([sys.executable, script_path], cwd=os.path.dirname(os.path.abspath(__file__)))
-    # process.wait()  # Wait for the subprocess to finish
-    # root.deiconify()  # Show main window again
-    # root.lift()  # Bring window to front
+    """Open Profile_Object_Selection from the same EXE."""
+    if getattr(sys, "frozen", False):
+        process = subprocess.Popen([sys.executable, "--profile-object-selection"], cwd=os.path.dirname(sys.executable)) 
+        child_processes.append(process)
+    else:
+        run_embedded_script("Profile_Object_Selection.py")
 
 ctk.CTkButton(output_frame, text="WC Profile Objects String", command=open_profile_object_selection, fg_color="#b341a3").grid(row=4, column=2, padx=30, sticky="w")
 
 def open_top_level_string_selection():
-    # root.withdraw()  # Hide main window
-    script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Top_Level_String_Selection.py")
-    process = subprocess.Popen([sys.executable, script_path], cwd=os.path.dirname(os.path.abspath(__file__)))
-    # process.wait()  # Wait for the subprocess to finish
-    # root.deiconify()  # Show main window again
-    # root.lift()  # Bring window to front
+    """Open Top_Level_String_Selection from the same EXE."""
+    if getattr(sys, "frozen", False):
+        process = subprocess.Popen([sys.executable, "--top-level-string-selection"], cwd=os.path.dirname(sys.executable))
+        child_processes.append(process)
+    else:
+        run_embedded_script("Top_Level_String_Selection.py")
 
 ctk.CTkButton(output_frame, text="Top Level String", command=open_top_level_string_selection, fg_color="#A34528").grid(row=5, column=2, padx=30, sticky="w")
 
+def close_main_application():
+    """Close all child EXE windows first, then close the main window."""
+    for process in child_processes[:]:
+        try:
+            if process.poll() is None:
+                process.terminate()
+
+                try:
+                    process.wait(timeout=2)
+                except subprocess.TimeoutExpired:
+                    process.kill()
+
+        except (OSError, ValueError):
+            pass
+
+        finally:
+            try:
+                child_processes.remove(process)
+            except ValueError:
+                pass
+
+    root.destroy()
+
+root.protocol("WM_DELETE_WINDOW", close_main_application) 
 
 saved_display_strings = load_display_strings()
 
