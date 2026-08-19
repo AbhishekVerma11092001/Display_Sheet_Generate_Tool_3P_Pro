@@ -99,7 +99,7 @@
 		<Item id="102">[size=13]RTC Status[/size]&#xA;[font=7 Segment]rtC FAIL[/font] : When RTC is Fail&#xA;[font=7 Segment]rtC FInE[/font] : When RTC is Good</Item>
 		<Item id="103">[size=13]Main Battery Status[/size]&#xA;[font=Segment14]G[/font][font=7 Segment]OOd[/font] : When Battery is Healthy&#xA;[font=7 Segment]LOW[/font] : When Battery is Low</Item>
 		<Item id="104">[size=13]RTC Battery Status[/size]&#xA;[font=Segment14]G[/font][font=7 Segment]OOd[/font] : When RTC Battery is Healthy&#xA;[font=7 Segment]LOW[/font] : When RTC Battery is Low</Item>
-		<Item id="105">[size=13]Load Switch Status[/size]&#xA;(If Connected)</Item>
+		<Item id="105">[size=13]Load Switch Status[/size]</Item>
 		<Item id="106">[size=13]Relay Connect[/size]&#xA;Last Occurrence Date</Item>
 		<Item id="107">[size=13]Relay Connect[/size]&#xA;Last Occurrence Time</Item>
 		<Item id="108">[size=13]Relay Disconnect[/size]&#xA;Last Occurrence Date</Item>
@@ -1424,7 +1424,7 @@
 		<Item id="102">[size=13]RTC Status[/size]&#xA;[font=7 Segment]rtC FAIL[/font] : When RTC is Fail&#xA;[font=7 Segment]rtC FInE[/font] : When RTC is Good</Item>
 		<Item id="103">[size=13]Main Battery Status[/size]&#xA;[font=Segment14]G[/font][font=7 Segment]OOd[/font] : When Battery is Healthy&#xA;[font=7 Segment]LOW[/font] : When Battery is Low</Item>
 		<Item id="104">[size=13]RTC Battery Status[/size]&#xA;[font=Segment14]G[/font][font=7 Segment]OOd[/font] : When RTC Battery is Healthy&#xA;[font=7 Segment]LOW[/font] : When RTC Battery is Low</Item>
-		<Item id="105">[size=13]Load Switch Status[/size]&#xA;(If Connected)</Item>
+		<Item id="105">[size=13]Load Switch Status[/size]</Item>
 		<Item id="106">[size=13]Relay Connect[/size]&#xA;Last Occurrence Date</Item>
 		<Item id="107">[size=13]Relay Connect[/size]&#xA;Last Occurrence Time</Item>
 		<Item id="108">[size=13]Relay Disconnect[/size]&#xA;Last Occurrence Date</Item>

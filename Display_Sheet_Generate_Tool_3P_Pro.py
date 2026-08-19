@@ -175,18 +175,20 @@ load_xml_mappings()
 DEFAULT_OUTPUT_FILE = "Display_Parameters_report.docx"
 DISPLAY_STRINGS_XML = "display_strings.xml"
 
+default_folder = r"\\192.10.10.8\Grid_Hex\Smart_3P_Pro\Tools\Testing\3P_Pro_Display_Parameter_Sheet_Generator_Tool_reference_images"
+
 # Global variables for folder paths
 image_folders = {
-    "3P-Pro WC 10-60A": os.path.join(base_folder, "3P Pro WC Display Forward Mode"),
-    "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(base_folder, "3P Pro WC Display Torrent Specific Forward Mode"),
-    "3P Pro LTCT 5-10A": os.path.join(base_folder, "3P Pro LTCT Display Forward Mode")
+    "3P-Pro WC 10-60A": os.path.join(default_folder, "3P Pro WC Display Forward Mode"),
+    "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(default_folder, "3P Pro WC Display Torrent Specific Forward Mode"),
+    "3P Pro LTCT 5-10A": os.path.join(default_folder, "3P Pro LTCT Display Forward Mode")
 }
 
 image_folders_net = {
-    "3P-Pro WC 10-60A": os.path.join(base_folder, "3P Pro WC Display NET Mode"),
-    "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(base_folder, "3P Pro WC Display Torrent Specific NET Mode"),
-    # "3P-Pro WC 20-100A" : os.path.join(base_folder, "3P Pro WC Display"),
-    "3P Pro LTCT 5-10A": os.path.join(base_folder, "3P Pro LTCT Display NET Mode")
+    "3P-Pro WC 10-60A": os.path.join(default_folder, "3P Pro WC Display NET Mode"),
+    "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(default_folder, "3P Pro WC Display Torrent Specific NET Mode"),
+    # "3P-Pro WC 20-100A" : os.path.join(default_folder, "3P Pro WC Display"),
+    "3P Pro LTCT 5-10A": os.path.join(default_folder, "3P Pro LTCT Display NET Mode")
 }
 
 def get_display_strings_xml_path():
@@ -1087,7 +1089,7 @@ def generate_doc():
     set_row_height(table.rows[2], 0.36)
 
     # === Insert company logo into [0,0] cell ===
-    logo_path = os.path.join(base_folder, "Template images", "Company Logo.jpg")
+    logo_path = os.path.join(default_folder, "Template images", "Company Logo.jpg")
 
     if os.path.exists(logo_path):
         cell = table.cell(0, 0)
@@ -1277,7 +1279,7 @@ def generate_doc():
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     run = para.add_run()
     run = para.add_run(" If net-meter mode configured in meter, all forwarded parameters converted into Import parameters and distinguish with ")
-    run.add_picture(os.path.join(base_folder, "Template images", "import.jpg"), width=Inches(0.25))
+    run.add_picture(os.path.join(default_folder, "Template images", "import.jpg"), width=Inches(0.25))
     run = para.add_run(" on display.")
     para = doc.add_paragraph("3.  In the Auto Mode Display and Push Mode Display default here show all 8 zones for zone wise display parameters otherwise meter will show zones wise display parameters as per the configured zones in meter.")
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
@@ -1286,7 +1288,7 @@ def generate_doc():
         para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
         run = para.add_run()
         run = para.add_run(" If top cover open tamper occurred in the meter then only the ") 
-        run.add_picture(os.path.join(base_folder, "Template images", "C-Open.jpg"), width=Inches(0.70))
+        run.add_picture(os.path.join(default_folder, "Template images", "C-Open.jpg"), width=Inches(0.70))
         if display_lock == "1":
             if display_lock_show == "0":
                 run = para.add_run("display continuously at LCD when meter power ON at supply or battery. During this time normal auto scroll mode will get stopped.However push parameters will be available in push mode as usual.")
@@ -1298,7 +1300,7 @@ def generate_doc():
             elif display_lock_show == "1":        
                 run = para.add_run(" with its Occurrence Date & Time display continuously auto scrolling with respective scrolling time at LCD when meter power ON at supply or battery, and all other display modes will be disabled.")
         if display_lock_show == "0":
-            para = doc.add_picture(os.path.join(base_folder, "Template images", "C-Open-Status.png"), width=Inches(5.0))
+            para = doc.add_picture(os.path.join(default_folder, "Template images", "C-Open-Status.png"), width=Inches(5.0))
             # Center align the picture
             last_paragraph = doc.paragraphs[-1]  # the paragraph where the picture was added
             last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -1314,20 +1316,20 @@ def generate_doc():
             first_row[0].text = "1"
             first_row[0].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
             first_row[1].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
-            first_row[1].paragraphs[0].add_run().add_picture(os.path.join(base_folder, "Template images", "C-Open-Status.png"),width=Inches(5.0))
+            first_row[1].paragraphs[0].add_run().add_picture(os.path.join(default_folder, "Template images", "C-Open-Status.png"),width=Inches(5.0))
 
             second_row = table.add_row().cells
             second_row[0].text = "2"
             second_row[0].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
             second_row[1].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
-            second_row[1].paragraphs[0].add_run().add_picture(os.path.join(base_folder, "Template images", "C-Open-Status-Date.png"),width=Inches(5.0))
+            second_row[1].paragraphs[0].add_run().add_picture(os.path.join(default_folder, "Template images", "C-Open-Status-Date.png"),width=Inches(5.0))
             
 
             third_row = table.add_row().cells
             third_row[0].text = "3"
             third_row[0].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
             third_row[1].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
-            third_row[1].paragraphs[0].add_run().add_picture(os.path.join(base_folder, "Template images", "C-Open-Status-Time.png"),width=Inches(5.0))    
+            third_row[1].paragraphs[0].add_run().add_picture(os.path.join(default_folder, "Template images", "C-Open-Status-Time.png"),width=Inches(5.0))    
 
     doc.add_heading("\nDisplay Modes : ", level=2)
     para = doc.add_paragraph("Display parameters are displayed in four different modes called Auto scrolling mode, push button mode, diagnostic mode and test mode.")
@@ -1407,7 +1409,7 @@ def generate_doc():
     table_seq_no = insert_error_tables(doc, test_vals, table_seq_no)
 
     doc.add_heading("\nLCD Glass Description: ", level=2)
-    para = doc.add_picture(os.path.join(base_folder, "Template images", "LCD_Glass_Description_3P-Pro.png"), width=Inches(5.0))
+    para = doc.add_picture(os.path.join(default_folder, "Template images", "LCD_Glass_Description_3P-Pro.png"), width=Inches(5.0))
     # Center align the picture
     last_paragraph = doc.paragraphs[-1]  # the paragraph where the picture was added
     last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -1415,12 +1417,12 @@ def generate_doc():
     doc.add_heading("\nIcons on LCD Glass:- ", level=3) 
     para1 = doc.add_paragraph("1. ")
     run = para1.add_run()
-    run.add_picture(os.path.join(base_folder, "Template images", "magnet.jpg"), width=Inches(0.25))
+    run.add_picture(os.path.join(default_folder, "Template images", "magnet.jpg"), width=Inches(0.25))
     para1.add_run(" Sign indicates the instantaneous presence of Magnet Tamper.")
 
     para2 = doc.add_paragraph("2.  ")
     run = para2.add_run()
-    run.add_picture(os.path.join(base_folder, "Template images", "comm.jpg"), width=Inches(0.25))
+    run.add_picture(os.path.join(default_folder, "Template images", "comm.jpg"), width=Inches(0.25))
     para2.add_run(" Blinking sign indicates the communication is going on with meter.")
 
     para3 = doc.add_paragraph("3.  ")
@@ -1436,28 +1438,28 @@ def generate_doc():
 
     para4 = doc.add_paragraph("4.  ")
     run = para4.add_run()
-    run.add_picture(os.path.join(base_folder, "Template images", "reverse_arrow.jpg"), width=Inches(0.3))
+    run.add_picture(os.path.join(default_folder, "Template images", "reverse_arrow.jpg"), width=Inches(0.3))
     para4.add_run(" Sign indicates reverse current.")
 
     para5 = doc.add_paragraph("5.  ")
     run = para5.add_run()
-    run.add_picture(os.path.join(base_folder, "Template images", "battery.jpg"), width=Inches(0.35))
+    run.add_picture(os.path.join(default_folder, "Template images", "battery.jpg"), width=Inches(0.35))
     para5.add_run(" Sign indicates internal backup low battery detection.")
 
     para6 = doc.add_paragraph("6.  ")
     run = para6.add_run()
-    run.add_picture(os.path.join(base_folder, "Template images", "lock.jpg"), width=Inches(0.2))
+    run.add_picture(os.path.join(default_folder, "Template images", "lock.jpg"), width=Inches(0.2))
     run = para6.add_run(" Sign indicates top cover open tamper and module cover open tamper present in meter. Continuous display of  ")
-    run.add_picture(os.path.join(base_folder, "Template images", "lock.jpg"), width=Inches(0.2))
+    run.add_picture(os.path.join(default_folder, "Template images", "lock.jpg"), width=Inches(0.2))
     run = para6.add_run(" shows top cover open present in meter. Blinking of  ")
-    run.add_picture(os.path.join(base_folder, "Template images", "lock.jpg"), width=Inches(0.2))
+    run.add_picture(os.path.join(default_folder, "Template images", "lock.jpg"), width=Inches(0.2))
     run = para6.add_run(" shows the module cover open tamper present in the meter. If Top cover and module cover both open then the top cover priority will be higher (Continuous display of  ")
-    run.add_picture(os.path.join(base_folder, "Template images", "lock.jpg"), width=Inches(0.2))
+    run.add_picture(os.path.join(default_folder, "Template images", "lock.jpg"), width=Inches(0.2))
     para6.add_run(" ).")
 
     para7 = doc.add_paragraph("7.  ")
     run = para7.add_run()
-    run.add_picture(os.path.join(base_folder, "Template images", "bell.jpg"), width=Inches(0.3))
+    run.add_picture(os.path.join(default_folder, "Template images", "bell.jpg"), width=Inches(0.3))
     if bell_icon == "0":
         para7.add_run(" Sign indicates phase sequence reverse in meter.")
     elif bell_icon == "1":
@@ -1466,7 +1468,7 @@ def generate_doc():
     if(meter_type == "3P-Pro WC 10-60A" or meter_type == "3P-Pro WC (Torrent Specific) 10-60A" or meter_type == "3P-Pro WC 20-100A"):
         para8 = doc.add_paragraph("8.  ")
         run = para8.add_run()
-        run.add_picture(os.path.join(base_folder, "Template images", "relay.jpg"), width=Inches(0.3))
+        run.add_picture(os.path.join(default_folder, "Template images", "relay.jpg"), width=Inches(0.3))
         para8.add_run(" Sign indicates relay connect/disconnect status.")
 
     doc.add_heading("\n Revision History: ", level=2)
@@ -1524,7 +1526,7 @@ ctk.set_default_color_theme("blue")  # Try "green", "dark-blue", etc.
 # === Main Window ===
 root = ctk.CTk()
 # root.iconbitmap("logo.ico")
-root.title("3P Pro Meter Display Report Generator V4.0")
+root.title("3P Pro Meter Display Report Generator V4.1")
 root.geometry("1200x780")
 root.resizable(False, False)
 
