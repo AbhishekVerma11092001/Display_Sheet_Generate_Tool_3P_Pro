@@ -17,9 +17,30 @@ from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 import subprocess
 import runpy
+import platform
+
+def is_ip_reachable(ip):
+    system = platform.system()
+
+    if system == "Windows":
+        command = ["ping", "-n", "1", "-w", "1000", ip]
+    else:
+        command = ["ping", "-c", "1", "-W", "1", ip]
+
+    try:
+        result = subprocess.run(
+            command,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+
+        return result.returncode == 0
+
+    except Exception:
+        return False
 
 
-def run_embedded_script(script_name):
+def run_embedded_script(script_name, args=None):
     """Run a Python child application bundled inside the same PyInstaller EXE."""
     if getattr(sys, "frozen", False):
         # PyInstaller --onefile extracts --add-data files to _MEIPASS.
@@ -39,7 +60,7 @@ def run_embedded_script(script_name):
     try:
         old_argv = sys.argv[:]
         old_cwd = os.getcwd()
-        sys.argv = [script_path]
+        sys.argv = [script_path, *(args or [])]
         os.chdir(working_dir)
         try:
             runpy.run_path(script_path, run_name="__main__")
@@ -67,7 +88,8 @@ def handle_embedded_mode():
     if not script_name:
         return False
 
-    run_embedded_script(script_name)
+    child_args = sys.argv[2:3] if sys.argv[1] == "--profile-object-selection" else []
+    run_embedded_script(script_name, child_args)
     return True
 
 
@@ -171,11 +193,14 @@ else:
 # Load XML relative to exe/script location
 load_xml_mappings()
 
+def get_default_output_file():
+    return f"Display_Parameters_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.docx"
 
 DEFAULT_OUTPUT_FILE = "Display_Parameters_report.docx"
 DISPLAY_STRINGS_XML = "display_strings.xml"
 
-default_folder = r"\\192.10.10.8\Grid_Hex\Smart_3P_Pro\Tools\Testing\3P_Pro_Display_Parameter_Sheet_Generator_Tool_reference_images"
+default_folder = base_folder  # Initialize default_folder_ip to base_folder
+default_folder_ip = None
 
 # Global variables for folder paths
 image_folders = {
@@ -190,6 +215,35 @@ image_folders_net = {
     # "3P-Pro WC 20-100A" : os.path.join(default_folder, "3P Pro WC Display"),
     "3P Pro LTCT 5-10A": os.path.join(default_folder, "3P Pro LTCT Display NET Mode")
 }
+
+
+def configure_reference_folders(ip_address):
+    global default_folder, default_folder_ip, image_folders, image_folders_net
+
+    host = ip_address.strip().strip("\\/")
+    default_folder_ip = "\\\\" + host
+    default_folder = os.path.join(
+        default_folder_ip,
+        "Grid_Hex",
+        "Smart_3P_Pro",
+        "Tools",
+        "Testing",
+        "3P_Pro_Display_Parameter_Sheet_Generator_Tool_reference_images",
+    )
+
+    image_folders = {
+        "3P-Pro WC 10-60A": os.path.join(default_folder, "3P Pro WC Display Forward Mode"),
+        "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(default_folder, "3P Pro WC Display Torrent Specific Forward Mode"),
+        "3P Pro LTCT 5-10A": os.path.join(default_folder, "3P Pro LTCT Display Forward Mode"),
+    }
+    image_folders_net = {
+        "3P-Pro WC 10-60A": os.path.join(default_folder, "3P Pro WC Display NET Mode"),
+        "3P-Pro WC (Torrent Specific) 10-60A": os.path.join(default_folder, "3P Pro WC Display Torrent Specific NET Mode"),
+        "3P Pro LTCT 5-10A": os.path.join(default_folder, "3P Pro LTCT Display NET Mode"),
+    }
+
+    meter_type_combo.configure(values=list(image_folders.keys()))
+    meter_type_var.set("Select Type")
 
 def get_display_strings_xml_path():
     return os.path.join(base_folder, "RefXML", DISPLAY_STRINGS_XML)
@@ -261,35 +315,132 @@ def get_selected_values(listbox):
     return [int(item.split(" - ")[0]) for item in listbox.get(0, tk.END)]
 
 
-def build_hex_payload(values, replacement_payload=""):
-    parts = []
-    for val in values:
-        if val == 9999:
-            if replacement_payload.startswith("09"):
-                replacement_payload = replacement_payload[2:]  # Remove the 09 prefix
-            
-                if len(replacement_payload) >= 2:
-                    if replacement_payload.startswith("81"):
-                        replacement_payload = replacement_payload[4:]  # Remove the 81 and Length prefix
-                    elif replacement_payload.startswith("82"):
-                        replacement_payload = replacement_payload[6:]  # Remove the 82 and Length prefix
-                    else:
-                        replacement_payload = replacement_payload[2:]  # Remove the Length prefix
-            parts.append(replacement_payload)
+class DisplayPayloadCodec:
+    @staticmethod
+    def build_hex_payload(values, replacement_payload=""):
+        parts = []
+        for val in values:
+            if val == 9999:
+                if replacement_payload.startswith("09"):
+                    replacement_payload = replacement_payload[2:]  # Remove the 09 prefix
+
+                    if len(replacement_payload) >= 2:
+                        if replacement_payload.startswith("81"):
+                            replacement_payload = replacement_payload[4:]  # Remove the 81 and Length prefix
+                        elif replacement_payload.startswith("82"):
+                            replacement_payload = replacement_payload[6:]  # Remove the 82 and Length prefix
+                        else:
+                            replacement_payload = replacement_payload[2:]  # Remove the Length prefix
+                parts.append(replacement_payload)
+            else:
+                parts.append(f"{val:04X}")
+
+        payload = "".join(parts)
+        length = len(payload) // 2
+
+        if length <= 127:
+            length_prefix = f"{length:02X}"
+        elif length <= 255:
+            length_prefix = "81" + f"{length:02X}"
         else:
-            parts.append(f"{val:04X}")
+            length_prefix = "82" + f"{length:04X}"
 
-    payload = "".join(parts)
-    length = len(payload) // 2
+        return "09" + length_prefix + payload
 
-    if length <= 127:
-        length_prefix = f"{length:02X}"
-    elif length <= 255:
-        length_prefix = "81" + f"{length:02X}"
-    else:
-        length_prefix = "82" + f"{length:04X}"
+    @staticmethod
+    def parse_payload_to_values(payload, available_items):
+        if not payload:
+            return []
 
-    return "09" + length_prefix + payload
+        payload = payload.strip()
+        if payload.startswith("09"):
+            payload = payload[2:]  # Remove the 09 prefix
+
+        if len(payload) >= 2:
+            if payload.startswith("81"):
+                payload = payload[2:]  # Remove the 81 prefix
+                length_bytes = payload[:2]
+            elif payload.startswith("82"):
+                payload = payload[2:]  # Remove the 82 prefix
+                length_bytes = payload[:4]
+            else:
+                length_bytes = payload[:2]
+
+            try:
+                length = int(length_bytes, 16)
+            except ValueError:
+                return []
+
+            if length <= 127:
+                body = payload[2:2 + length * 2]
+                body = payload[2:]  # Remove the Length
+            elif length <= 255:
+                body = payload[2:2 + length * 2]
+                body = payload[2:]  # Remove the Length
+            else:
+                body = payload[4:4 + length * 2]
+                body = payload[4:]  # Remove the Length
+        else:
+            body = ""
+
+        values = []
+        for index in range(0, len(body), 4):
+            chunk = body[index:index + 4]
+            if len(chunk) != 4:
+                continue
+            try:
+                values.append(int(chunk, 16))
+            except ValueError:
+                continue
+
+        if not available_items:
+            return values
+
+        available_map = {
+            f"{int(item.split(' - ', 1)[0]):04d}": item
+            for item in available_items
+        }
+        return [available_map[f"{value:04d}"] for value in values if f"{value:04d}" in available_map]
+
+    @staticmethod
+    def extract_payload_body(payload):
+        if not payload:
+            return ""
+
+        payload = payload.strip()
+        if payload.startswith("09"):
+            payload = payload[2:]  # Remove the 09 prefix
+
+        if len(payload) >= 2:
+            if payload.startswith("81"):
+                payload = payload[2:]  # Remove the 81 prefix
+                length_bytes = payload[:2]
+            elif payload.startswith("82"):
+                payload = payload[2:]  # Remove the 82 prefix
+                length_bytes = payload[:4]
+            else:
+                length_bytes = payload[:2]
+
+            try:
+                length = int(length_bytes, 16)
+            except ValueError:
+                return []
+
+        if length <= 127:
+            body_start = 2
+        elif length <= 255:
+            body_start = 2
+        else:
+            body_start = 4
+
+        if length <= 127:
+            body_end = body_start + length * 2
+        elif length <= 255:
+            body_end = body_start + length * 2
+        else:
+            body_end = body_start + length * 2
+
+        return payload[body_start:body_end]
 
 
 def validate_hex_input_string(value, label):
@@ -299,103 +450,6 @@ def validate_hex_input_string(value, label):
         messagebox.showerror("Error", f"Input {label} hex string is invalid. Check length.")
         return False
     return True
-
-
-def parse_payload_to_values(payload, available_items):
-    if not payload:
-        return []
-
-    payload = payload.strip()
-    if payload.startswith("09"):
-        payload = payload[2:]  # Remove the 09 prefix
-
-    if len(payload) >= 2:
-        if payload.startswith("81"):
-            payload = payload[2:]  # Remove the 81 prefix
-            length_bytes = payload[:2]
-        elif payload.startswith("82"):
-            payload = payload[2:]  # Remove the 82 prefix
-            length_bytes = payload[:4]
-        else:
-            length_bytes = payload[:2]
-
-        try:
-            length = int(length_bytes, 16)
-        except ValueError:
-            return []
-
-        if length <= 127:
-            body = payload[2:2 + length * 2]
-            body = payload[2:]  # Remove the Length
-        elif length <= 255:
-            body = payload[2:2 + length * 2]
-            body = payload[2:]  # Remove the Length
-        else:
-            body = payload[4:4 + length * 2]
-            body = payload[4:]  # Remove the Length
-    else:
-        body = ""
-
-    values = []
-    for i in range(0, len(body), 4):
-        chunk = body[i:i+4]
-        if len(chunk) != 4:
-            continue
-        try:
-            values.append(int(chunk, 16))
-        except ValueError:
-            continue
-
-    if not available_items:
-        return values
-
-    available_map = {f"{value:04d}": item for value, item in [(int(item.split(" - ", 1)[0]), item) for item in available_items]}
-    result = []
-    for value in values:
-        item = available_map.get(f"{value:04d}")
-        if item:
-            result.append(item)
-    return result
-
-
-def extract_payload_body(payload):
-    if not payload:
-        return ""
-
-    payload = payload.strip()
-    if payload.startswith("09"):
-        payload = payload[2:]  # Remove the 09 prefix
-
-    if len(payload) >= 2:
-        if payload.startswith("81"):
-            payload = payload[2:]  # Remove the 81 prefix
-            length_bytes = payload[:2]
-        elif payload.startswith("82"):
-            payload = payload[2:]  # Remove the 82 prefix
-            length_bytes = payload[:4]
-        else:
-            length_bytes = payload[:2]
-
-        try:
-            length = int(length_bytes, 16)
-        except ValueError:
-            return []
-
-    if length <= 127:
-        body_start = 2
-    elif length <= 255:
-        body_start = 2
-    else:
-        body_start = 4
-
-    if length <= 127:
-        body_end = body_start + length * 2
-    elif length <= 255:
-        body_end = body_start + length * 2
-    else:
-        body_end = body_start + length * 2
-
-    return payload[body_start:body_end]
 
 
 def add_error_details_table(doc, title, rows):
@@ -575,7 +629,7 @@ def add_page_number(paragraph):
 
 # === Function to set base folder dynamically ===
 def choose_base_folder():
-    global base_folder, image_folders, image_folders_net
+    global base_folder, default_folder, image_folders, image_folders_net
     # , template_path
 
     folder = filedialog.askdirectory(title="Select Base Folder")
@@ -583,6 +637,7 @@ def choose_base_folder():
         return
     
     base_folder = folder
+    default_folder = base_folder  # Update default_folder to the new base_folder
     load_xml_mappings()
 
     image_folders = {
@@ -936,13 +991,13 @@ def generate_hex_string():
     if not validate_hex_input_string(test_input_string, "Test"):
         return
 
-    tamper_payload = build_hex_payload(tamper_vals)
-    auto_string.set(build_hex_payload(auto_vals, replacement_payload=tamper_payload))
-    push_string.set(build_hex_payload(push_vals, replacement_payload=tamper_payload))
+    tamper_payload = DisplayPayloadCodec.build_hex_payload(tamper_vals)
+    auto_string.set(DisplayPayloadCodec.build_hex_payload(auto_vals, replacement_payload=tamper_payload))
+    push_string.set(DisplayPayloadCodec.build_hex_payload(push_vals, replacement_payload=tamper_payload))
     tamper_string.set(tamper_payload)
-    batt_string.set(build_hex_payload(batt_vals))
-    diag_string.set(build_hex_payload(diag_vals))
-    test_string.set(build_hex_payload(test_vals))
+    batt_string.set(DisplayPayloadCodec.build_hex_payload(batt_vals))
+    diag_string.set(DisplayPayloadCodec.build_hex_payload(diag_vals))
+    test_string.set(DisplayPayloadCodec.build_hex_payload(test_vals))
 
     save_display_strings({
         "auto_string": auto_string.get(),
@@ -1012,13 +1067,13 @@ def generate_doc():
     if energy_decimal is None or display_lock is None or display_lock_show is None or bell_icon is None or tamper_time is None or display_table_mode is None:
         return  # User cancelled or invalid input
 
-    tamper_payload = build_hex_payload(tamper_vals)
-    auto_string.set(build_hex_payload(auto_vals, replacement_payload=tamper_payload))
-    push_string.set(build_hex_payload(push_vals, replacement_payload=tamper_payload))
+    tamper_payload = DisplayPayloadCodec.build_hex_payload(tamper_vals)
+    auto_string.set(DisplayPayloadCodec.build_hex_payload(auto_vals, replacement_payload=tamper_payload))
+    push_string.set(DisplayPayloadCodec.build_hex_payload(push_vals, replacement_payload=tamper_payload))
     tamper_string.set(tamper_payload)
-    batt_string.set(build_hex_payload(batt_vals))
-    diag_string.set(build_hex_payload(diag_vals))
-    test_string.set(build_hex_payload(test_vals))
+    batt_string.set(DisplayPayloadCodec.build_hex_payload(batt_vals))
+    diag_string.set(DisplayPayloadCodec.build_hex_payload(diag_vals))
+    test_string.set(DisplayPayloadCodec.build_hex_payload(test_vals))
 
     save_display_strings({
         "auto_string": auto_string.get(),
@@ -1172,6 +1227,8 @@ def generate_doc():
     # doc.save(template_path)
 
     output_path = output_var.get()
+    output_path = os.path.join(os.path.dirname(output_path), get_default_output_file())
+    output_var.set(output_path)  # Update the output path variable
     
     # Set default font (for normal text)
     style = doc.styles['Normal']
@@ -1562,185 +1619,155 @@ project_code_entry = ctk.CTkEntry(top_frame, textvariable=project_code_var, widt
 project_code_entry.grid(row=0, column=9, padx=5, sticky="w")
 
 
-# === Dual listbox UI ===
+# === Reusable selection widgets ===
 
-def auto_fill_selected(input_var, available_listbox, selected_listbox):
-    """Auto-fill the selected listbox from a HEX entry string.
+class DualListBox:
+    def __init__(self, frame, title, items):
+        self.items = list(items)
+        self.available = None
+        self.selected = None
+        self.input_hex_string = tk.StringVar()
+        self.search_var = tk.StringVar()
+        self._build(frame, title)
 
-    The input is treated as a continuous HEX stream, split into 4-character chunks.
-    Each valid chunk is converted to decimal and formatted as a 4-digit string.
-    Matching available items are inserted into selected_listbox, duplicates avoided.
-    """
-    hex_text = input_var.get().strip().upper()
-    selected_listbox.delete(0, tk.END)
+    def _build(self, frame, title):
+        ttk.Label(frame, text=title, font=("Arial", 16, "bold")).grid(row=0, column=0, columnspan=3, pady=5)
 
-    if not hex_text:
-        return
+        search_entry = ttk.Entry(frame, textvariable=self.search_var, width=60)
+        search_entry.grid(row=1, column=0, padx=10, pady=5)
+        ttk.Label(frame, text="Input String:").grid(row=1, column=1, padx=5, sticky="e")
 
-    values = []
-    for i in range(0, len(hex_text), 4):
-        chunk = hex_text[i:i+4]
-        if len(chunk) != 4:
-            continue
-        try:
-            values.append(int(chunk, 16))
-        except ValueError:
-            continue
+        input_entry = ttk.Entry(frame, textvariable=self.input_hex_string, width=80)
+        input_entry.grid(row=1, column=2, padx=10, pady=5)
 
-    if not values:
-        return
+        available_frame = tk.Frame(frame)
+        available_frame.grid(row=2, column=0, padx=10, pady=5)
+        self.available = tk.Listbox(available_frame, selectmode=tk.EXTENDED, width=70, height=12)
+        available_scroll = tk.Scrollbar(available_frame, orient=tk.VERTICAL, command=self.available.yview)
+        self.available.config(yscrollcommand=available_scroll.set)
+        self.available.grid(row=0, column=0, sticky="nsew")
+        available_scroll.grid(row=0, column=1, sticky="ns")
 
-    available_items = getattr(available_listbox, "full_items", available_listbox.get(0, tk.END))
-    available_map = {item.split(" - ", 1)[0]: item for item in available_items}
+        selected_frame = tk.Frame(frame)
+        selected_frame.grid(row=2, column=2, padx=10, pady=5)
+        self.selected = tk.Listbox(selected_frame, selectmode=tk.EXTENDED, width=70, height=12)
+        selected_scroll = tk.Scrollbar(selected_frame, orient=tk.VERTICAL, command=self.selected.yview)
+        self.selected.config(yscrollcommand=selected_scroll.set)
+        self.selected.grid(row=0, column=0, sticky="nsew")
+        selected_scroll.grid(row=0, column=1, sticky="ns")
 
-    for value in values:
-        formatted = f"{value:04d}"
-        match = available_map.get(formatted)
-        if match and match not in selected_listbox.get(0, tk.END):
-            selected_listbox.insert(tk.END, match)
+        self.available.full_items = self.items
+        self._populate_available(self.items)
 
+        button_frame = tk.Frame(frame)
+        button_frame.grid(row=2, column=1)
+        ttk.Button(button_frame, text=">>", command=self.add_item).pack(pady=5)
+        ttk.Button(button_frame, text="🗑", command=self.remove_item).pack(pady=5)
+        ttk.Button(button_frame, text="↑", command=self.move_up).pack(pady=5)
+        ttk.Button(button_frame, text="↓", command=self.move_down).pack(pady=5)
 
-def create_dual_listbox(frame, title, items):
-    ttk.Label(frame, text=title, font=("Arial", 16, "bold")).grid(row=0, column=0, columnspan=3, pady=5)
+        self.search_var.trace_add("write", self.update_filter)
+        self.input_hex_string.trace_add("write", self.auto_fill_selected)
 
-    # --- Search Entry ---
-    search_var = tk.StringVar()
-    search_entry = ttk.Entry(frame, textvariable=search_var, width=60)
-    search_entry.grid(row=1, column=0, padx=10, pady=5)
+    def _populate_available(self, items):
+        self.available.delete(0, tk.END)
+        for item in items:
+            self.available.insert(tk.END, item)
 
-    ttk.Label(frame, text="Input String:").grid(row=1, column=1, padx=5, sticky="e")
-    
-    input_hex_string = tk.StringVar()
-    input_string = ttk.Entry(frame, textvariable=input_hex_string, width=80)
-    input_string.grid(row=1, column=2, padx=10, pady=5)
-    input_string.insert(0, "")
-    
+    def auto_fill_selected(self, *_args):
+        hex_text = self.input_hex_string.get().strip().upper()
+        self.selected.delete(0, tk.END)
 
-    # --- Available Listbox + Scrollbar ---
-    available_frame = tk.Frame(frame)
-    available_frame.grid(row=2, column=0, padx=10, pady=5)
-    available = tk.Listbox(available_frame, selectmode=tk.EXTENDED, width=70, height=12)
-    available_scroll = tk.Scrollbar(available_frame, orient=tk.VERTICAL, command=available.yview)
-    available.config(yscrollcommand=available_scroll.set)
-    available.grid(row=0, column=0, sticky="nsew")
-    available_scroll.grid(row=0, column=1, sticky="ns")
+        values = []
+        for index in range(0, len(hex_text), 4):
+            chunk = hex_text[index:index + 4]
+            if len(chunk) == 4:
+                try:
+                    values.append(int(chunk, 16))
+                except ValueError:
+                    continue
 
-    # --- Selected Listbox + Scrollbar ---
-    selected_frame = tk.Frame(frame)
-    selected_frame.grid(row=2, column=2, padx=10, pady=5)
-    selected = tk.Listbox(selected_frame, selectmode=tk.EXTENDED, width=70, height=12)
-    selected_scroll = tk.Scrollbar(selected_frame, orient=tk.VERTICAL, command=selected.yview)
-    selected.config(yscrollcommand=selected_scroll.set)
-    selected.grid(row=0, column=0, sticky="nsew")
-    selected_scroll.grid(row=0, column=1, sticky="ns")
+        available_map = {
+            item.split(" - ", 1)[0]: item
+            for item in self.available.full_items
+        }
+        for value in values:
+            match = available_map.get(f"{value:04d}")
+            if match and match not in self.selected.get(0, tk.END):
+                self.selected.insert(tk.END, match)
 
-    # --- Populate Available ---
-    filtered_items = items.copy()
-    available.full_items = filtered_items
-    for item in filtered_items:
-        available.insert(tk.END, item)
-
-    # --- Button Functions ---
-    def add_item():
-        selections = available.curselection()
-
+    def add_item(self):
+        selections = self.available.curselection()
         if not selections:
             return
 
-        existing = set(selected.get(0, tk.END))
+        existing = set(self.selected.get(0, tk.END))
+        for index in selections:
+            item = self.available.get(index)
+            if item not in existing:
+                self.selected.insert(tk.END, item)
+                existing.add(item)
 
-        for idx in selections:
-            text = available.get(idx)
-            if text not in existing:
-                selected.insert(tk.END, text)
-                existing.add(text)
+        self.available.selection_clear(0, tk.END)
+        next_index = selections[-1] + 1
+        if next_index < self.available.size():
+            self.available.selection_set(next_index)
+            self.available.activate(next_index)
+            self.available.see(next_index)
 
-        # Keep focus on the last selected item
-        available.selection_clear(0, tk.END)
-
-        next_idx = selections[-1] + 1
-        if next_idx < available.size():
-            available.selection_set(next_idx)
-            available.activate(next_idx)
-            available.see(next_idx)
-
-    def remove_item():
-        selections = selected.curselection()
-
+    def remove_item(self):
+        selections = self.selected.curselection()
         if not selections:
             return
 
-        first = selections[0]
+        first_index = selections[0]
+        for index in reversed(selections):
+            self.selected.delete(index)
 
-        for idx in reversed(selections):
-            selected.delete(idx)
+        if self.selected.size() > 0:
+            new_index = min(first_index, self.selected.size() - 1)
+            self.selected.selection_set(new_index)
+            self.selected.activate(new_index)
+            self.selected.see(new_index)
 
-        if selected.size() > 0:
-            new_idx = min(first, selected.size() - 1)
-            selected.selection_set(new_idx)
-            selected.activate(new_idx)
-            selected.see(new_idx)
-
-    def move_up():
-        selections = list(selected.curselection())
-
+    def move_up(self):
+        selections = list(self.selected.curselection())
         if not selections or selections[0] == 0:
             return
 
-        # Move each selected item up by one
-        for idx in selections:
-            item = selected.get(idx)
-            selected.delete(idx)
-            selected.insert(idx - 1, item)
+        for index in selections:
+            item = self.selected.get(index)
+            self.selected.delete(index)
+            self.selected.insert(index - 1, item)
 
-        # Restore selection
-        selected.selection_clear(0, tk.END)
-        for idx in selections:
-            selected.selection_set(idx - 1)
+        self.selected.selection_clear(0, tk.END)
+        for index in selections:
+            self.selected.selection_set(index - 1)
 
-        selected.activate(selections[0] - 1)
-        selected.see(selections[0] - 1)
+        self.selected.activate(selections[0] - 1)
+        self.selected.see(selections[0] - 1)
 
-    def move_down():
-        selections = list(selected.curselection())
-
-        if not selections or selections[-1] == selected.size() - 1:
+    def move_down(self):
+        selections = list(self.selected.curselection())
+        if not selections or selections[-1] == self.selected.size() - 1:
             return
 
-        # Move from bottom to top
-        for idx in reversed(selections):
-            item = selected.get(idx)
-            selected.delete(idx)
-            selected.insert(idx + 1, item)
+        for index in reversed(selections):
+            item = self.selected.get(index)
+            self.selected.delete(index)
+            self.selected.insert(index + 1, item)
 
-        # Restore selection
-        selected.selection_clear(0, tk.END)
-        for idx in selections:
-            selected.selection_set(idx + 1)
+        self.selected.selection_clear(0, tk.END)
+        for index in selections:
+            self.selected.selection_set(index + 1)
 
-        selected.activate(selections[-1] + 1)
-        selected.see(selections[-1] + 1)
+        self.selected.activate(selections[-1] + 1)
+        self.selected.see(selections[-1] + 1)
 
-    # --- Buttons Frame ---
-    btn_frame = tk.Frame(frame)
-    btn_frame.grid(row=2, column=1)
-    ttk.Button(btn_frame, text=">>", command=add_item).pack(pady=5)
-    ttk.Button(btn_frame, text="🗑", command=remove_item).pack(pady=5)
-    ttk.Button(btn_frame, text="↑", command=move_up).pack(pady=5)
-    ttk.Button(btn_frame, text="↓", command=move_down).pack(pady=5)
-
-    # --- Search Function ---
-    def update_filter(*args):
-        search_term = search_var.get().lower()
-        available.delete(0, tk.END)
-        for item in filtered_items:
-            if search_term in str(item).lower():
-                available.insert(tk.END, item)
-
-    search_var.trace_add("write", update_filter)
-    input_hex_string.trace_add("write", lambda *args: auto_fill_selected(input_hex_string, available, selected))
-
-    return available, selected, input_hex_string
+    def update_filter(self, *_args):
+        search_term = self.search_var.get().lower()
+        filtered = [item for item in self.items if search_term in str(item).lower()]
+        self._populate_available(filtered)
 
 
 
@@ -1757,14 +1784,14 @@ def restore_saved_selection(input_var, listbox, payload, available_items, payloa
     if payload_name in ("auto", "push"):
         tamper_payload = saved_display_strings.get("tamper_string", "")
         if tamper_payload:
-            tamper_body = extract_payload_body(tamper_payload)
+            tamper_body = DisplayPayloadCodec.extract_payload_body(tamper_payload)
             if tamper_body and tamper_body in payload:
                 payload = payload.replace(tamper_body, "270F")
 
-    body = extract_payload_body(payload)
+    body = DisplayPayloadCodec.extract_payload_body(payload)
     input_var.set(body)
 
-    values = parse_payload_to_values(payload, available_items)
+    values = DisplayPayloadCodec.parse_payload_to_values(payload, available_items)
     listbox.delete(0, tk.END)
     for item in values:
         if item not in listbox.get(0, tk.END):
@@ -1783,27 +1810,33 @@ notebook.pack(pady=20, expand=True, fill="both")
 
 auto_tab = ttk.Frame(notebook)
 notebook.add(auto_tab, text="Auto Scroll Selection")
-auto_available, auto_selected, auto_input_hex_string = create_dual_listbox(auto_tab, "Auto Scroll Selection", default_items)
+auto_selection = DualListBox(auto_tab, "Auto Scroll Selection", default_items)
+auto_available, auto_selected, auto_input_hex_string = auto_selection.available, auto_selection.selected, auto_selection.input_hex_string
 
 push_tab = ttk.Frame(notebook)
 notebook.add(push_tab, text="Push Scroll Selection")
-push_available, push_selected, push_input_hex_string  = create_dual_listbox(push_tab, "Push Scroll Selection", default_items)
+push_selection = DualListBox(push_tab, "Push Scroll Selection", default_items)
+push_available, push_selected, push_input_hex_string = push_selection.available, push_selection.selected, push_selection.input_hex_string
 
 tamper_tab = ttk.Frame(notebook)
 notebook.add(tamper_tab, text="Tamper Selection")
-tamper_available, tamper_selected, tamper_input_hex_string  = create_dual_listbox(tamper_tab, "Present Tamper Status Selection", tamper_items)
+tamper_selection = DualListBox(tamper_tab, "Present Tamper Status Selection", tamper_items)
+tamper_available, tamper_selected, tamper_input_hex_string = tamper_selection.available, tamper_selection.selected, tamper_selection.input_hex_string
 
 battery_tab = ttk.Frame(notebook)
 notebook.add(battery_tab, text="Battery Mode Selection")
-battery_available, battery_selected, battery_input_hex_string  = create_dual_listbox(battery_tab, "Battery Mode Selection", default_items)
+battery_selection = DualListBox(battery_tab, "Battery Mode Selection", default_items)
+battery_available, battery_selected, battery_input_hex_string = battery_selection.available, battery_selection.selected, battery_selection.input_hex_string
 
 diag_tab = ttk.Frame(notebook)
 notebook.add(diag_tab, text="Diagnostic Selection")
-diag_available, diag_selected, diag_input_hex_string  = create_dual_listbox(diag_tab, "Diagnostic Selection", diag_items)
+diag_selection = DualListBox(diag_tab, "Diagnostic Selection", diag_items)
+diag_available, diag_selected, diag_input_hex_string = diag_selection.available, diag_selection.selected, diag_selection.input_hex_string
 
 test_tab = ttk.Frame(notebook)
 notebook.add(test_tab, text="Test Mode Selection")
-test_available, test_selected, test_input_hex_string  = create_dual_listbox(test_tab, "Test Mode Selection", test_items)
+test_selection = DualListBox(test_tab, "Test Mode Selection", test_items)
+test_available, test_selected, test_input_hex_string = test_selection.available, test_selection.selected, test_selection.input_hex_string
 
 restore_saved_selection(auto_input_hex_string, auto_selected, saved_display_strings.get("auto_string", ""), default_items, "auto")
 restore_saved_selection(push_input_hex_string, push_selected, saved_display_strings.get("push_string", ""), default_items, "push")
@@ -1863,20 +1896,50 @@ child_processes = []
 def open_profile_object_selection():
     """Open Profile_Object_Selection from the same EXE."""
     if getattr(sys, "frozen", False):
-        process = subprocess.Popen([sys.executable, "--profile-object-selection"], cwd=os.path.dirname(sys.executable)) 
-        child_processes.append(process)
+        command = [sys.executable, "--profile-object-selection"]
+        working_dir = os.path.dirname(sys.executable)
     else:
-        run_embedded_script("Profile_Object_Selection.py")
+        script_path = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)),
+            "Profile_Object_Selection.py",
+        )
+        command = [sys.executable, script_path]
+        working_dir = os.path.dirname(script_path)
 
-ctk.CTkButton(output_frame, text="WC Profile Objects String", command=open_profile_object_selection, fg_color="#b341a3").grid(row=4, column=2, padx=30, sticky="w")
+    try:
+        process = subprocess.Popen(command, cwd=working_dir)
+        child_processes.append(process)
+    except OSError as exc:
+        messagebox.showerror(
+            "Unable to Open Profile Objects",
+            f"Could not start the profile-object selector:\n\n{exc}",
+            parent=root,
+        )
+
+ctk.CTkButton(output_frame, text="Profile Objects String", command=open_profile_object_selection, fg_color="#b341a3").grid(row=4, column=2, padx=30, sticky="w")
 
 def open_top_level_string_selection():
     """Open Top_Level_String_Selection from the same EXE."""
     if getattr(sys, "frozen", False):
-        process = subprocess.Popen([sys.executable, "--top-level-string-selection"], cwd=os.path.dirname(sys.executable))
-        child_processes.append(process)
+        command = [sys.executable, "--top-level-string-selection"]
+        working_dir = os.path.dirname(sys.executable)
     else:
-        run_embedded_script("Top_Level_String_Selection.py")
+        script_path = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)),
+            "Top_Level_String_Selection.py",
+        )
+        command = [sys.executable, script_path]
+        working_dir = os.path.dirname(script_path)
+
+    try:
+        process = subprocess.Popen(command, cwd=working_dir)
+        child_processes.append(process)
+    except OSError as exc:
+        messagebox.showerror(
+            "Unable to Open Top Level String",
+            f"Could not start the Top Level String selector:\n\n{exc}",
+            parent=root,
+        )
 
 ctk.CTkButton(output_frame, text="Top Level String", command=open_top_level_string_selection, fg_color="#A34528").grid(row=5, column=2, padx=30, sticky="w")
 
@@ -1947,4 +2010,99 @@ footer_label = ctk.CTkLabel(
 )
 footer_label.pack(pady=5)
 
-root.mainloop()
+class LoginWindow:
+    def __init__(self, root, on_success):
+
+        self.root = root
+        self.on_success = on_success
+
+        self.root.title("Login - 3P PRO Display Tool")
+        self.root.geometry("350x300")
+        self.root.resizable(False, False)
+        self.root.protocol("WM_DELETE_WINDOW", self.root.master.destroy)
+
+        frame = ttk.Frame(root, padding=20)
+        frame.pack(expand=True)
+
+        ttk.Label(frame, text="3P PRO Display Tool", font=("Arial", 16, "bold")).pack(pady=10)
+
+        # IP Address
+        ttk.Label(frame, text="IP Address").pack(anchor="w")
+        self.ip_var = tk.StringVar(value="10.141.17.8")
+        self.ip = ttk.Entry(frame, textvariable=self.ip_var)
+        self.ip.pack(fill="x", pady=5)
+
+        # Username
+        ttk.Label(frame, text="Username").pack(anchor="w")
+        self.username_var = tk.StringVar(value="Admin")
+        self.username = ttk.Entry(frame, textvariable=self.username_var)
+        self.username.pack(fill="x", pady=5)
+
+        # Password
+        ttk.Label(frame, text="Password").pack(anchor="w")
+        self.password_var = tk.StringVar(value="10101")
+        self.password = ttk.Entry(frame, textvariable=self.password_var, show="*")
+        self.password.pack(fill="x", pady=5)
+
+        # Login Button
+        ttk.Button(frame, text="Login", command=self.validate_login).pack(pady=10)
+
+        # Status Label
+        self.status = ttk.Label(frame, text="", foreground="red")
+        self.status.pack()
+
+    def validate_login(self):
+        ip = self.ip.get().strip()
+        user = self.username.get().strip()
+        pwd = self.password.get().strip()
+
+        
+        if not user or not pwd:
+            self.status.config(text="Username and password are required")
+            return
+
+        if user != "Admin" or pwd != "10101":
+            self.status.config(text="Invalid username and password")
+            return
+                
+        if not ip:
+            self.status.config(text="IP address is required")
+            return
+
+        if is_ip_reachable(ip):
+            configure_reference_folders(ip)
+            ip_result = True
+
+        else: 
+            ip_result = messagebox.askyesno(
+                "IP Address Not Reachable",
+                f"The IP address {ip} is not reachable. Do you want to use base_folder as default_folder?",
+                parent=self.root
+            )
+
+        if ip_result==True :
+            self.root.destroy()
+            self.on_success()
+        else:
+            self.status.config(text="Please enter another valid IP address.")
+        
+
+
+
+class LaunchGUI:
+    def __init__(self, application_root):
+        self.root = application_root
+
+    def launch_gui(self):
+        """Launch the main GUI application."""
+        self.root.deiconify()
+
+    def run(self):
+        self.root.mainloop()
+
+# Start with login window
+root.withdraw()
+login_root = tk.Toplevel(root)
+launcher = LaunchGUI(root)
+LoginWindow(login_root, launcher.launch_gui)
+launcher.run()

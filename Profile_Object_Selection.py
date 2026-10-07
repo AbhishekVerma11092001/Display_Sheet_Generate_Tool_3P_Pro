@@ -1,10 +1,8 @@
 import os
-import re
 import sys
 import tkinter as tk
 import xml.etree.ElementTree as ET
-from tkinter import filedialog, messagebox
-from tkinter import ttk
+from tkinter import messagebox, ttk
 
 TAB_NAMES = [
     "Load-Survey-Profile",
@@ -16,47 +14,97 @@ TAB_NAMES = [
     "Instant-Profile",
 ]
 
-Pro_3P_WC_Load_Survey_Profile = []
-Pro_3P_WC_Daily_Energy_Profile = []
-Pro_3P_WC_Billing_Profile = []
-Pro_3P_WC_Event_Profile_1 = []
-Pro_3P_WC_Event_Profile_2 = []
-Pro_3P_WC_Nameplate_Profile = []
-Pro_3P_WC_Instantaneous_Profile = []
-
-OBJECT_LISTS = {
-        "Load-Survey-Profile": [],
-        "Daily-Energy-Profile": [],
-        "Billing-Profile": [],
-        "Event-Profile-1": [],
-        "Event-Profile-2": [],
-        "Nameplate-Profile": [],
-        "Instant-Profile": [],
+PROFILE_XML_ALIASES = {
+    "Load-Survey-Profile": {
+        "3P-WC": ["Profile_3PProWCLoadSurvey", "3P-Pro-WC-Load-Survey-Profile"],
+        "3P-LTCT": ["Profile_3PProLTCTLoadSurvey", "3P-Pro-LTCT-Load-Survey-Profile"],
+    },
+    "Daily-Energy-Profile": {
+        "3P-WC": ["Profile_3PProWCDailyEnergy", "3P-Pro-WC-Daily-Energy-Profile"],
+        "3P-LTCT": ["Profile_3PProLTCTDailyEnergy", "3P-Pro-LTCT-Daily-Energy-Profile"],
+    },
+    "Billing-Profile": {
+        "3P-WC": ["Profile_3PProWCBillingEnergy", "3P-Pro-WC-Billing-Profile"],
+        "3P-LTCT": ["Profile_3PProLTCTBillingEnergy", "3P-Pro-LTCT-Billing-Profile"],
+    },
+    "Event-Profile-1": {
+        "3P-WC": ["Profile_3PProWCEvent1", "3P-Pro-WC-Event-Profile-1"],
+        "3P-LTCT": ["Profile_3PProLTCTEvent1", "3P-Pro-LTCT-Event-Profile-1"],
+    },
+    "Event-Profile-2": {
+        "3P-WC": ["Profile_3PProWCEvent2", "3P-Pro-WC-Event-Profile-2"],
+        "3P-LTCT": ["Profile_3PProLTCTEvent2", "3P-Pro-LTCT-Event-Profile-2"],
+    },
+    "Nameplate-Profile": {
+        "3P-WC": ["Profile_3PProWCNameplate", "3P-Pro-WC-Nameplate-Profile"],
+        "3P-LTCT": ["Profile_3PProLTCTNameplate", "3P-Pro-LTCT-Nameplate-Profile"],
+    },
+    "Instant-Profile": {
+        "3P-WC": ["Profile_3PProWCInstantaneous", "3P-Pro-WC-Instantaneous-Profile"],
+        "3P-LTCT": ["Profile_3PProLTCTInstantaneous", "3P-Pro-LTCT-Instantaneous-Profile"],
+    },
 }
 
-# Determine app folder and default base folder
-if getattr(sys, 'frozen', False):
-    base_folder = os.path.dirname(sys.executable)
-else:
-    base_folder = os.path.dirname(os.path.abspath(__file__))
+PROFILE_FIELDS = {
+    "Load-Survey-Profile": ("Load_Survey_Profile", "LoadSurvey"),
+    "Daily-Energy-Profile": ("Daily_Energy_Profile", "DailyEnergy"),
+    "Billing-Profile": ("Billing_Profile", "BillingEnergy"),
+    "Event-Profile-1": ("Event_Profile_1", "Event1"),
+    "Event-Profile-2": ("Event_Profile_2", "Event2"),
+    "Nameplate-Profile": ("Nameplate_Profile", "Nameplate"),
+    "Instant-Profile": ("Instantaneous_Profile", "Instantaneous"),
+}
+
+BASE_FOLDER = os.path.dirname(os.path.abspath(__file__)) if not getattr(sys, "frozen", False) else os.path.dirname(sys.executable)
+
 
 def parse_profile_xml(path):
-    tree = ET.parse(path)
-    return tree.getroot()
+    return ET.parse(path).getroot()
 
 
-def read_items_from_section(root, section_name):
-    aliases = {
-        "Load-Survey-Profile": ["Profile_3PProWCLoadSurvey", "3P-Pro-WC-Load-Survey-Profile"],
-        "Daily-Energy-Profile": ["Profile_3PProWCDailyEnergy", "3P-Pro-WC-Daily-Energy-Profile"],
-        "Billing-Profile": ["Profile_3PProWCBillingEnergy", "3P-Pro-WC-Billing-Profile"],
-        "Event-Profile-1": ["Profile_3PProWCEvent1", "3P-Pro-WC-Event-Profile-1"],
-        "Event-Profile-2": ["Profile_3PProWCEvent2", "3P-Pro-WC-Event-Profile-2"],
-        "Nameplate-Profile": ["Profile_3PProWCNameplate", "3P-Pro-WC-Nameplate-Profile"],
-        "Instant-Profile": ["Profile_3PProWCInstantaneous", "3P-Pro-WC-Instantaneous-Profile"],
-    }
+def choose_profile_type():
+    prompt_root = tk.Tk()
+    prompt_root.title("Profile Objects Selection")
+    prompt_root.resizable(False, False)
 
-    for tag_name in aliases.get(section_name, [section_name]):
+    selected_profile = {"value": None}
+    content = ttk.Frame(prompt_root, padding=20)
+    content.pack(fill="both", expand=True)
+    ttk.Label(
+        content,
+        text="Please select the meter type for profile-object-selection string generation",
+    ).pack(pady=(0, 16))
+
+    buttons = ttk.Frame(content)
+    buttons.pack()
+
+    def select_profile(profile_type):
+        selected_profile["value"] = profile_type
+        prompt_root.destroy()
+
+    ttk.Button(buttons, text="3P-WC", command=lambda: select_profile("3P-WC")).pack(side="left", padx=6)
+    ttk.Button(buttons, text="3P-LTCT", command=lambda: select_profile("3P-LTCT")).pack(side="left", padx=6)
+
+    prompt_root.protocol("WM_DELETE_WINDOW", prompt_root.destroy)
+    prompt_root.update_idletasks()
+    width = prompt_root.winfo_reqwidth()
+    height = prompt_root.winfo_reqheight()
+    x = (prompt_root.winfo_screenwidth() - width) // 2
+    y = (prompt_root.winfo_screenheight() - height) // 2
+    prompt_root.geometry(f"{width}x{height}+{x}+{y}")
+    prompt_root.grab_set()
+    prompt_root.mainloop()
+    return selected_profile["value"]
+
+
+def read_items_from_section(root, section_name, profile_type=None):
+    candidates = []
+    if profile_type:
+        candidates.extend(PROFILE_XML_ALIASES.get(section_name, {}).get(profile_type, []))
+    if not candidates:
+        candidates.append(section_name)
+
+    for tag_name in candidates:
         section_node = root.find(tag_name)
         if section_node is None:
             continue
@@ -66,54 +114,52 @@ def read_items_from_section(root, section_name):
             text = (item.text or "").strip()
             if text:
                 values.append(text)
-        return values
+        if values:
+            return values
 
     return []
 
 
-def load_xml_mappings():
-    global Pro_3P_WC_Load_Survey_Profile, Pro_3P_WC_Daily_Energy_Profile, Pro_3P_WC_Billing_Profile, Pro_3P_WC_Event_Profile_1, Pro_3P_WC_Event_Profile_2, Pro_3P_WC_Nameplate_Profile, Pro_3P_WC_Instantaneous_Profile, OBJECT_LISTS
+class ProfileXMLLoader:
+    def __init__(self, base_folder):
+        self.base_folder = base_folder
 
-    object_xml_path = os.path.join(base_folder, "RefXML",  "profile_objects_3p_pro.xml")
+    def load_xml_mappings(self, profile_type):
+        object_xml_path = os.path.join(self.base_folder, "RefXML", "profile_objects_3p_pro.xml")
+        profile_code = profile_type.removeprefix("3P-")
+        object_lists = {tab_name: [] for tab_name in TAB_NAMES}
 
-    if os.path.exists(object_xml_path):
+        if not os.path.exists(object_xml_path):
+            return object_lists
+
         root = parse_profile_xml(object_xml_path)
-        Pro_3P_WC_Load_Survey_Profile = read_items_from_section(root, "Profile_3PProWCLoadSurvey")
-        Pro_3P_WC_Daily_Energy_Profile = read_items_from_section(root, "Profile_3PProWCDailyEnergy")
-        Pro_3P_WC_Billing_Profile = read_items_from_section(root, "Profile_3PProWCBillingEnergy")
-        Pro_3P_WC_Event_Profile_1 = read_items_from_section(root, "Profile_3PProWCEvent1")
-        Pro_3P_WC_Event_Profile_2 = read_items_from_section(root, "Profile_3PProWCEvent2")
-        Pro_3P_WC_Nameplate_Profile = read_items_from_section(root, "Profile_3PProWCNameplate")
-        Pro_3P_WC_Instantaneous_Profile = read_items_from_section(root, "Profile_3PProWCInstantaneous")
-    else:
-        Pro_3P_WC_Load_Survey_Profile = []
-        Pro_3P_WC_Daily_Energy_Profile = []
-        Pro_3P_WC_Billing_Profile = []
-        Pro_3P_WC_Event_Profile_1 = []
-        Pro_3P_WC_Event_Profile_2 = []
-        Pro_3P_WC_Nameplate_Profile = []
-        Pro_3P_WC_Instantaneous_Profile = []
+        for tab_name in TAB_NAMES:
+            values = []
+            aliases = PROFILE_XML_ALIASES.get(tab_name, {}).get(profile_type, [])
+            for tag_name in aliases or [f"Profile_3PPro{profile_code}{PROFILE_FIELDS[tab_name][1]}"]:
+                section_node = root.find(tag_name)
+                if section_node is None:
+                    continue
+                values = [
+                    (item.text or "").strip()
+                    for item in section_node.findall("Item")
+                    if (item.text or "").strip()
+                ]
+                if values:
+                    break
+            object_lists[tab_name] = values
 
-    OBJECT_LISTS = {
-        "Load-Survey-Profile": Pro_3P_WC_Load_Survey_Profile,
-        "Daily-Energy-Profile": Pro_3P_WC_Daily_Energy_Profile,
-        "Billing-Profile": Pro_3P_WC_Billing_Profile,
-        "Event-Profile-1": Pro_3P_WC_Event_Profile_1,
-        "Event-Profile-2": Pro_3P_WC_Event_Profile_2,
-        "Nameplate-Profile": Pro_3P_WC_Nameplate_Profile,
-        "Instant-Profile": Pro_3P_WC_Instantaneous_Profile,
-    }
+        return object_lists
+
 
 class CheckboxPanel(ttk.Frame):
     def __init__(self, parent, items, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
 
-        # Scrollable canvas to hold a large number of checkbuttons
         canvas = tk.Canvas(self)
         scrollbar = ttk.Scrollbar(self, orient="vertical", command=canvas.yview)
         self.inner = ttk.Frame(canvas)
-
-        self.inner_id = canvas.create_window((0, 0), window=self.inner, anchor="nw")
+        canvas.create_window((0, 0), window=self.inner, anchor="nw")
         canvas.configure(yscrollcommand=scrollbar.set)
 
         canvas.pack(side="left", fill="both", expand=True)
@@ -145,40 +191,43 @@ class CheckboxPanel(ttk.Frame):
         self.vars = []
         for idx, label in enumerate(items):
             var = tk.IntVar(value=0)
-            cb = ttk.Checkbutton(self.inner, text=label, variable=var)
-            cb.grid(row=idx, column=0, sticky="w", padx=4, pady=2)
+            checkbutton = ttk.Checkbutton(self.inner, text=label, variable=var)
+            checkbutton.grid(row=idx, column=0, sticky="w", padx=4, pady=2)
             self.vars.append((label, var))
 
-        # update scrollregion when needed
         self.inner.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
-
-        # make the widget receive focus for wheel events
         canvas.bind("<Enter>", lambda e: canvas.focus_set())
         canvas.bind("<Button-1>", lambda e: canvas.focus_set())
 
     def get_bits(self):
-        # Return list of 0/1 for each checkbox in order
         return [int(var.get()) for _, var in self.vars]
-
-    def get_labels(self):
-        return [label for label, _ in self.vars]
 
 
 class ProfileTabbedApp(tk.Tk):
-    def __init__(self):
+    def __init__(self, profile_type, object_lists):
         super().__init__()
-        load_xml_mappings()
-        self.title("3P Pro Profile Objects Selection V1.0")
-        self.geometry("800x620")
+        self.profile_type = profile_type
+        self.object_lists = object_lists
+
+        if not any(object_lists.values()):
+            self.withdraw()
+            messagebox.showerror(
+                "Profile Objects Unavailable",
+                f"No {profile_type} profile-object mappings were found in RefXML/profile_objects_3p_pro.xml.",
+                parent=self,
+            )
+            self.destroy()
+            return
+
+        self.title(f"{profile_type} Profile Objects Selection V1.0")
+        self.geometry("800x720")
         self.resizable(False, False)
 
-        # Always open the child window in its normal/default view and bring it
-        # to the foreground when launched from the single EXE.
         self.update_idletasks()
         screen_w = self.winfo_screenwidth()
         screen_h = self.winfo_screenheight()
         win_w = 800
-        win_h = 620
+        win_h = 720
         pos_x = max((screen_w - win_w) // 2, 0)
         pos_y = max((screen_h - win_h) // 2, 0)
         self.geometry(f"{win_w}x{win_h}+{pos_x}+{pos_y}")
@@ -194,16 +243,16 @@ class ProfileTabbedApp(tk.Tk):
 
         self.panels = {}
         self.output_texts = {}
-        self.note_texts = {}
         self.all_profile_objects_text = None
+
         for name in TAB_NAMES:
             frame = ttk.Frame(self.notebook)
             self.notebook.add(frame, text=name)
-            # build inner layout: checkbox panel + actions panel
+
             left = ttk.Frame(frame)
             left.pack(side="left", fill="both", expand=True, padx=(8, 4), pady=8)
 
-            items = OBJECT_LISTS.get(name, [])
+            items = object_lists.get(name, [])
             panel = CheckboxPanel(left, items)
             panel.pack(fill="both", expand=True)
             self.panels[name] = panel
@@ -212,10 +261,9 @@ class ProfileTabbedApp(tk.Tk):
             right.pack(side="right", fill="y", padx=(4, 8), pady=8)
 
             ttk.Label(right, text="Actions", font=(None, 10, "bold")).pack(pady=(4, 8))
-            gen_btn = ttk.Button(right, text="Generate String", command=self.generate_for_all_tabs)
-            gen_btn.pack(fill="x", padx=6, pady=4)
+            ttk.Button(right, text="Generate String", command=self.generate_for_all_tabs).pack(fill="x", padx=6, pady=4)
 
-            ttk.Label(right, text="Output:").pack(anchor="w", padx=6, pady=(12, 2))
+            ttk.Label(right, text="Individual Tab Output:", font=(None, 10, "bold")).pack(anchor="w", padx=6, pady=(12, 2))
             output_text = tk.Text(right, height=10, width=40)
             output_text.pack(fill="both", padx=6, pady=(0, 6), expand=False)
             self.output_texts[name] = output_text
@@ -225,7 +273,6 @@ class ProfileTabbedApp(tk.Tk):
                 ttk.Label(right, text="Maximum Phase wise THD with Date & Time for Voltage").pack(anchor="w", padx=6, pady=(0, 2))
                 ttk.Label(right, text="and Current Objects will be shows value only if it is also").pack(anchor="w", padx=6, pady=(0, 2))
                 ttk.Label(right, text="enabled from Firmware also.").pack(anchor="w", padx=6, pady=(0, 2))
-                
 
         bottom_frame = ttk.Frame(self)
         bottom_frame.pack(fill="x", padx=8, pady=(0, 8))
@@ -234,28 +281,20 @@ class ProfileTabbedApp(tk.Tk):
         self.all_profile_objects_text = tk.Text(bottom_frame, height=2, width=80)
         self.all_profile_objects_text.pack(fill="both", expand=False)
 
-        convert_btn = ttk.Button(bottom_frame, text="Convert String to Bits", command=self.convert_string_to_bits)
-        convert_btn.pack(anchor="e", pady=(6, 0))
-
-        # status bar
+        ttk.Button(bottom_frame, text="Convert String to Bits", command=self.convert_string_to_bits).pack(anchor="e", pady=(6, 0))
         self.status = ttk.Label(self, text="Ready", anchor="w")
         self.status.pack(fill="x", padx=4, pady=(0, 4))
 
-
     def _build_output_for_tab(self, tab_name, panel):
         bits = panel.get_bits()
-        # bits[0] -> MSB or LSB? We'll treat first item as MSB (leftmost) for display.
-        bitstring = "".join(str(b) for b in bits)
-        # also produce hex for convenience
-        # pad to multiple of 8
+        bitstring = "".join(str(bit) for bit in bits)
         pad = (-len(bitstring)) % 8
         bitstring_padded = ("0" * pad) + bitstring
-        hex_chunks = []
-        for i in range(0, len(bitstring_padded), 8):
-            chunk = bitstring_padded[i:i+8]
-            hex_chunks.append(f"{int(chunk, 2):02X}")
+
+        hex_chunks = [f"{int(bitstring_padded[i:i+8], 2):02X}" for i in range(0, len(bitstring_padded), 8)]
         hex_string_temp = "".join(hex_chunks)
-        length = len(bitstring_padded)  # number of bits, which is also the length of the bitstring
+        length = len(bitstring_padded)
+
         if length <= 127:
             length_prefix = f"{length:02X}"
         elif length <= 255:
@@ -263,21 +302,20 @@ class ProfileTabbedApp(tk.Tk):
         else:
             length_prefix = "82" + f"{length:04X}"
 
-        hex_string = f"04{length_prefix}{hex_string_temp}"  # prepend length as 1 byte
+        hex_string = f"04{length_prefix}{hex_string_temp}"
         display_text = f"Tab: {tab_name}\nBits: {bitstring}\nHex: {hex_string}\n"
         return display_text, hex_string
 
     def generate_for_all_tabs(self):
         tab_hex_strings = {}
         for tab_name, panel in self.panels.items():
-            out, hex_string = self._build_output_for_tab(tab_name, panel)
+            _, hex_string = self._build_output_for_tab(tab_name, panel)
             tab_hex_strings[tab_name] = hex_string
 
         combined_profile_string = "02081101" + "".join(tab_hex_strings.values())
 
         for tab_name in self.panels:
             output_text = self.output_texts.get(tab_name)
-
             if output_text is not None:
                 display_text, _ = self._build_output_for_tab(tab_name, self.panels[tab_name])
                 output_text.delete("1.0", tk.END)
@@ -288,6 +326,7 @@ class ProfileTabbedApp(tk.Tk):
             self.all_profile_objects_text.insert(tk.END, combined_profile_string)
 
         self.status.config(text="Generated strings for all tabs")
+        messagebox.showinfo("Success", "Strings generated for all tabs.")
 
     def convert_string_to_bits(self):
         if self.all_profile_objects_text is None:
@@ -298,70 +337,59 @@ class ProfileTabbedApp(tk.Tk):
             messagebox.showerror("Error", "Please generate or enter an All Profile Objects string first.")
             return
 
-        length = len(all_profile_objects_string)
-        if length != 146:
+        if len(all_profile_objects_string) != 146:
             messagebox.showerror("Error", "Input All Profile ObjectsHex string is invalid. Check length.")
             return
 
         if all_profile_objects_string.startswith("02081101"):
             all_profile_objects_string = all_profile_objects_string[8:]
 
+        values = {}
         if all_profile_objects_string.startswith("0420"):
             all_profile_objects_string = all_profile_objects_string[4:]
-            load_survey_profile_object_string = all_profile_objects_string[:8]
+            values["Load-Survey-Profile"] = all_profile_objects_string[:8]
             all_profile_objects_string = all_profile_objects_string[8:]
 
         if all_profile_objects_string.startswith("0438"):
             all_profile_objects_string = all_profile_objects_string[4:]
-            daily_energy_profile_object_string = all_profile_objects_string[:14]
+            values["Daily-Energy-Profile"] = all_profile_objects_string[:14]
             all_profile_objects_string = all_profile_objects_string[14:]
 
         if all_profile_objects_string.startswith("0481B8"):
             all_profile_objects_string = all_profile_objects_string[6:]
-            billing_profile_object_string = all_profile_objects_string[:46]
+            values["Billing-Profile"] = all_profile_objects_string[:46]
             all_profile_objects_string = all_profile_objects_string[46:]
 
         if all_profile_objects_string.startswith("0418"):
             all_profile_objects_string = all_profile_objects_string[4:]
-            event_profile_1_object_string = all_profile_objects_string[:6]
+            values["Event-Profile-1"] = all_profile_objects_string[:6]
             all_profile_objects_string = all_profile_objects_string[6:]
 
         if all_profile_objects_string.startswith("0408"):
             all_profile_objects_string = all_profile_objects_string[4:]
-            event_profile_2_object_string = all_profile_objects_string[:2]
+            values["Event-Profile-2"] = all_profile_objects_string[:2]
             all_profile_objects_string = all_profile_objects_string[2:]
 
         if all_profile_objects_string.startswith("0410"):
             all_profile_objects_string = all_profile_objects_string[4:]
-            nameplate_profile_object_string = all_profile_objects_string[:4]
+            values["Nameplate-Profile"] = all_profile_objects_string[:4]
             all_profile_objects_string = all_profile_objects_string[4:]
 
         if all_profile_objects_string.startswith("0470"):
             all_profile_objects_string = all_profile_objects_string[4:]
-            instant_profile_object_string = all_profile_objects_string[:28]
+            values["Instant-Profile"] = all_profile_objects_string[:28]
             all_profile_objects_string = all_profile_objects_string[28:]
 
-        if len(all_profile_objects_string) > 0:
+        if all_profile_objects_string:
             messagebox.showerror("Error", "Input All Profile ObjectsHex string is invalid. Extra data found.")
             return
 
-        load_survey_profile_object_bits = hex_string_to_bits(load_survey_profile_object_string)
-        daily_energy_profile_object_bits = hex_string_to_bits(daily_energy_profile_object_string)
-        billing_profile_object_bits = hex_string_to_bits(billing_profile_object_string)
-        event_profile_1_object_bits = hex_string_to_bits(event_profile_1_object_string)
-        event_profile_2_object_bits = hex_string_to_bits(event_profile_2_object_string)
-        nameplate_profile_object_bits = hex_string_to_bits(nameplate_profile_object_string)
-        instant_profile_object_bits = hex_string_to_bits(instant_profile_object_string)
-
-        self.apply_bits_to_panel("Load-Survey-Profile", load_survey_profile_object_bits)
-        self.apply_bits_to_panel("Daily-Energy-Profile", daily_energy_profile_object_bits)
-        self.apply_bits_to_panel("Billing-Profile", billing_profile_object_bits)
-        self.apply_bits_to_panel("Event-Profile-1", event_profile_1_object_bits)
-        self.apply_bits_to_panel("Event-Profile-2", event_profile_2_object_bits)
-        self.apply_bits_to_panel("Nameplate-Profile", nameplate_profile_object_bits)
-        self.apply_bits_to_panel("Instant-Profile", instant_profile_object_bits)
+        for tab_name, hex_string in values.items():
+            bits_string = hex_string_to_bits(hex_string)
+            self.apply_bits_to_panel(tab_name, bits_string)
 
         self.status.config(text="Loaded bits for all profile tabs")
+        messagebox.showinfo("Success", "Strings converted to bits and applied to all tabs.")
 
     def apply_bits_to_panel(self, tab_name, bits_string):
         panel = self.panels.get(tab_name)
@@ -390,19 +418,24 @@ class ProfileTabbedApp(tk.Tk):
 
 
 def hex_string_to_bits(hex_string):
-    # Remove any whitespace and convert to uppercase
-    hex_string = hex_string.replace(" ", "").upper()
-
-    # Convert hex string to binary string without the '0b' prefix
+    hex_string = (hex_string or "").replace(" ", "").upper()
     if not hex_string:
         return ""
+    return bin(int(hex_string, 16))[2:]
 
-    binary_string = bin(int(hex_string, 16))[2:]
 
-    return binary_string
+def launch_profile_selection():
+    profile_type = sys.argv[1] if len(sys.argv) > 1 else None
+    if profile_type not in {"3P-WC", "3P-LTCT"}:
+        profile_type = choose_profile_type()
+    if profile_type is None:
+        return
 
+    loader = ProfileXMLLoader(BASE_FOLDER)
+    object_lists = loader.load_xml_mappings(profile_type)
+    app = ProfileTabbedApp(profile_type, object_lists)
+    app.mainloop()
 
 
 if __name__ == "__main__":
-    app = ProfileTabbedApp()
-    app.mainloop()
+    launch_profile_selection()
