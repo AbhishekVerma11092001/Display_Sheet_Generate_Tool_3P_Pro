@@ -1598,7 +1598,7 @@ MODERN = {
 # Tk window titled "tk".
 root = ctk.CTk()
 # root.iconbitmap("logo.ico")
-# root.title("3P Pro Meter Display Report Generator | V5.0")
+root.title("3P Pro Meter Display Report Generator | V5.0")
 root.configure(fg_color=MODERN["bg"])
 root.geometry("1200x780")
 root.resizable(False, False)
