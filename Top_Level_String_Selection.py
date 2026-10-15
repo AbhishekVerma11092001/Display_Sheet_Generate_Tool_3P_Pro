@@ -419,195 +419,109 @@ def convert_string_to_bits():
     messagebox.showinfo("Success", "String converted to bits successfully.")
 
 
-# === Tkinter GUI ===
-ctk.set_appearance_mode("light")   # Options: "light", "dark", "system"
-ctk.set_default_color_theme("blue")  # Try "green", "dark-blue", etc.
-# === Main Window ===
+# === Modern Industrial GUI ===
+ctk.set_appearance_mode("light")
+ctk.set_default_color_theme("blue")
+
+COLORS = {
+    "bg": "#F3F6F9", "surface": "#FFFFFF", "input": "#E0EAF5",
+    "text": "#17212B", "muted": "#667381", "primary": "#1D55CE",
+    "primary_hover": "#6A91E7", "border": "#989A9C", "success": "#5E8BEC",
+    "success_hover": "#9EB6E9",
+}
+
 root = ctk.CTk()
-# root.iconbitmap("logo.ico")
-root.title("3P Pro Top Level Selection V1.0")
-root.geometry("1100x600")
+root.title("3P Pro Top Level String Selection | V2.0")
+root.configure(fg_color=COLORS["bg"])
 root.resizable(False, False)
 
-# Always open in the normal/default view and bring the window to the
-# foreground when launched from the single EXE.
+WIN_W, WIN_H = 1100, 720
 root.update_idletasks()
-screen_w = root.winfo_screenwidth()
-screen_h = root.winfo_screenheight()
-win_w = 1100
-win_h = 600
-pos_x = max((screen_w - win_w) // 2, 0)
-pos_y = max((screen_h - win_h) // 2, 0)
-root.geometry(f"{win_w}x{win_h}+{pos_x}+{pos_y}")
-root.state("normal")
-root.deiconify()
-root.lift()
-root.focus_force()
+pos_x = max((root.winfo_screenwidth() - WIN_W) // 2, 0)
+pos_y = max((root.winfo_screenheight() - WIN_H) // 2, 0)
+root.geometry(f"{WIN_W}x{WIN_H}+{pos_x}+{pos_y}")
+root.lift(); root.focus_force()
 root.after(100, lambda: root.attributes("-topmost", True))
 root.after(300, lambda: root.attributes("-topmost", False))
 
-# === Top Frame ===
-top_frame = ctk.CTkFrame(root, corner_radius=15)
-top_frame.pack(pady=15, padx=15, fill="x")
+# Header
+header = ctk.CTkFrame(root, fg_color="#1D55CE", corner_radius=0, height=35)
+header.pack(fill="x")
+header.pack_propagate(False)
+ctk.CTkLabel(header, text="3P PRO TOP LEVEL STRING SELECTION", text_color="white", font=ctk.CTkFont(size=18, weight="bold")).pack(anchor="w", padx=20, pady=(10, 0))
 
-top_label = ctk.CTkLabel(top_frame, text="3P Pro Top Level String Selection", font=ctk.CTkFont(size=20, weight="bold"))
-top_label.pack(pady=10, padx=10)
+content = ctk.CTkFrame(root, fg_color=COLORS["bg"], corner_radius=0)
+content.pack(fill="both", expand=True, padx=18, pady=14)
 
-left_frame = ctk.CTkFrame(top_frame)
-left_frame.pack(side="left", fill="both", expand=True, padx=(8, 4), pady=8)
+left_frame = ctk.CTkFrame(content, fg_color=COLORS["surface"], border_width=1, border_color=COLORS["border"], corner_radius=12)
+left_frame.pack(side="left", fill="both", expand=True, padx=(0, 7))
+right_frame = ctk.CTkFrame(content, fg_color=COLORS["surface"], border_width=1, border_color=COLORS["border"], corner_radius=12)
+right_frame.pack(side="right", fill="both", expand=True, padx=(7, 0))
 
-right_frame = ctk.CTkFrame(top_frame)
-right_frame.pack(side="right", fill="both", expand=True, padx=(4, 8), pady=8)
+ctk.CTkLabel(left_frame, text="Profile & Event Configuration", text_color=COLORS["primary"], font=ctk.CTkFont(size=16, weight="bold")).grid(row=0, column=0, columnspan=2, padx=20, pady=(8, 0), sticky="w")
+ctk.CTkLabel(right_frame, text="Meter & Operating Configuration", text_color=COLORS["primary"], font=ctk.CTkFont(size=16, weight="bold")).grid(row=0, column=0, columnspan=3, padx=20, pady=(8, 0), sticky="w")
 
-bottom_frame = ctk.CTkFrame(root)
-bottom_frame.pack(fill="x", padx=8, pady=(0, 8))
+LABEL_FONT = ctk.CTkFont(size=14)
+ENTRY_FONT = ctk.CTkFont(size=14)
 
-bottom_left_frame = ctk.CTkFrame(bottom_frame)
-bottom_left_frame.pack(side="left", fill="both", expand=True, padx=(8, 6), pady=8)
 
-bottom_right_frame = ctk.CTkFrame(bottom_frame)
-bottom_right_frame.pack(side="right", fill="both", expand=True, padx=(6, 8), pady=8)
+def add_entry(parent, row, label, variable, width=180):
+    ctk.CTkLabel(parent, text=label, text_color=COLORS["text"], font=LABEL_FONT).grid(row=row, column=0, padx=20, pady=5, sticky="w")
+    w = ctk.CTkEntry(parent, textvariable=variable, width=width, height=20, font=ENTRY_FONT, fg_color=COLORS["input"], border_color=COLORS["border"], text_color=COLORS["text"])
+    w.grid(row=row, column=1, padx=(5, 20), pady=5, sticky="w")
+    return w
 
-# === GUI Elements ===
-ctk.CTkLabel(left_frame, text="Tamper Log Time Type:").grid(row=0, column=0, padx=20, sticky="w")
+
+def add_combo(parent, row, label, variable, values, width=180):
+    ctk.CTkLabel(parent, text=label, text_color=COLORS["text"], font=LABEL_FONT).grid(row=row, column=0, padx=20, pady=5, sticky="w")
+    w = ctk.CTkComboBox(parent, variable=variable, values=values, state="readonly", width=width, height=20, font=ENTRY_FONT, fg_color=COLORS["input"], border_color=COLORS["border"], button_color=COLORS["primary_hover"], button_hover_color=COLORS["primary"], text_color=COLORS["text"])
+    w.grid(row=row, column=1, padx=(5, 20), pady=5, sticky="w")
+    return w
+
+# Variables + controls (same names/values used by generation logic)
 tamper_log_time_type_var = tk.StringVar(value="1-T1_T3")
-tamper_log_time_type_combo = ctk.CTkComboBox(left_frame, variable=tamper_log_time_type_var, values=["0-T2_T4", "1-T1_T3"], state="readonly", width=150)
-tamper_log_time_type_combo.grid(row=0, column=1, padx=5, sticky="w")
-
-ctk.CTkLabel(left_frame, text="Tamper Detect Time for Display: range(0-255)").grid(row=1, column=0, padx=20, sticky="w")
-tamper_detect_time_var = tk.StringVar(value="10")
-tamper_detect_time_combo = ctk.CTkEntry(left_frame, textvariable=tamper_detect_time_var, width=100)
-tamper_detect_time_combo.grid(row=1, column=1, padx=5, sticky="w")
-
-ctk.CTkLabel(left_frame, text="Load Survey Max Entries (upto 4800):").grid(row=2, column=0, padx=20, sticky="w")
-LS_Max_Entry_var = tk.StringVar(value="2880")
-LS_Max_Entry_combo = ctk.CTkEntry(left_frame, textvariable=LS_Max_Entry_var, width=100)
-LS_Max_Entry_combo.grid(row=2, column=1, padx=5, sticky="w")
-
-ctk.CTkLabel(left_frame, text="Daily Energy Max Entries (upto 100):").grid(row=3, column=0, padx=20, sticky="w")
-DE_Max_Entry_var = tk.StringVar(value="60")
-DE_Max_Entry_combo = ctk.CTkEntry(left_frame, textvariable=DE_Max_Entry_var, width=100)
-DE_Max_Entry_combo.grid(row=3, column=1, padx=5, sticky="w")
-
-ctk.CTkLabel(left_frame, text="Bill Profile  Max Entries (12):").grid(row=4, column=0, padx=20, sticky="w")
-BP_Max_Entry_var = tk.StringVar(value="12")
-BP_Max_Entry_combo = ctk.CTkEntry(left_frame, textvariable=BP_Max_Entry_var, width=100)
-BP_Max_Entry_combo.grid(row=4, column=1, padx=5, sticky="w")
-
-ctk.CTkLabel(left_frame, text="Voltage Related Event Max Entries (upto 100):").grid(row=5, column=0, padx=20, sticky="w")
-Vol_Max_Entry_var = tk.StringVar(value="80")
-Vol_Max_Entry_combo = ctk.CTkEntry(left_frame, textvariable=Vol_Max_Entry_var, width=100)
-Vol_Max_Entry_combo.grid(row=5, column=1, padx=5, sticky="w")
-
-ctk.CTkLabel(left_frame, text="Current Related Event Max Entries (upto 150):").grid(row=6, column=0, padx=20, sticky="w")
-Curr_Max_Entry_var = tk.StringVar(value="80")
-Curr_Max_Entry_combo = ctk.CTkEntry(left_frame, textvariable=Curr_Max_Entry_var, width=100)
-Curr_Max_Entry_combo.grid(row=6, column=1, padx=5, sticky="w")
-
-ctk.CTkLabel(left_frame, text="Non-Rollover Event Max Entries (upto 6):").grid(row=7, column=0, padx=20, sticky="w")
-Non_Roll_Max_Entry_var = tk.StringVar(value="2")
-Non_Roll_Max_Entry_combo = ctk.CTkEntry(left_frame, textvariable=Non_Roll_Max_Entry_var, width=100)
-Non_Roll_Max_Entry_combo.grid(row=7, column=1, padx=5, sticky="w")
-
-ctk.CTkLabel(left_frame, text="Other Event Max Entries (upto 250):").grid(row=8, column=0, padx=20, sticky="w")
-Other_Max_Entry_var = tk.StringVar(value="40")
-Other_Max_Entry_combo = ctk.CTkEntry(left_frame, textvariable=Other_Max_Entry_var, width=100)
-Other_Max_Entry_combo.grid(row=8, column=1, padx=5, sticky="w")
-
-ctk.CTkLabel(left_frame, text="Transaction Event Max Entries (upto 100):").grid(row=9, column=0, padx=20, sticky="w")
-Trans_Max_Entry_var = tk.StringVar(value="24")
-Trans_Max_Entry_combo = ctk.CTkEntry(left_frame, textvariable=Trans_Max_Entry_var, width=100)
-Trans_Max_Entry_combo.grid(row=9, column=1, padx=5, sticky="w")
-
-ctk.CTkLabel(left_frame, text="Power Event Max Entries (upto 300):").grid(row=10, column=0, padx=20, sticky="w")
-Power_Max_Entry_var = tk.StringVar(value="288")
-Power_Max_Entry_combo = ctk.CTkEntry(left_frame, textvariable=Power_Max_Entry_var, width=100)
-Power_Max_Entry_combo.grid(row=10, column=1, padx=5, sticky="w")
-
-ctk.CTkLabel(left_frame, text="Control Event Max Entries (upto 100):").grid(row=11, column=0, padx=20, sticky="w")
-Control_Max_Entry_var = tk.StringVar(value="64")
-Control_Max_Entry_combo = ctk.CTkEntry(left_frame, textvariable=Control_Max_Entry_var, width=100)
-Control_Max_Entry_combo.grid(row=11, column=1, padx=5, sticky="w")
-
-ctk.CTkLabel(left_frame, text="C-Open Lock Display Configuration:").grid(row=12, column=0, padx=20, sticky="w")
+tamper_log_time_type_combo = add_combo(left_frame, 1, "Tamper Log Time Type", tamper_log_time_type_var, ["0-T2_T4", "1-T1_T3"])
+tamper_detect_time_var = tk.StringVar(value="10"); tamper_detect_time_combo = add_entry(left_frame, 2, "Tamper Detect Time (0-255)", tamper_detect_time_var)
+LS_Max_Entry_var = tk.StringVar(value="2880"); LS_Max_Entry_combo = add_entry(left_frame, 3, "Load Survey Max Entries (≤4800)", LS_Max_Entry_var)
+DE_Max_Entry_var = tk.StringVar(value="60"); DE_Max_Entry_combo = add_entry(left_frame, 4, "Daily Energy Max Entries (≤100)", DE_Max_Entry_var)
+BP_Max_Entry_var = tk.StringVar(value="12"); BP_Max_Entry_combo = add_entry(left_frame, 5, "Bill Profile Max Entries (12)", BP_Max_Entry_var)
+Vol_Max_Entry_var = tk.StringVar(value="80"); Vol_Max_Entry_combo = add_entry(left_frame, 6, "Voltage Event Max Entries (≤100)", Vol_Max_Entry_var)
+Curr_Max_Entry_var = tk.StringVar(value="80"); Curr_Max_Entry_combo = add_entry(left_frame, 7, "Current Event Max Entries (≤150)", Curr_Max_Entry_var)
+Non_Roll_Max_Entry_var = tk.StringVar(value="2"); Non_Roll_Max_Entry_combo = add_entry(left_frame, 8, "Non-Rollover Event Max Entries (≤6)", Non_Roll_Max_Entry_var)
+Other_Max_Entry_var = tk.StringVar(value="40"); Other_Max_Entry_combo = add_entry(left_frame, 9, "Other Event Max Entries (≤250)", Other_Max_Entry_var)
+Trans_Max_Entry_var = tk.StringVar(value="24"); Trans_Max_Entry_combo = add_entry(left_frame, 10, "Transaction Event Max Entries (≤100)", Trans_Max_Entry_var)
+Power_Max_Entry_var = tk.StringVar(value="288"); Power_Max_Entry_combo = add_entry(left_frame, 11, "Power Event Max Entries (≤300)", Power_Max_Entry_var)
+Control_Max_Entry_var = tk.StringVar(value="64"); Control_Max_Entry_combo = add_entry(left_frame, 12, "Control Event Max Entries (≤100)", Control_Max_Entry_var)
 display_lock_var = tk.StringVar(value="0-No Mode lock")
-display_lock_combo = ctk.CTkComboBox(left_frame, variable=display_lock_var, values=["0-No Mode lock", "1-Auto Mode lock", "2-All Mode lock"], state="readonly", width=150)
-display_lock_combo.grid(row=12, column=1, padx=5, sticky="w")
+display_lock_combo = add_combo(left_frame, 13, "C-Open Lock Display Configuration", display_lock_var, ["0-No Mode lock", "1-Auto Mode lock", "2-All Mode lock"])
 
-ctk.CTkLabel(right_frame, text="Relay Configuration:").grid(row=0, column=0, padx=20, sticky="w")
-Relay_Config_var = tk.StringVar(value="1-All Projects Config")
-Relay_Config_combo = ctk.CTkComboBox(right_frame, variable=Relay_Config_var, values=["0-YMPL Lab config", "1-All Projects Config"], state="readonly", width=200)
-Relay_Config_combo.grid(row=0, column=1, padx=5, sticky="w")
-
-ctk.CTkLabel(right_frame, text="Bill due to Configuration:").grid(row=1, column=0, padx=20, sticky="w")
+Relay_Config_var = tk.StringVar(value="1-All Projects Config"); Relay_Config_combo = add_combo(right_frame, 1, "Relay Configuration", Relay_Config_var, ["0-YMPL Lab config", "1-All Projects Config"])
 bill_config_var = tk.StringVar(value="00000000")
-bill_config_entry = ctk.CTkEntry(right_frame, textvariable=bill_config_var, state="readonly", width=100)
-bill_config_entry.grid(row=1, column=1, padx=5, sticky="w")
-bill_config_button = ctk.CTkButton(right_frame, text="Select", width=60, height=20, command=get_bill_due_config, fg_color="#782E86")
-bill_config_button.grid(row=1, column=2, padx=5, sticky="w")
+ctk.CTkLabel(right_frame, text="Bill due to Configuration", text_color=COLORS["text"], font=LABEL_FONT).grid(row=2, column=0, padx=20, pady=5, sticky="w")
+bill_config_entry = ctk.CTkEntry(right_frame, textvariable=bill_config_var, state="readonly", width=180, height=20, font=ENTRY_FONT, fg_color=COLORS["input"], border_color=COLORS["border"], text_color=COLORS["text"]); bill_config_entry.grid(row=2,column=1,padx=(5,5),pady=5,sticky="w")
+bill_config_button = ctk.CTkButton(right_frame, text="Select", width=78, height=20, command=get_bill_due_config, font=ENTRY_FONT, fg_color=COLORS["primary"], hover_color=COLORS["primary_hover"]); bill_config_button.grid(row=2,column=2,padx=(0,20),pady=5)
+Active_LED_var = tk.StringVar(value="0-Total(Import+Export)"); Active_LED_combo = add_combo(right_frame, 3, "Active LED Configuration", Active_LED_var, ["0-Total(Import+Export)", "1-NET(Import-Export)"])
+App_Calc_var = tk.StringVar(value="0-Square Root"); App_Calc_combo = add_combo(right_frame, 4, "Apparent Calculation Method", App_Calc_var, ["0-Square Root", "1-VI Method"])
+ND_Defraud_var = tk.StringVar(value="0-Disabled"); ND_Defraud_combo = add_combo(right_frame, 5, "Defraud at ND Tamper", ND_Defraud_var, ["0-Disabled", "1-Enabled"])
+push_timeout_var = tk.StringVar(value="10"); push_timeout_combo = add_entry(right_frame, 6, "Push Mode Timeout", push_timeout_var)
+diagnostic_timeout_var = tk.StringVar(value="900"); diagnostic_timeout_combo = add_entry(right_frame, 7, "Diagnostic Mode Timeout", diagnostic_timeout_var)
+test_timeout_var = tk.StringVar(value="60"); test_timeout_combo = add_entry(right_frame, 8, "Test Mode Timeout", test_timeout_var)
+battery_mode_var = tk.StringVar(value="0-Disabled"); battery_mode_combo = add_combo(right_frame, 9, "Battery Mode Requirement", battery_mode_var, ["0-Disabled", "1-Enabled"])
+low_battery_threshold_var = tk.StringVar(value="1900"); low_battery_threshold_combo = add_entry(right_frame, 10, "Low Battery Detection Threshold", low_battery_threshold_var)
+lrcf_postpaid_var = tk.StringVar(value="0-Disabled"); lrcf_postpaid_combo = add_combo(right_frame, 11, "LRCF Required in Postpaid Mode", lrcf_postpaid_var, ["0-Disabled", "1-Enabled"])
+auto_mode_push_var = tk.StringVar(value="0-Disabled"); auto_mode_push_combo = add_combo(right_frame, 12, "Auto Mode with Push Functionality", auto_mode_push_var, ["0-Disabled", "1-Enabled"])
 
-
-ctk.CTkLabel(right_frame, text="Active LED Configuration:").grid(row=2, column=0, padx=20, sticky="w")
-Active_LED_var = tk.StringVar(value="0-Total(Import+Export)")
-Active_LED_combo = ctk.CTkComboBox(right_frame, variable=Active_LED_var, values=["0-Total(Import+Export)", "1-NET(Import-Export)"], state="readonly", width=200)
-Active_LED_combo.grid(row=2, column=1, padx=5, sticky="w")
-
-ctk.CTkLabel(right_frame, text="Apparent Calculation Method:").grid(row=3, column=0, padx=20, sticky="w")
-App_Calc_var = tk.StringVar(value="0-Square Root")
-App_Calc_combo = ctk.CTkComboBox(right_frame, variable=App_Calc_var, values=["0-Square Root", "1-VI Method"], state="readonly", width=200)
-App_Calc_combo.grid(row=3, column=1, padx=5, sticky="w")
-
-ctk.CTkLabel(right_frame, text="Defraud at ND Tamper:").grid(row=4, column=0, padx=20, sticky="w")
-ND_Defraud_var = tk.StringVar(value="0-Disabled")
-ND_Defraud_combo = ctk.CTkComboBox(right_frame, variable=ND_Defraud_var, values=["0-Disabled", "1-Enabled"], state="readonly", width=200)
-ND_Defraud_combo.grid(row=4, column=1, padx=5, sticky="w")
-
-ctk.CTkLabel(right_frame, text="Push Mode Timeout:").grid(row=5, column=0, padx=20, sticky="w")
-push_timeout_var = tk.StringVar(value="10")
-push_timeout_combo = ctk.CTkEntry(right_frame, textvariable=push_timeout_var, width=100)
-push_timeout_combo.grid(row=5, column=1, padx=5, sticky="w")
-
-ctk.CTkLabel(right_frame, text="Diagnostic Mode Timeout:").grid(row=6, column=0, padx=20, sticky="w")
-diagnostic_timeout_var = tk.StringVar(value="900")
-diagnostic_timeout_combo = ctk.CTkEntry(right_frame, textvariable=diagnostic_timeout_var, width=100)
-diagnostic_timeout_combo.grid(row=6, column=1, padx=5, sticky="w")
-
-ctk.CTkLabel(right_frame, text="Test Mode Timeout:").grid(row=7, column=0, padx=20, sticky="w")
-test_timeout_var = tk.StringVar(value="60")
-test_timeout_combo = ctk.CTkEntry(right_frame, textvariable=test_timeout_var, width=100)
-test_timeout_combo.grid(row=7, column=1, padx=5, sticky="w")
-
-ctk.CTkLabel(right_frame, text="Battery Mode Requirement :").grid(row=8, column=0, padx=20, sticky="w")
-battery_mode_var = tk.StringVar(value="0-Disabled")
-battery_mode_combo = ctk.CTkComboBox(right_frame, variable=battery_mode_var, values=["0-Disabled", "1-Enabled"], state="readonly", width=200)
-battery_mode_combo.grid(row=8, column=1, padx=5, sticky="w")
-
-ctk.CTkLabel(right_frame, text="Low Battery Detection Threshold:").grid(row=9, column=0, padx=20, sticky="w")
-low_battery_threshold_var = tk.StringVar(value="1900")
-low_battery_threshold_combo = ctk.CTkEntry(right_frame, textvariable=low_battery_threshold_var, width=100)
-low_battery_threshold_combo.grid(row=9, column=1, padx=5, sticky="w")
-
-ctk.CTkLabel(right_frame, text="LRCF required in Postpaid Mode:").grid(row=10, column=0, padx=20, sticky="w")
-lrcf_postpaid_var = tk.StringVar(value="0-Disabled")
-lrcf_postpaid_combo = ctk.CTkComboBox(right_frame, variable=lrcf_postpaid_var, values=["0-Disabled", "1-Enabled"], state="readonly", width=200)
-lrcf_postpaid_combo.grid(row=10, column=1, padx=5, sticky="w")
-
-ctk.CTkLabel(right_frame, text="Auto Mode with Push Functionality:").grid(row=11, column=0, padx=20, sticky="w")
-auto_mode_push_var = tk.StringVar(value="0-Disabled")
-auto_mode_push_combo = ctk.CTkComboBox(right_frame, variable=auto_mode_push_var, values=["0-Disabled", "1-Enabled"], state="readonly", width=200)
-auto_mode_push_combo.grid(row=11, column=1, padx=5, sticky="w")
-
-
-ctk.CTkLabel(bottom_left_frame, text="Output String:", font=(None, 15, "bold")).grid(row=0, column=0, padx=20, sticky="w")
-output_textbox = ctk.CTkTextbox(bottom_left_frame, height=50, width=800, font=(None, 15), wrap="word")
-output_textbox.grid(row=1, column=0, padx=20, pady=(0, 10), sticky="w")  
-
-convert_btn = ctk.CTkButton(bottom_right_frame, text="Generate String", command=generate_string, fg_color="#4946f1")
-convert_btn.grid(row=1, column=1, padx=20, pady=(6, 0), sticky="e")
-
-
-convert_btn = ctk.CTkButton(bottom_right_frame, text="Convert String to Bits", command=convert_string_to_bits, fg_color="#317a41")
-convert_btn.grid(row=2, column=1, padx=20, pady=(6, 0), sticky="e")
+# Output/action card
+bottom = ctk.CTkFrame(root, fg_color=COLORS["surface"], border_width=1, border_color=COLORS["border"], corner_radius=12)
+bottom.pack(fill="x", padx=18, pady=(0, 15))
+ctk.CTkLabel(bottom, text="Generated Configuration String", text_color=COLORS["primary"], font=ctk.CTkFont(size=14, weight="bold")).grid(row=0,column=0,padx=18,pady=(12,5),sticky="w")
+output_textbox = ctk.CTkTextbox(bottom, height=50, font=("Consolas", 14), wrap="word", fg_color=COLORS["input"], border_width=1, border_color=COLORS["border"])
+output_textbox.grid(row=1,column=0,columnspan=2,padx=18,pady=(0,12),sticky="ew")
+output_textbox.insert("1.0", "02191101110A120B4012003C12000C1200501200501200021200281200181201201200401100110112000011001100110012000A12038412003C12000012076C11001100")
+btns = ctk.CTkFrame(bottom, fg_color="transparent"); btns.grid(row=0,column=2,rowspan=2,padx=(5,18),pady=10)
+convert_btn = ctk.CTkButton(btns, text="Generate String",font=ctk.CTkFont(size=14), command=generate_string, width=150, height=28, fg_color=COLORS["primary"], hover_color=COLORS["primary_hover"]); convert_btn.pack(pady=4)
+convert_btn2 = ctk.CTkButton(btns, text="Convert String → Bits", font=ctk.CTkFont(size=14), command=convert_string_to_bits, width=150, height=28, fg_color=COLORS["success"], hover_color=COLORS["success_hover"]); convert_btn2.pack(pady=4)
+bottom.grid_columnconfigure(0, weight=1)
 
 if __name__ == "__main__":
     root.mainloop()

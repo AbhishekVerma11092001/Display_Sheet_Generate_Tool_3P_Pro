@@ -658,7 +658,8 @@ def choose_base_folder():
     meter_type_var.set("Select Type")
 
     # Update default output path
-    output_var.set(os.path.join(base_folder, "standards_report.docx"))
+    output_entry.delete("1.0", tk.END)  # Clear current entry
+    output_entry.insert("1.0", os.path.join(base_folder, "standards_report.docx"))  # Insert new path
 
     messagebox.showinfo("Base Folder Selected", f"Base folder set to:\n{base_folder}")
 
@@ -676,9 +677,9 @@ def choose_output():
     
     # Create full path with .docx extension
     path = os.path.join(folder, file_name + ".docx")
-    
-    output_var.set(path)  # Set to variable
 
+    output_entry.delete("1.0", tk.END)  # Clear current entry
+    output_entry.insert("1.0", path)  # Insert new path
 
 # === Function to collect available images ===
 def get_image_list(folder):
@@ -867,93 +868,93 @@ def forward_create_table(doc, values, meter_type, energy_decimal, display_table_
 
 class InputDialog(simpledialog.Dialog):
     def body(self, master):
-        tk.Label(master, text="Energy Decimal :").grid(row=0, column=0, padx=5, pady=5, sticky="w")
-        self.energy_var = tk.StringVar(value="1 Decimal Digit")
-        self.energy_combo = ttk.Combobox(master, textvariable=self.energy_var, values=["1 Decimal Digit", "0 Decimal Digit", "2 Decimal Digit"], state="readonly", width=20)
+        ctk.CTkLabel(master, text="Energy Decimal :", text_color="#1D55CE", font=ctk.CTkFont(size=13, weight="bold")).grid(row=0, column=0, padx=5, pady=5, sticky="w")
+        self.energy_var = tk.StringVar(master=master, value="1 Decimal Digit")
+        self.energy_combo = ctk.CTkComboBox(master, variable=self.energy_var, values=["1 Decimal Digit", "0 Decimal Digit", "2 Decimal Digit"], 
+                                            state="readonly", width=220, fg_color="#F7F9FB", border_color="#989A9C", button_color="#6A91E7")
         self.energy_combo.grid(row=0, column=1, padx=5, pady=5)
 
-        tk.Label(master, text="Display Lock Feature:").grid(row=1, column=0, padx=5, pady=5, sticky="w")
-        self.display_lock_var = tk.StringVar(value="0-No Mode lock")
-        self.display_lock_combo = ttk.Combobox(master, textvariable=self.display_lock_var, values=["0-No Mode lock", "1-Auto Mode lock", "2-All Mode lock"], state="readonly", width=20)
+        ctk.CTkLabel(master, text="Display Lock Feature:", text_color="#1D55CE", font=ctk.CTkFont(size=13, weight="bold")).grid(row=1, column=0, padx=5, pady=5, sticky="w")
+        self.display_lock_var = tk.StringVar(master=master, value="0-No Mode lock")
+        self.display_lock_combo = ctk.CTkComboBox(master, variable=self.display_lock_var, values=["0-No Mode lock", "1-Auto Mode lock", "2-All Mode lock"], 
+                                                  state="readonly", width=220, fg_color="#F7F9FB", border_color="#989A9C", button_color="#6A91E7")
         self.display_lock_combo.grid(row=1, column=1, padx=5, pady=5)
 
-        tk.Label(master, text="Display Required for Lock:").grid(row=2, column=0, padx=5, pady=5, sticky="w")
-        self.display_lock_show_var = tk.StringVar(value="0-Only C-Open Show")
-        self.display_lock_show_combo = ttk.Combobox(master, textvariable=self.display_lock_show_var, values=["0-Only C-Open Show", "1-C-Open Shows With D&T"], state="disabled", width=20)
+        ctk.CTkLabel(master, text="Display Required for Lock:", text_color="#1D55CE", font=ctk.CTkFont(size=13, weight="bold")).grid(row=2, column=0, padx=5, pady=5, sticky="w")
+        self.display_lock_show_var = tk.StringVar(master=master, value="0-Only C-Open Show")
+        self.display_lock_show_combo = ctk.CTkComboBox(master, variable=self.display_lock_show_var, values=["0-Only C-Open Show", "1-C-Open Shows With D&T"], 
+                                                       state="disabled", width=220, fg_color="#A4A5A7", border_color="#989A9C", button_color="#A4A5A7")
         self.display_lock_show_combo.grid(row=2, column=1, padx=5, pady=5)
 
         def update_lock_show_state(*args):
-            selected_lock = self.display_lock_var.get()
+            selected_lock = self.display_lock_combo.get()
             if selected_lock in {"1-Auto Mode lock", "2-All Mode lock"}:
-                self.display_lock_show_combo.configure(state="readonly")
+                self.display_lock_show_combo.configure(state="readonly", fg_color="#FFFFFF", button_color="#6A91E7")
             else:
-                self.display_lock_show_combo.configure(state="disabled")
+                self.display_lock_show_combo.configure(state="disabled", fg_color="#A4A5A7", button_color="#A4A5A7")
                 self.display_lock_show_var.set("0-Only C-Open Show")
 
         self.display_lock_var.trace_add("write", update_lock_show_state)
         update_lock_show_state()
 
-        tk.Label(master, text="Bell Icon Display :").grid(row=3, column=0, padx=5, pady=5, sticky="w")
-        self.bell_icon_var = tk.StringVar(value="0-PSEQ Only")
-        self.bell_icon_combo = ttk.Combobox(master, textvariable=self.bell_icon_var, values=["0-PSEQ Only", "1-All Tampers"], state="readonly", width=20)
+        ctk.CTkLabel(master, text="Bell Icon Display :", text_color="#1D55CE", font=ctk.CTkFont(size=13, weight="bold")).grid(row=3, column=0, padx=5, pady=5, sticky="w")
+        self.bell_icon_var = tk.StringVar(master=master, value="0-PSEQ Only")
+        self.bell_icon_combo = ctk.CTkComboBox(master, variable=self.bell_icon_var, values=["0-PSEQ Only", "1-All Tampers"], state="readonly", width=220, 
+                                               fg_color="#F7F9FB", border_color="#989A9C", button_color="#6A91E7")
         self.bell_icon_combo.grid(row=3, column=1, padx=5, pady=5)
 
-        tk.Label(master, text="Tamper Detect Time for Display :").grid(row=4, column=0, padx=5, pady=5, sticky="w")
-        self.tamper_time_value = tk.StringVar(value="10 seconds")
-        self.tamper_time_var = ttk.Entry(master, textvariable=self.tamper_time_value, width=22)
+        ctk.CTkLabel(master, text="Tamper Detect Time for Display :", text_color="#1D55CE", font=ctk.CTkFont(size=13, weight="bold")).grid(row=4, column=0, padx=5, pady=5, sticky="w")
+        self.tamper_time_value = tk.StringVar(master=master, value="10 seconds")
+        self.tamper_time_var = ctk.CTkEntry(master, textvariable=self.tamper_time_value, width=220)
         self.tamper_time_var.grid(row=4, column=1, padx=5, pady=5)
 
-        tk.Label(master, text="Display Table Required :").grid(row=5, column=0, padx=5, pady=5, sticky="w")
-        self.display_table_mode_var = tk.StringVar(value="Forward & NET Combined Mode")
-        self.display_table_mode_combo = ttk.Combobox(master, textvariable=self.display_table_mode_var, values=["Forward & NET Combined Mode", "Forward & NET Individual Mode"], state="readonly", width=20)
+        ctk.CTkLabel(master, text="Display Table Required :", text_color="#1D55CE", font=ctk.CTkFont(size=13, weight="bold")).grid(row=5, column=0, padx=5, pady=5, sticky="w")
+        self.display_table_mode_var = tk.StringVar(master=master, value="Forward & NET Combined Mode")
+        self.display_table_mode_combo = ctk.CTkComboBox(master, variable=self.display_table_mode_var, values=["Forward & NET Combined Mode", "Forward & NET Individual Mode"], 
+                                                        state="readonly", width=220, fg_color="#F7F9FB", border_color="#989A9C", button_color="#6A91E7")
         self.display_table_mode_combo.grid(row=5, column=1, padx=5, pady=5)
 
         return self.energy_combo
 
     def apply(self):
         self.result = (
-            self.energy_var.get().strip(),
-            self.display_lock_var.get().strip(),
-            self.display_lock_show_var.get().strip(),
-            self.bell_icon_var.get().strip(),
-            self.tamper_time_value.get().strip(),
-            self.display_table_mode_var.get().strip()
+            self.energy_combo.get().strip(),
+            self.display_lock_combo.get().strip(),
+            self.display_lock_show_combo.get().strip(),
+            self.bell_icon_combo.get().strip(),
+            self.tamper_time_var.get().strip(),
+            self.display_table_mode_combo.get().strip()
         )
 
 def get_user_inputs(root):
     dialog = InputDialog(root, title="Meter Configuration")
 
+    if dialog.result is None:
+        return None, None, None, None, None, None
+
     energy_decimal, display_lock, display_lock_show, bell_icon, tamper_time, display_table_mode = dialog.result
-
-    if energy_decimal == "0 Decimal Digit":
-        energy_decimal = "0"
-    elif energy_decimal == "1 Decimal Digit":
-        energy_decimal = "1"
-    elif energy_decimal == "2 Decimal Digit":
-        energy_decimal = "2"
-
-    if display_lock == "0-No Mode lock":
-        display_lock = "0"
-    elif display_lock == "1-Auto Mode lock":
-        display_lock = "1"
-    elif display_lock == "2-All Mode lock":
-        display_lock = "2"
-
-    if display_lock_show == "0-Only C-Open Show":
-        display_lock_show = "0"
-    elif display_lock_show == "1-C-Open Shows With D&T":
-        display_lock_show = "1"
-
-    if bell_icon == "0-PSEQ Only":
-        bell_icon = "0"
-    elif bell_icon == "1-All Tampers":
-        bell_icon = "1"
-
-    if display_table_mode == "Forward & NET Combined Mode":
-        display_table_mode = "0"
-    elif display_table_mode == "Forward & NET Individual Mode":
-        display_table_mode = "1"
-
+    energy_decimal = {
+        "0 Decimal Digit": "0",
+        "1 Decimal Digit": "1",
+        "2 Decimal Digit": "2",
+    }.get(energy_decimal, energy_decimal)
+    display_lock = {
+        "0-No Mode lock": "0",
+        "1-Auto Mode lock": "1",
+        "2-All Mode lock": "2",
+    }.get(display_lock, display_lock)
+    display_lock_show = {
+        "0-Only C-Open Show": "0",
+        "1-C-Open Shows With D&T": "1",
+    }.get(display_lock_show, display_lock_show)
+    bell_icon = {
+        "0-PSEQ Only": "0",
+        "1-All Tampers": "1",
+    }.get(bell_icon, bell_icon)
+    display_table_mode = {
+        "Forward & NET Combined Mode": "0",
+        "Forward & NET Individual Mode": "1",
+    }.get(display_table_mode, display_table_mode)
 
     return energy_decimal, display_lock, display_lock_show, bell_icon, tamper_time, display_table_mode
 
@@ -967,45 +968,45 @@ def generate_hex_string():
     diag_vals = [int(item.split(" - ")[0]) for item in diag_selected.get(0, tk.END)]
     test_vals = [int(item.split(" - ")[0]) for item in test_selected.get(0, tk.END)]
 
-    auto_input_string = auto_input_hex_string.get().strip()
+    auto_input_string = auto_selection.input_entry.get().strip()
     if not validate_hex_input_string(auto_input_string, "Auto"):
         return
 
-    push_input_string = push_input_hex_string.get().strip()
+    push_input_string = push_selection.input_entry.get().strip()
     if not validate_hex_input_string(push_input_string, "Push"):
         return
 
-    tamper_input_string = tamper_input_hex_string.get().strip()
+    tamper_input_string = tamper_selection.input_entry.get().strip()
     if not validate_hex_input_string(tamper_input_string, "Tamper"):
         return
 
-    battery_input_string = battery_input_hex_string.get().strip()
+    battery_input_string = battery_selection.input_entry.get().strip()
     if not validate_hex_input_string(battery_input_string, "Battery"):
         return
 
-    diag_input_string = diag_input_hex_string.get().strip()
+    diag_input_string = diag_selection.input_entry.get().strip()
     if not validate_hex_input_string(diag_input_string, "Diagnostic"):
         return
 
-    test_input_string = test_input_hex_string.get().strip()
+    test_input_string = test_selection.input_entry.get().strip()
     if not validate_hex_input_string(test_input_string, "Test"):
         return
 
     tamper_payload = DisplayPayloadCodec.build_hex_payload(tamper_vals)
-    auto_string.set(DisplayPayloadCodec.build_hex_payload(auto_vals, replacement_payload=tamper_payload))
-    push_string.set(DisplayPayloadCodec.build_hex_payload(push_vals, replacement_payload=tamper_payload))
+    set_readonly_text(auto_entry, DisplayPayloadCodec.build_hex_payload(auto_vals, replacement_payload=tamper_payload))
+    set_readonly_text(push_entry, DisplayPayloadCodec.build_hex_payload(push_vals, replacement_payload=tamper_payload))
     tamper_string.set(tamper_payload)
-    batt_string.set(DisplayPayloadCodec.build_hex_payload(batt_vals))
-    diag_string.set(DisplayPayloadCodec.build_hex_payload(diag_vals))
-    test_string.set(DisplayPayloadCodec.build_hex_payload(test_vals))
+    set_readonly_text(batt_entry, DisplayPayloadCodec.build_hex_payload(batt_vals))
+    set_readonly_text(diag_entry, DisplayPayloadCodec.build_hex_payload(diag_vals))
+    set_readonly_text(test_entry, DisplayPayloadCodec.build_hex_payload(test_vals))
 
     save_display_strings({
-        "auto_string": auto_string.get(),
-        "push_string": push_string.get(),
+        "auto_string": auto_entry.get("1.0", tk.END).strip(),
+        "push_string": push_entry.get("1.0", tk.END).strip(),
         "tamper_string": tamper_string.get(),
-        "batt_string": batt_string.get(),
-        "diag_string": diag_string.get(),
-        "test_string": test_string.get(),
+        "batt_string": batt_entry.get("1.0", tk.END).strip(),
+        "diag_string": diag_entry.get("1.0", tk.END).strip(),
+        "test_string": test_entry.get("1.0", tk.END).strip(),
     })
 
 # === Generate document === 
@@ -1018,7 +1019,7 @@ def generate_doc():
         messagebox.showerror("Error", "Please select a Base Folder first")
         return
 
-    meter_type = meter_type_var.get()
+    meter_type = meter_type_combo.get().strip()
     if meter_type not in image_folders:
         messagebox.showerror("Error", "Please select a valid Meter Type")
         return 
@@ -1030,27 +1031,27 @@ def generate_doc():
     diag_vals = [int(item.split(" - ")[0]) for item in diag_selected.get(0, tk.END)]
     test_vals = [int(item.split(" - ")[0]) for item in test_selected.get(0, tk.END)]
 
-    auto_input_string = auto_input_hex_string.get().strip()
+    auto_input_string = auto_selection.input_entry.get().strip()
     if not validate_hex_input_string(auto_input_string, "Auto"):
         return
 
-    push_input_string = push_input_hex_string.get().strip()
+    push_input_string = push_selection.input_entry.get().strip()
     if not validate_hex_input_string(push_input_string, "Push"):
         return
 
-    tamper_input_string = tamper_input_hex_string.get().strip()
+    tamper_input_string = tamper_selection.input_entry.get().strip()
     if not validate_hex_input_string(tamper_input_string, "Tamper"):
         return
 
-    battery_input_string = battery_input_hex_string.get().strip()
+    battery_input_string = battery_selection.input_entry.get().strip()
     if not validate_hex_input_string(battery_input_string, "Battery"):
         return
 
-    diag_input_string = diag_input_hex_string.get().strip()
+    diag_input_string = diag_selection.input_entry.get().strip()
     if not validate_hex_input_string(diag_input_string, "Diagnostic"):
         return
 
-    test_input_string = test_input_hex_string.get().strip()
+    test_input_string = test_selection.input_entry.get().strip()
     if not validate_hex_input_string(test_input_string, "Test"):
         return
 
@@ -1068,20 +1069,20 @@ def generate_doc():
         return  # User cancelled or invalid input
 
     tamper_payload = DisplayPayloadCodec.build_hex_payload(tamper_vals)
-    auto_string.set(DisplayPayloadCodec.build_hex_payload(auto_vals, replacement_payload=tamper_payload))
-    push_string.set(DisplayPayloadCodec.build_hex_payload(push_vals, replacement_payload=tamper_payload))
+    set_readonly_text(auto_entry, DisplayPayloadCodec.build_hex_payload(auto_vals, replacement_payload=tamper_payload))
+    set_readonly_text(push_entry, DisplayPayloadCodec.build_hex_payload(push_vals, replacement_payload=tamper_payload))
     tamper_string.set(tamper_payload)
-    batt_string.set(DisplayPayloadCodec.build_hex_payload(batt_vals))
-    diag_string.set(DisplayPayloadCodec.build_hex_payload(diag_vals))
-    test_string.set(DisplayPayloadCodec.build_hex_payload(test_vals))
+    set_readonly_text(batt_entry, DisplayPayloadCodec.build_hex_payload(batt_vals))
+    set_readonly_text(diag_entry, DisplayPayloadCodec.build_hex_payload(diag_vals))
+    set_readonly_text(test_entry, DisplayPayloadCodec.build_hex_payload(test_vals))
 
     save_display_strings({
-        "auto_string": auto_string.get(),
-        "push_string": push_string.get(),
+        "auto_string": auto_entry.get("1.0", tk.END).strip(),
+        "push_string": push_entry.get("1.0", tk.END).strip(),
         "tamper_string": tamper_string.get(),
-        "batt_string": batt_string.get(),
-        "diag_string": diag_string.get(),
-        "test_string": test_string.get(),
+        "batt_string": batt_entry.get("1.0", tk.END).strip(),
+        "diag_string": diag_entry.get("1.0", tk.END).strip(),
+        "test_string": test_entry.get("1.0", tk.END).strip(),
     })
     
     # ==== Create Template in Docx ===
@@ -1169,7 +1170,7 @@ def generate_doc():
     run = para.add_run("Rev. No. :  ")
     run.bold = True
     run.font.size = Pt(12)
-    run = para.add_run(revision_var.get())
+    run = para.add_run(revision_combo.get().strip())
     run.font.size = Pt(12)
 
     # Merge cell(1,0) and cell(2,0)
@@ -1190,7 +1191,7 @@ def generate_doc():
     run = para.add_run("Title :  ")
     run.bold = True
     run = para.add_run("Display Parameter ")
-    run = para.add_run(project_code_var.get())
+    run = para.add_run(project_code_entry.get().strip())
     run.font.size = Pt(13)
 
     cell = table.cell(1, 2)   # Row=1, Col=2
@@ -1226,9 +1227,11 @@ def generate_doc():
 
     # doc.save(template_path)
 
-    output_path = output_var.get()
+    output_path = output_entry.get("1.0", "end").strip()
     output_path = os.path.join(os.path.dirname(output_path), get_default_output_file())
-    output_var.set(output_path)  # Update the output path variable
+    output_entry.delete("1.0", tk.END)  # Clear current entry
+    output_entry.insert("1.0", output_path)  # Insert new path
+    # output_var.set(output_path) 
     
     # Set default font (for normal text)
     style = doc.styles['Normal']
@@ -1350,14 +1353,14 @@ def generate_doc():
             if display_lock_show == "0":
                 run = para.add_run("display continuously at LCD when meter power ON at supply or battery. During this time normal auto scroll mode will get stopped.However push parameters will be available in push mode as usual.")
             elif display_lock_show == "1":        
-                run = para.add_run(" with its Occurrence Date & Time display continuously auto scrolling with respective scrolling time at LCD when meter power ON at supply or battery. During this time normal auto scroll mode will get stopped.However push parameters will be available in push mode as usual.")
+                run = para.add_run(" with its occurrence date & time display continuously auto scrolling with respective scrolling time at LCD when meter power ON at supply or battery. During this time normal auto scroll mode will get stopped.However push parameters will be available in push mode as usual.")
         elif display_lock == "2":
             if display_lock_show == "0":
                 run = para.add_run("display continuously at LCD when meter power ON at supply or battery, and all other display modes will be disabled.")
             elif display_lock_show == "1":        
-                run = para.add_run(" with its Occurrence Date & Time display continuously auto scrolling with respective scrolling time at LCD when meter power ON at supply or battery, and all other display modes will be disabled.")
+                run = para.add_run(" with its occurrence date & time display continuously auto scrolling with respective scrolling time at LCD when meter power ON at supply or battery, and all other display modes will be disabled.")
         if display_lock_show == "0":
-            para = doc.add_picture(os.path.join(default_folder, "Template images", "C-Open-Status.png"), width=Inches(5.0))
+            para = doc.add_picture(os.path.join(default_folder, "Template images", "C-Open-Status.png"), width=Inches(5.0)) # "C-Open-Status.png" used for c-open image without lock icon
             # Center align the picture
             last_paragraph = doc.paragraphs[-1]  # the paragraph where the picture was added
             last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -1373,7 +1376,7 @@ def generate_doc():
             first_row[0].text = "1"
             first_row[0].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
             first_row[1].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
-            first_row[1].paragraphs[0].add_run().add_picture(os.path.join(default_folder, "Template images", "C-Open-Status.png"),width=Inches(5.0))
+            first_row[1].paragraphs[0].add_run().add_picture(os.path.join(default_folder, "Template images", "C-Open-Status1.png"),width=Inches(5.0)) # "C-Open-Status1.png" used for c-open image with lock icon
 
             second_row = table.add_row().cells
             second_row[0].text = "2"
@@ -1401,7 +1404,7 @@ def generate_doc():
         else:
             new_refer_table_seq_no = refer_table_seq_no + 3
         doc.add_heading(f"\nAUTO MODE-- (Auto Scrolling, Refer TABLE-{refer_table_seq_no} & TABLE-{new_refer_table_seq_no}): ", level=3)
-    para = doc.add_paragraph(auto_txt.get())
+    para = doc.add_paragraph(auto_txt_entry.get("1.0", tk.END).strip())
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     refer_table_seq_no += 1
 
@@ -1413,7 +1416,7 @@ def generate_doc():
         else:
             new_refer_table_seq_no = refer_table_seq_no + 3
         doc.add_heading(f"\nPUSH MODE-- (Scroll with Push Button, Refer TABLE-{refer_table_seq_no} & TABLE-{new_refer_table_seq_no}): ", level=3)
-    para = doc.add_paragraph(push_txt.get())
+    para = doc.add_paragraph(push_txt_entry.get("1.0", tk.END).strip())
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     refer_table_seq_no += 1
 
@@ -1429,7 +1432,7 @@ def generate_doc():
         else:
             new_refer_table_seq_no = refer_table_seq_no + 3
         doc.add_heading(f"\nDIAGNOSTIC MODE-- (High resolution display, Refer TABLE-{refer_table_seq_no} & TABLE-{new_refer_table_seq_no}): ", level=3)
-    para = doc.add_paragraph(diag_txt.get())
+    para = doc.add_paragraph(diag_txt_entry.get("1.0", tk.END).strip())
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     refer_table_seq_no += 1
 
@@ -1445,7 +1448,7 @@ def generate_doc():
         refer_table_seq_no += 1
     else:
         doc.add_heading(f"\nTEST MODE—(Test Mode Display): ", level=3)
-    para = doc.add_paragraph(test_txt.get())
+    para = doc.add_paragraph(test_txt_entry.get("1.0", tk.END).strip())
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
     if batt_vals: 
@@ -1456,7 +1459,7 @@ def generate_doc():
             doc.add_heading(f"\nUnder Power OFF condition—(Battery Mode Display: Refer TABLE-{refer_table_seq_no_temp} & TABLE-{new_refer_table_seq_no}): ", level=3)
     else: 
         doc.add_heading(f"\nUnder Power OFF condition: ", level=3)
-    para = doc.add_paragraph(batt_txt.get())
+    para = doc.add_paragraph(batt_txt_entry.get("1.0", tk.END).strip())
     para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
     if 3132 in test_vals:
@@ -1543,7 +1546,7 @@ def generate_doc():
         run.font.size = Pt(14)
         cell.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
 
-    rows = [(revision_var.get(), date_var.get(), "Initial")]
+    rows = [(revision_combo.get().strip(), date_var.get(), "Initial")]
 
     for rev_number, date, description in rows:
         row = table.add_row().cells
@@ -1558,7 +1561,8 @@ def generate_doc():
     # === Save DOCX ===
     if not output_path.lower().endswith(".docx"):
         output_path = output_path + ".docx"
-        output_var.set(output_path)
+        output_entry.delete("1.0", tk.END)  # Clear current entry
+        output_entry.insert("1.0", output_path)  # Insert new path
 
     doc.save(output_path)
 
@@ -1578,46 +1582,86 @@ def generate_doc():
 
 
 # === Tkinter GUI ===
+# === Modern Industrial GUI Theme ===
 ctk.set_appearance_mode("light")   # Options: "light", "dark", "system"
 ctk.set_default_color_theme("blue")  # Try "green", "dark-blue", etc.
-# === Main Window ===
+
+MODERN = {
+    "bg": "#EAEEF3", "surface": "#FFFFFF", "panel": "#FFFFFF", "input": "#E6F2FC", 
+    "text": "#17212B", "muted": "#C6DAF0", "success": "#6200ff", "success_hover": "#b78ff8", 
+    "primary": "#1D55CE", "primary_hover": "#6894F5", "border": "#D8E0E8", "boundary":"#0A0A0A",
+}
+
+#--------------------------------------------------Header Top Frame Start---------------------------------------------------------------------
+
+# Create the application root before ttk styles to avoid a separate default
+# Tk window titled "tk".
 root = ctk.CTk()
 # root.iconbitmap("logo.ico")
-root.title("3P Pro Meter Display Report Generator V4.1")
+# root.title("3P Pro Meter Display Report Generator | V5.0")
+root.configure(fg_color=MODERN["bg"])
 root.geometry("1200x780")
 root.resizable(False, False)
+root.withdraw()
+
+style = ttk.Style(master=root)
+try:
+    style.theme_use("clam")
+except tk.TclError:
+    pass
+
+style.configure("Modern.TNotebook", background=MODERN["border"], borderwidth=0)
+style.configure("Modern.TNotebook.Tab", font=("Segoe UI", 10, "bold"), padding=(18, 8), background=MODERN["bg"], foreground=MODERN["text"])
+style.map("Modern.TNotebook.Tab", background=[("selected", MODERN["panel"])], foreground=[("selected", MODERN["primary"])])
+style.configure("Modern.TFrame", background=MODERN["input"])
+style.configure("Modern.TLabel", background=MODERN["input"], foreground=MODERN["primary"], font=("Segoe UI", 16, "bold"))
+style.configure("Modern.Small.Label", background=MODERN["input"], foreground=MODERN["primary"], font=("Segoe UI", 9, "bold"))
+style.configure("Modern.TEntry", fieldbackground=MODERN["panel"], foreground=MODERN["text"], padding=5)
+style.configure("Modern.TButton", background=MODERN["primary_hover"], foreground=MODERN["text"], font=("Segoe UI", 10, "bold"), padding=(10, 7))
+style.map("Modern.TButton", background=[("active",MODERN["primary"])])
+style.configure("Login.TLabel", background=MODERN["input"], foreground=MODERN["primary"], font=("Segoe UI", 14, "bold"))
+style.configure("Login.TEntry", foreground=MODERN["text"], padding=5, font=("Segoe UI", 12))
 
 # === Top Frame ===
-top_frame = ctk.CTkFrame(root, corner_radius=15)
-top_frame.pack(pady=15, padx=15, fill="x")
+top_frame = ctk.CTkFrame(root, fg_color="#1D55CE", corner_radius=0, height=140)
+top_frame.pack_propagate(False)
+top_frame.pack(pady=0, padx=0, fill="x")
+
+ctk.CTkLabel(top_frame, text="3P PRO METER DISPLAY REPORT GENERATOR", text_color="white", font=ctk.CTkFont(size=24, weight="bold")).grid(row=0, column=0, columnspan=10, padx=20, pady=(9, 2), sticky="w")
 
 # Base Folder (left side)
-ctk.CTkLabel(top_frame, text="Base Folder:", text_color="#1a1a1a").grid(row=0, column=0, padx=5, sticky="w")
-ctk.CTkButton(top_frame, text="Browse Base Folder", fg_color="#a843ec", hover_color="#155a8a", command= choose_base_folder).grid(row=0, column=1, padx=5, sticky="w")
+ctk.CTkLabel(top_frame, text="Base Folder:", text_color="white", font=ctk.CTkFont(size=12, weight="bold")).grid(row=2, column=0, padx=10, sticky="w")
+ctk.CTkButton(top_frame, text="Browse Base Folder", fg_color="#94B1EE", hover_color="#6389DB", command= choose_base_folder).grid(row=2, column=1, padx=10, sticky="w")
 
 # Meter Type (middle side)
-ctk.CTkLabel(top_frame, text="Meter Type:").grid(row=0, column=2, padx=20, sticky="w")
-meter_type_var = tk.StringVar(value="Select Type")
-meter_type_combo = ctk.CTkComboBox(top_frame, variable=meter_type_var, values=list(image_folders.keys()))
-meter_type_combo.grid(row=0, column=3, padx=5, sticky="w")
+ctk.CTkLabel(top_frame, text="Meter Type:", text_color="white", font=ctk.CTkFont(size=12, weight="bold")).grid(row=2, column=2, padx=10, sticky="w")
+meter_type_var = tk.StringVar(master=root, value="Select Type")
+meter_type_combo = ctk.CTkComboBox(top_frame, variable=meter_type_var, values=list(image_folders.keys()), fg_color="#F7F9FB", border_color="#989A9C", button_color="#94B1EE", button_hover_color="#6389DB", width=200)
+meter_type_combo.grid(row=2, column=3, padx=10, sticky="w")
 
 # Date input with calendar picker (right side)
-ctk.CTkLabel(top_frame, text="Date:").grid(row=0, column=4, padx=30, sticky="w")
-date_var = tk.StringVar()
-date_entry = DateEntry(top_frame, textvariable=date_var, date_pattern="dd-mm-yyyy", width=15)
-date_entry.grid(row=0, column=5, padx=5, sticky="w")
+ctk.CTkLabel(top_frame, text="Date:", text_color="white", font=ctk.CTkFont(size=12, weight="bold")).grid(row=2, column=4, padx=10, sticky="w")
+date_var = tk.StringVar(master=root)
+date_entry = DateEntry(top_frame, textvariable=date_var, date_pattern="dd-mm-yyyy", width=15, background="#F7F9FB", foreground="#000000", bordercolor="#989A9C", buttonbackground="#6A91E7")
+date_entry.grid(row=2, column=5, padx=10, sticky="w")
 
 # Revision Number (right side)
-ctk.CTkLabel(top_frame, text="Rev. No:").grid(row=0, column=6, padx=40, sticky="w")
-revision_var = tk.StringVar(value="00")
-revision_combo = ctk.CTkComboBox(top_frame, variable=revision_var, values=["00", "01", "02", "03"], width=65)
-revision_combo.grid(row=0, column=7, padx=5, sticky="w")
+ctk.CTkLabel(top_frame, text="Rev. No:", text_color="white", font=ctk.CTkFont(size=12, weight="bold")).grid(row=2, column=6, padx=10, sticky="w")
+revision_var = tk.StringVar(master=root, value="00")
+revision_combo = ctk.CTkComboBox(top_frame, variable=revision_var, values=["00", "01", "02", "03"], width=65, fg_color="#F7F9FB", border_color="#989A9C", button_color="#94B1EE", button_hover_color="#6389DB")
+revision_combo.grid(row=2, column=7, padx=10, sticky="w")
 
-ctk.CTkLabel(top_frame, text="Project Code").grid(row=0, column=8, padx=30, sticky="w")
-project_code_var = tk.StringVar(value="G3P_DC21")
-project_code_entry = ctk.CTkEntry(top_frame, textvariable=project_code_var, width=120)
-project_code_entry.grid(row=0, column=9, padx=5, sticky="w")
+ctk.CTkLabel(top_frame, text="Project Code", text_color="white", font=ctk.CTkFont(size=12, weight="bold")).grid(row=2, column=8, padx=10, sticky="w")
+project_code_var = tk.StringVar(master=root, value="G3P_DC21")
+project_code_entry = ctk.CTkEntry(top_frame, textvariable=project_code_var, width=120, fg_color="#F7F9FB", border_color="#989A9C")
+project_code_entry.grid(row=2, column=9, padx=10, sticky="w")
 
+
+#--------------------------------------------------Header Top Frame End-------------------------------------------------------------------------------
+
+
+
+#--------------------------------------------------Selection Tabs Start-------------------------------------------------------------------------------
 
 # === Reusable selection widgets ===
 
@@ -1626,32 +1670,32 @@ class DualListBox:
         self.items = list(items)
         self.available = None
         self.selected = None
-        self.input_hex_string = tk.StringVar()
-        self.search_var = tk.StringVar()
+        self.input_hex_string = tk.StringVar(master=frame)
+        self.search_var = tk.StringVar(master=frame)
         self._build(frame, title)
 
     def _build(self, frame, title):
-        ttk.Label(frame, text=title, font=("Arial", 16, "bold")).grid(row=0, column=0, columnspan=3, pady=5)
+        ttk.Label(frame, text=title, style="Modern.TLabel").grid(row=0, column=0, columnspan=3, pady=5)
 
-        search_entry = ttk.Entry(frame, textvariable=self.search_var, width=60)
+        search_entry = ttk.Entry(frame, textvariable=self.search_var, style="Modern.TEntry", width=70)
         search_entry.grid(row=1, column=0, padx=10, pady=5)
-        ttk.Label(frame, text="Input String:").grid(row=1, column=1, padx=5, sticky="e")
+        ttk.Label(frame, text="Input String:", style="Modern.Small.Label").grid(row=1, column=1, padx=5, sticky="e")
 
-        input_entry = ttk.Entry(frame, textvariable=self.input_hex_string, width=80)
-        input_entry.grid(row=1, column=2, padx=10, pady=5)
+        self.input_entry = ttk.Entry(frame, textvariable=self.input_hex_string, style="Modern.TEntry", width=80)
+        self.input_entry.grid(row=1, column=2, padx=10, pady=5)
 
         available_frame = tk.Frame(frame)
         available_frame.grid(row=2, column=0, padx=10, pady=5)
-        self.available = tk.Listbox(available_frame, selectmode=tk.EXTENDED, width=70, height=12)
-        available_scroll = tk.Scrollbar(available_frame, orient=tk.VERTICAL, command=self.available.yview)
+        self.available = tk.Listbox(available_frame, bg=MODERN["panel"], selectmode=tk.EXTENDED, width=75, height=12)
+        available_scroll = tk.Scrollbar(available_frame, bg=MODERN["muted"], orient=tk.VERTICAL, command=self.available.yview)
         self.available.config(yscrollcommand=available_scroll.set)
         self.available.grid(row=0, column=0, sticky="nsew")
         available_scroll.grid(row=0, column=1, sticky="ns")
 
         selected_frame = tk.Frame(frame)
         selected_frame.grid(row=2, column=2, padx=10, pady=5)
-        self.selected = tk.Listbox(selected_frame, selectmode=tk.EXTENDED, width=70, height=12)
-        selected_scroll = tk.Scrollbar(selected_frame, orient=tk.VERTICAL, command=self.selected.yview)
+        self.selected = tk.Listbox(selected_frame, bg=MODERN["panel"], selectmode=tk.EXTENDED, width=75, height=12)
+        selected_scroll = tk.Scrollbar(selected_frame, bg=MODERN["muted"], orient=tk.VERTICAL, command=self.selected.yview)
         self.selected.config(yscrollcommand=selected_scroll.set)
         self.selected.grid(row=0, column=0, sticky="nsew")
         selected_scroll.grid(row=0, column=1, sticky="ns")
@@ -1659,12 +1703,12 @@ class DualListBox:
         self.available.full_items = self.items
         self._populate_available(self.items)
 
-        button_frame = tk.Frame(frame)
-        button_frame.grid(row=2, column=1)
-        ttk.Button(button_frame, text=">>", command=self.add_item).pack(pady=5)
-        ttk.Button(button_frame, text="🗑", command=self.remove_item).pack(pady=5)
-        ttk.Button(button_frame, text="↑", command=self.move_up).pack(pady=5)
-        ttk.Button(button_frame, text="↓", command=self.move_down).pack(pady=5)
+        button_frame = tk.Frame(frame, bg=MODERN["panel"])
+        button_frame.grid(row=2, column=1, padx=10, pady=5, sticky="nsew")
+        ttk.Button(button_frame, text=">>", style="Modern.TButton", command=self.add_item).pack(pady=5)
+        ttk.Button(button_frame, text="🗑", style="Modern.TButton", command=self.remove_item).pack(pady=5)
+        ttk.Button(button_frame, text="↑", style="Modern.TButton", command=self.move_up).pack(pady=5)
+        ttk.Button(button_frame, text="↓", style="Modern.TButton", command=self.move_down).pack(pady=5)
 
         self.search_var.trace_add("write", self.update_filter)
         self.input_hex_string.trace_add("write", self.auto_fill_selected)
@@ -1675,7 +1719,7 @@ class DualListBox:
             self.available.insert(tk.END, item)
 
     def auto_fill_selected(self, *_args):
-        hex_text = self.input_hex_string.get().strip().upper()
+        hex_text = self.input_entry.get().strip().upper()
         self.selected.delete(0, tk.END)
 
         values = []
@@ -1798,42 +1842,42 @@ def restore_saved_selection(input_var, listbox, payload, available_items, payloa
             listbox.insert(tk.END, item)
 
 # Create a frame with fixed size for the notebook
-notebook_frame = tk.Frame(root, width=1080, height=335)
-notebook_frame.pack(padx=10, pady=(0,5))  # adjust pady to reduce gap
+notebook_frame = tk.Frame(root, width=1150, height=350, bg=MODERN["bg"])
+notebook_frame.pack(padx=10, pady=(0,2))  # adjust pady to reduce gap
 
 # Prevent frame from shrinking to fit notebook
 notebook_frame.pack_propagate(False)
 
 # Tabs for Auto / Push
-notebook = ttk.Notebook(notebook_frame)
-notebook.pack(pady=20, expand=True, fill="both")
+notebook = ttk.Notebook(notebook_frame, style="Modern.TNotebook")
+notebook.pack(pady=10, padx=8, expand=True, fill="both")
 
-auto_tab = ttk.Frame(notebook)
+auto_tab = ttk.Frame(notebook, style="Modern.TFrame")
 notebook.add(auto_tab, text="Auto Scroll Selection")
 auto_selection = DualListBox(auto_tab, "Auto Scroll Selection", default_items)
 auto_available, auto_selected, auto_input_hex_string = auto_selection.available, auto_selection.selected, auto_selection.input_hex_string
 
-push_tab = ttk.Frame(notebook)
+push_tab = ttk.Frame(notebook, style="Modern.TFrame")
 notebook.add(push_tab, text="Push Scroll Selection")
 push_selection = DualListBox(push_tab, "Push Scroll Selection", default_items)
 push_available, push_selected, push_input_hex_string = push_selection.available, push_selection.selected, push_selection.input_hex_string
 
-tamper_tab = ttk.Frame(notebook)
+tamper_tab = ttk.Frame(notebook, style="Modern.TFrame")
 notebook.add(tamper_tab, text="Tamper Selection")
 tamper_selection = DualListBox(tamper_tab, "Present Tamper Status Selection", tamper_items)
 tamper_available, tamper_selected, tamper_input_hex_string = tamper_selection.available, tamper_selection.selected, tamper_selection.input_hex_string
 
-battery_tab = ttk.Frame(notebook)
+battery_tab = ttk.Frame(notebook, style="Modern.TFrame")
 notebook.add(battery_tab, text="Battery Mode Selection")
 battery_selection = DualListBox(battery_tab, "Battery Mode Selection", default_items)
 battery_available, battery_selected, battery_input_hex_string = battery_selection.available, battery_selection.selected, battery_selection.input_hex_string
 
-diag_tab = ttk.Frame(notebook)
+diag_tab = ttk.Frame(notebook, style="Modern.TFrame")
 notebook.add(diag_tab, text="Diagnostic Selection")
 diag_selection = DualListBox(diag_tab, "Diagnostic Selection", diag_items)
 diag_available, diag_selected, diag_input_hex_string = diag_selection.available, diag_selection.selected, diag_selection.input_hex_string
 
-test_tab = ttk.Frame(notebook)
+test_tab = ttk.Frame(notebook, style="Modern.TFrame")
 notebook.add(test_tab, text="Test Mode Selection")
 test_selection = DualListBox(test_tab, "Test Mode Selection", test_items)
 test_available, test_selected, test_input_hex_string = test_selection.available, test_selection.selected, test_selection.input_hex_string
@@ -1845,52 +1889,81 @@ restore_saved_selection(battery_input_hex_string, battery_selected, saved_displa
 restore_saved_selection(diag_input_hex_string, diag_selected, saved_display_strings.get("diag_string", ""), diag_items, "diag")
 restore_saved_selection(test_input_hex_string, test_selected, saved_display_strings.get("test_string", ""), test_items, "test")
 
+#--------------------------------------------------Selection Tabs End-------------------------------------------------------------------
+
+
+
+#--------------------------------------------------Configuration Tabs Start-------------------------------------------------------------
+
 # Output file
-output_var = tk.StringVar(value=os.path.join(base_folder, "Display_Parameters_report.docx"))
+output_var = tk.StringVar(master=root, value=os.path.join(base_folder, "Display_Parameters_report.docx"))
 
-auto_txt = tk.StringVar(value="These parameters displayed on the LCD continuously with auto scrolling. All auto mode Parameters shall display for 10 seconds with auto scrolling.")
+auto_txt = tk.StringVar(master=root, value="These parameters displayed on the LCD continuously with auto scrolling. All auto mode Parameters shall display for 10 seconds with auto scrolling.")
 
-push_txt = tk.StringVar(value="This mode will activate when pressing the Scroll up or Scroll down push button. Meter will continuously scroll through Push Button as Display parameters (Refer TABLE-2). If push button not pressed for 10 seconds then display will switch over to AUTO display mode.")
+push_txt = tk.StringVar(master=root, value="This mode will activate when pressing the Scroll up or Scroll down push button. Meter will continuously scroll through Push Button as Display parameters (Refer TABLE-2). If push button not pressed for 10 seconds then display will switch over to AUTO display mode.")
 
-diag_txt = tk.StringVar(value="This mode will activate when both Scroll UP & Scroll Down button will press then released & continuously scroll through push button as diagnostics mode display parameters (Refer TABLE-3). The diagnostic mode display will switch over to AUTO display mode when buttons (scroll up/scroll down) not pressed for 15 minutes or again press and released the both buttons.")
+diag_txt = tk.StringVar(master=root, value="This mode will activate when both Scroll UP & Scroll Down button will press then released & continuously scroll through push button as diagnostics mode display parameters (Refer TABLE-3). The diagnostic mode display will switch over to AUTO display mode when buttons (scroll up/scroll down) not pressed for 15 minutes or again press and released the both buttons.")
 
-test_txt = tk.StringVar(value="Test mode can be enabled by continuously pressing the scroll down button for 8 seconds then released. The test mode options are accessed by navigating the options using the push buttons. The Test mode display will switch over to AUTO display mode when buttons (scroll up/scroll down) is not pressed for 1 minutes or at 'exit' parameter, pressing scroll up button for 4 sec then release it. Test mode parameters used for diagnostic purpose only.")
+test_txt = tk.StringVar(master=root, value="Test mode can be enabled by continuously pressing the scroll down button for 8 seconds then released. The test mode options are accessed by navigating the options using the push buttons. The Test mode display will switch over to AUTO display mode when buttons (scroll up/scroll down) is not pressed for 1 minutes or at 'exit' parameter, pressing scroll up button for 4 sec then release it. Test mode parameters used for diagnostic purpose only.")
 
-batt_txt = tk.StringVar(value="Meter display parameters with the help of internal battery activated by pressing the scroll down button and parameter shall scroll one after another using press of push buttons, if push button left unattended, then the display switch-off after 20 seconds.")
+batt_txt = tk.StringVar(master=root, value="Meter display parameters with the help of internal battery activated by pressing the scroll down button and parameter shall scroll one after another using press of push buttons, if push button left unattended, then the display switch-off after 20 seconds.")
+
+##### Create a frame with fixed size for the notebook for Input and Output controls
+new_notebook_frame = tk.Frame(root, width=1150, height=330, bg=MODERN["bg"])
+new_notebook_frame.pack(padx=10, pady=(0,2))  # adjust pady to reduce gap
+
+# Prevent frame from shrinking to fit notebook
+new_notebook_frame.pack_propagate(False)
+
+# Tabs for Auto / Push
+new_notebook = ttk.Notebook(new_notebook_frame, style="Modern.TNotebook")
+new_notebook.pack(pady=10, padx=8, expand=True, fill="both")
+# new_notebook_slidebar = tk.Scrollbar(new_notebook_frame, bg=MODERN["bg"], orient="vertical", command=new_notebook.yview)
+# new_notebook_slidebar.pack(side="right", fill="y")
+
+output_frame = ttk.Frame(new_notebook, style="Modern.TFrame")
+new_notebook.add(output_frame, text="Output Strings")
+
+input_frame = ttk.Frame(new_notebook, style="Modern.TFrame")
+new_notebook.add(input_frame, text="Input Configuration")
 
 
-# Create a frame for output file controls
-input_frame = ttk.Frame(root)
-input_frame.pack(pady=20, padx=10, fill="x")   # This uses pack()
+# **********************************Input Configuration Start****************************************
 
-ttk.Label(input_frame, text="Auto Mode:").grid(row=0, column=0, padx=5, sticky="w")
-ttk.Entry(input_frame, textvariable=auto_txt, width=170).grid(row=0, column=1, padx=30, sticky="w")
+ctk.CTkLabel(input_frame, text="Auto Mode:", text_color=MODERN["primary"], bg_color=MODERN["input"], font=ctk.CTkFont(size=14, weight="bold")).grid(row=0,column=0,padx=10, pady=5, sticky="w")
+auto_txt_entry = ctk.CTkTextbox(input_frame, width=980, height=44, font=("Consolas", 12), wrap="word", fg_color=MODERN["surface"], border_width=1, border_color=MODERN["boundary"])
+auto_txt_entry.grid(row=0, column=1, padx=10, pady=5, sticky="w")
+auto_txt_entry.insert("0.0", auto_txt.get())
 
-ttk.Label(input_frame, text="Push Mode:").grid(row=1, column=0, padx=5, sticky="w")
-ttk.Entry(input_frame, textvariable=push_txt, width=170).grid(row=1, column=1, padx=30, sticky="w")
 
-ttk.Label(input_frame, text="Diag. Mode:").grid(row=2, column=0, padx=5, sticky="w")
-ttk.Entry(input_frame, textvariable=diag_txt, width=170).grid(row=2, column=1, padx=30, sticky="w")
+ctk.CTkLabel(input_frame, text="Push Mode:", text_color=MODERN["primary"], bg_color=MODERN["input"], font=ctk.CTkFont(size=14, weight="bold")).grid(row=1, column=0, padx=10, pady=5, sticky="w")
+push_txt_entry = ctk.CTkTextbox(input_frame, width=980, height=44, font=("Consolas", 12), wrap="word", fg_color=MODERN["surface"], border_width=1, border_color=MODERN["boundary"])
+push_txt_entry.grid(row=1, column=1, padx=10, pady=5, sticky="w")
+push_txt_entry.insert("0.0", push_txt.get())
 
-ttk.Label(input_frame, text="Test Mode:").grid(row=3, column=0, padx=5, sticky="w")
-ttk.Entry(input_frame, textvariable=test_txt, width=170).grid(row=3, column=1, padx=30, sticky="w")
+ctk.CTkLabel(input_frame, text="Diag. Mode:", text_color=MODERN["primary"], bg_color=MODERN["input"], font=ctk.CTkFont(size=14, weight="bold")).grid(row=2, column=0, padx=10, pady=5, sticky="w")
+diag_txt_entry = ctk.CTkTextbox(input_frame, width=980, height=44, font=("Consolas", 12), wrap="word", fg_color=MODERN["surface"], border_width=1, border_color=MODERN["boundary"])
+diag_txt_entry.grid(row=2, column=1, padx=10, pady=5, sticky="w")
+diag_txt_entry.insert("0.0", diag_txt.get())
 
-ttk.Label(input_frame, text="Battery Mode:").grid(row=4, column=0, padx=5, sticky="w")
-ttk.Entry(input_frame, textvariable=batt_txt, width=170).grid(row=4, column=1, padx=30, sticky="w")
+ctk.CTkLabel(input_frame, text="Test Mode:", text_color=MODERN["primary"], bg_color=MODERN["input"], font=ctk.CTkFont(size=14, weight="bold")).grid(row=3, column=0, padx=10, pady=5, sticky="w")
+test_txt_entry = ctk.CTkTextbox(input_frame, width=980, height=44, font=("Consolas", 12), wrap="word", fg_color=MODERN["surface"], border_width=1, border_color=MODERN["boundary"])
+test_txt_entry.grid(row=3, column=1, padx=10, pady=5, sticky="w")
+test_txt_entry.insert("0.0", test_txt.get())
 
-# Create a frame for output file controls
-output_frame = ctk.CTkFrame(root, corner_radius=15)
-output_frame.pack(pady=5, fill="x")   # This uses pack()
+ctk.CTkLabel(input_frame, text="Battery Mode:", text_color=MODERN["primary"], bg_color=MODERN["input"], font=ctk.CTkFont(size=14, weight="bold")).grid(row=4, column=0, padx=10, pady=5, sticky="w")
+batt_txt_entry = ctk.CTkTextbox(input_frame, width=980, height=44, font=("Consolas", 12), wrap="word", fg_color=MODERN["surface"], border_width=1, border_color=MODERN["boundary"])
+batt_txt_entry.grid(row=4, column=1, padx=10, pady=5, sticky="w")
+batt_txt_entry.insert("0.0", batt_txt.get())
 
-ttk.Label(output_frame, text="Output File:").grid(row=0, column=0, padx=5, sticky="w")
-ttk.Entry(output_frame, textvariable=output_var, width=130).grid(row=0, column=1, padx=30, sticky="w")
-ctk.CTkButton(output_frame, text="Browse", command=choose_output, fg_color="#2dbe9f").grid(row=0, column=2, padx=30, sticky="w")
+# **********************************Input Configuration End****************************************
 
-# Generate Report button
-ctk.CTkButton(output_frame, text="Generate Report", command=generate_doc, fg_color="#37b63d").grid(row=2, column=2, padx=30, sticky="w")
+def set_readonly_text(textbox, text):
+    textbox.configure(state="normal")
+    textbox.delete("1.0", "end")
+    textbox.insert("1.0", text)
+    textbox.configure(state="disabled")
 
-# Generate Hex String button
-ctk.CTkButton(output_frame, text="Generate Hex String", command=generate_hex_string, fg_color="#4946f1").grid(row=3, column=2, padx=30, sticky="w")
 child_processes = [] 
 
 def open_profile_object_selection():
@@ -1916,7 +1989,6 @@ def open_profile_object_selection():
             parent=root,
         )
 
-ctk.CTkButton(output_frame, text="Profile Objects String", command=open_profile_object_selection, fg_color="#b341a3").grid(row=4, column=2, padx=30, sticky="w")
 
 def open_top_level_string_selection():
     """Open Top_Level_String_Selection from the same EXE."""
@@ -1941,7 +2013,6 @@ def open_top_level_string_selection():
             parent=root,
         )
 
-ctk.CTkButton(output_frame, text="Top Level String", command=open_top_level_string_selection, fg_color="#A34528").grid(row=5, column=2, padx=30, sticky="w")
 
 def close_main_application():
     """Close all child EXE windows first, then close the main window."""
@@ -1970,45 +2041,92 @@ root.protocol("WM_DELETE_WINDOW", close_main_application)
 
 saved_display_strings = load_display_strings()
 
-auto_string = tk.StringVar(value="")
+auto_string = tk.StringVar(master=root, value="")
 
-ctk.CTkLabel(output_frame, text="").grid(row=1, column=3, padx=5, sticky="w")
+push_string = tk.StringVar(master=root, value="")
 
-ttk.Label(output_frame, text="Auto Display String:").grid(row=2, column=0, padx=5, sticky="w")
-ttk.Entry(output_frame, textvariable=auto_string, width=130).grid(row=2, column=1, padx=30, sticky="e")
+tamper_string = tk.StringVar(master=root, value="")
 
-push_string = tk.StringVar(value="")
+batt_string = tk.StringVar(master=root, value="")
 
-ttk.Label(output_frame, text="Push Display String:").grid(row=3, column=0, padx=5, sticky="w")
-ttk.Entry(output_frame, textvariable=push_string, width=130).grid(row=3, column=1, padx=30, sticky="e")
+diag_string = tk.StringVar(master=root, value="")
 
-tamper_string = tk.StringVar(value="")
+test_string = tk.StringVar(master=root, value="")
 
-batt_string = tk.StringVar(value="")
 
-ttk.Label(output_frame, text="Battery Display String:").grid(row=6, column=0, padx=5, sticky="w")
-ttk.Entry(output_frame, textvariable=batt_string, width=130).grid(row=6, column=1, padx=30, sticky="e")
+# **********************************Output String Start****************************************
 
-diag_string = tk.StringVar(value="")
+# Output file Location
+ctk.CTkLabel(output_frame, text="Output File:", text_color=MODERN["primary"], bg_color=MODERN["input"], font=ctk.CTkFont(size=14, weight="bold")).grid(row=0,column=0,padx=10, pady=5, sticky="w")
+output_entry = ctk.CTkTextbox(output_frame, width=760, height=22, font=("Consolas", 11), wrap="word", fg_color=MODERN["surface"], border_width=1, border_color=MODERN["boundary"])
+output_entry.grid(row=0, column=1, padx=10, pady=5, sticky="w")
+output_entry.insert("1.0", output_var.get())
 
-ttk.Label(output_frame, text="Diag Display String:").grid(row=4, column=0, padx=5, sticky="w")
-ttk.Entry(output_frame, textvariable=diag_string, width=130).grid(row=4, column=1, padx=30, sticky="e")
+# Browse button for Selection of output file Location
+ctk.CTkButton(output_frame, text="Browse", command=choose_output, fg_color=MODERN["primary"], hover_color=MODERN["primary_hover"]).grid(row=0, column=2, padx=10, pady=5, sticky="w")
 
-test_string = tk.StringVar(value="")
+# Generate Report button
+ctk.CTkButton(output_frame, text="Generate Report", command=generate_doc, fg_color=MODERN["success"], hover_color=MODERN["success_hover"]).grid(row=1, column=2, padx=10, pady=5, sticky="w")
 
-ttk.Label(output_frame, text="Test Display String:").grid(row=5, column=0, padx=5, sticky="w")
-ttk.Entry(output_frame, textvariable=test_string, width=130).grid(row=5, column=1, padx=30, sticky="e")
+# Generate Hex String button
+ctk.CTkButton(output_frame, text="Generate Hex String", command=generate_hex_string, fg_color=MODERN["primary"], hover_color=MODERN["primary_hover"]).grid(row=2, column=2, padx=10, pady=5, sticky="w")
 
+# Profile Objects String Selection GUI Open button
+ctk.CTkButton(output_frame, text="Profile Objects String", command=open_profile_object_selection, fg_color=MODERN["primary"], hover_color=MODERN["primary_hover"]).grid(row=3, column=2, padx=10, pady=5, sticky="w")
+
+# Top Level String Selection GUI Open button
+ctk.CTkButton(output_frame, text="Top Level String", command=open_top_level_string_selection, fg_color=MODERN["primary"], hover_color=MODERN["primary_hover"]).grid(row=4, column=2, padx=10, pady=5, sticky="w")
+
+# Auto Display String 
+ctk.CTkLabel(output_frame, text="Auto Display String:", text_color=MODERN["primary"], bg_color=MODERN["input"], font=ctk.CTkFont(size=14, weight="bold")).grid(row=1,column=0,padx=10, pady=5, sticky="w")
+auto_entry = ctk.CTkTextbox(output_frame, width=760, height=44, font=("Consolas", 12), wrap="word", fg_color=MODERN["surface"], border_width=1, border_color=MODERN["boundary"])
+auto_entry.grid(row=1, column=1, padx=10, pady=5, sticky="w")
+set_readonly_text(auto_entry, auto_string.get())
+
+# Push Display String 
+ctk.CTkLabel(output_frame, text="Push Display String:", text_color=MODERN["primary"], bg_color=MODERN["input"], font=ctk.CTkFont(size=14, weight="bold")).grid(row=2,column=0,padx=10, pady=5, sticky="w")
+push_entry = ctk.CTkTextbox(output_frame, width=760, height=44, font=("Consolas", 12), wrap="word", fg_color=MODERN["surface"], border_width=1, border_color=MODERN["boundary"])
+push_entry.grid(row=2, column=1, padx=10, pady=5, sticky="w")
+set_readonly_text(push_entry, push_string.get())
+
+# Battery Display String 
+ctk.CTkLabel(output_frame, text="Battery Display String:", text_color=MODERN["primary"], bg_color=MODERN["input"], font=ctk.CTkFont(size=14, weight="bold")).grid(row=3,column=0,padx=10, pady=5, sticky="w")
+batt_entry = ctk.CTkTextbox(output_frame, width=760, height=22, font=("Consolas", 12), wrap="word", fg_color=MODERN["surface"], border_width=1, border_color=MODERN["boundary"])
+batt_entry.grid(row=3, column=1, padx=10, pady=5, sticky="w")
+set_readonly_text(batt_entry, batt_string.get())
+
+# Diag Display String 
+ctk.CTkLabel(output_frame, text="Diag Display String:", text_color=MODERN["primary"], bg_color=MODERN["input"], font=ctk.CTkFont(size=14, weight="bold")).grid(row=4,column=0,padx=10, pady=5, sticky="w")
+diag_entry = ctk.CTkTextbox(output_frame, width=760, height=22, font=("Consolas", 12), wrap="word", fg_color=MODERN["surface"], border_width=1, border_color=MODERN["boundary"])
+diag_entry.grid(row=4, column=1, padx=10, pady=5, sticky="w")
+set_readonly_text(diag_entry, diag_string.get())
+
+# Test Display String 
+ctk.CTkLabel(output_frame, text="Test Display String:", text_color=MODERN["primary"], bg_color=MODERN["input"], font=ctk.CTkFont(size=14, weight="bold")).grid(row=5,column=0,padx=10, pady=5, sticky="w")
+test_entry = ctk.CTkTextbox(output_frame, width=760, height=22, font=("Consolas", 12), wrap="word", fg_color=MODERN["surface"], border_width=1, border_color=MODERN["boundary"])
+test_entry.grid(row=5, column=1, padx=10, pady=5, sticky="w")
+set_readonly_text(test_entry, test_string.get())
+
+# **********************************Output String End****************************************
+
+
+#--------------------------------------------------Configuration Tabs End-------------------------------------------------------------
+
+
+
+
+
+#--------------------------------------------------Footer Frame Start---------------------------------------------------------------------
 
 # === Footer ===
-footer_frame = ctk.CTkFrame(root, height=30)
+footer_frame = ctk.CTkFrame(root, fg_color="#4B70E7", height=34, corner_radius=0)
 footer_frame.pack(side="bottom", fill="x")
 
-footer_label = ctk.CTkLabel(
-    footer_frame,
-    text="Disclaimer - This is internal property of Genus Power Infrastructure Limited. Do not use without permission of developers.                                CopyRight - abhishek.Verma@genus.in (All Rights Reserved)"
-)
+footer_label = ctk.CTkLabel(footer_frame, text="Disclaimer - This is internal property of Genus Power Infrastructure Limited. Do not use without permission of developers.                                CopyRight - abhishek.Verma@genus.in (All Rights Reserved)", text_color="#C9D8E5", font=ctk.CTkFont(size=13))
 footer_label.pack(pady=5)
+
+
+#--------------------------------------------------Footer Frame End---------------------------------------------------------------------
 
 class LoginWindow:
     def __init__(self, root, on_success):
@@ -2017,38 +2135,37 @@ class LoginWindow:
         self.on_success = on_success
 
         self.root.title("Login - 3P PRO Display Tool")
-        self.root.geometry("350x300")
+        self.root.geometry("400x400")
         self.root.resizable(False, False)
         self.root.protocol("WM_DELETE_WINDOW", self.root.master.destroy)
 
-        frame = ttk.Frame(root, padding=20)
-        frame.pack(expand=True)
-
-        ttk.Label(frame, text="3P PRO Display Tool", font=("Arial", 16, "bold")).pack(pady=10)
+        frame = ctk.CTkFrame(root, fg_color=MODERN["input"], corner_radius=14)
+        frame.pack(padx=18, pady=18, fill="both", expand=True)
+        ctk.CTkLabel(frame, text="3P PRO DISPLAY TOOL", text_color=MODERN["primary"], font=ctk.CTkFont(size=20, weight="bold")).pack(pady=(22, 5))
 
         # IP Address
-        ttk.Label(frame, text="IP Address").pack(anchor="w")
-        self.ip_var = tk.StringVar(value="10.141.17.8")
-        self.ip = ttk.Entry(frame, textvariable=self.ip_var)
-        self.ip.pack(fill="x", pady=5)
+        ttk.Label(frame, text="IP Address", style="Login.TLabel").pack(anchor="w", padx=28)
+        self.ip_var = tk.StringVar(master=self.root, value="10.141.17.8")
+        self.ip = ttk.Entry(frame, textvariable=self.ip_var, style="Login.TEntry")
+        self.ip.pack(fill="x", padx=28, pady=(4, 12))
 
         # Username
-        ttk.Label(frame, text="Username").pack(anchor="w")
-        self.username_var = tk.StringVar(value="Admin")
-        self.username = ttk.Entry(frame, textvariable=self.username_var)
-        self.username.pack(fill="x", pady=5)
+        ttk.Label(frame, text="Username", style="Login.TLabel").pack(anchor="w", padx=28)
+        self.username_var = tk.StringVar(master=self.root, value="Admin")
+        self.username = ttk.Entry(frame, textvariable=self.username_var, style="Login.TEntry", state="disabled")
+        self.username.pack(fill="x", padx=28, pady=(4, 12))
 
         # Password
-        ttk.Label(frame, text="Password").pack(anchor="w")
-        self.password_var = tk.StringVar(value="10101")
-        self.password = ttk.Entry(frame, textvariable=self.password_var, show="*")
-        self.password.pack(fill="x", pady=5)
+        ttk.Label(frame, text="Password", style="Login.TLabel").pack(anchor="w", padx=28)
+        self.password_var = tk.StringVar(master=self.root, value="10101")
+        self.password = ttk.Entry(frame, textvariable=self.password_var, show="*", style="Login.TEntry", state="disabled")
+        self.password.pack(fill="x", padx=28, pady=(4, 16))
 
         # Login Button
-        ttk.Button(frame, text="Login", command=self.validate_login).pack(pady=10)
+        ctk.CTkButton(frame, text="LOGIN", command=self.validate_login, width=230, height=36, fg_color=MODERN["primary"], hover_color=MODERN["primary_hover"]).pack(pady=8)
 
         # Status Label
-        self.status = ttk.Label(frame, text="", foreground="red")
+        self.status = ttk.Label(frame, text="", foreground="#B42318", background=MODERN["input"], font=("Segoe UI", 10))
         self.status.pack()
 
     def validate_login(self):
@@ -2074,7 +2191,7 @@ class LoginWindow:
             ip_result = True
 
         else: 
-            ip_result = messagebox.askyesno(
+            ip_result = messagebox.askyesnocancel(
                 "IP Address Not Reachable",
                 f"The IP address {ip} is not reachable. Do you want to use base_folder as default_folder?",
                 parent=self.root
@@ -2101,8 +2218,10 @@ class LaunchGUI:
         self.root.mainloop()
 
 # Start with login window
-root.withdraw()
 login_root = tk.Toplevel(root)
+login_root.title("Login - 3P PRO Display Tool")
 launcher = LaunchGUI(root)
-LoginWindow(login_root, launcher.launch_gui)
+login_window = LoginWindow(login_root, launcher.launch_gui)
+login_root.after(0, login_root.lift)
+login_window.ip.focus_set()
 launcher.run()

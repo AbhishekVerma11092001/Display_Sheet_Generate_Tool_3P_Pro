@@ -1,895 +1,895 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Root>
 	<Profile_3PProWCLoadSurvey>
-        <Item>RTC</Item>
-        <Item>Averaged R Phase Current - IR</Item>
-        <Item>Averaged Y Phase Current - IY</Item>
-        <Item>Averaged B Phase Current - IB</Item>
-        <Item>Averaged R Phase Voltage - VRN</Item>
-        <Item>Averaged Y Phase Voltage - VYN</Item>
-        <Item>Averaged B Phase Voltage - VBN</Item>
-        <Item>Consumed Active Import Energy</Item>
-        <Item>Consumed Apparent Import Energy</Item>
-        <Item>Consumed Active Export Energy</Item>
-        <Item>Consumed Apparent Export Energy</Item>
-        <Item>Status Byte</Item>
-        <Item>Averaged Neutral Current - IN</Item>
-        <Item>Consumed Reactive Energy - Q1</Item>
-        <Item>Consumed Reactive Energy - Q2</Item>
-        <Item>Consumed Reactive Energy - Q3</Item>
-        <Item>Consumed Reactive Energy - Q4</Item>
-        <Item>Averaged Temperature</Item>
-        <Item>Averaged R Phase Voltage THD</Item>
-        <Item>Averaged Y Phase Voltage THD</Item>
-        <Item>Averaged B Phase Voltage THD</Item>
-        <Item>Averaged R Phase Current THD</Item>
-        <Item>Averaged Y Phase Current THD</Item>
-        <Item>Averaged B Phase Current THD</Item>
-        <Item>LS Period Power On Duration</Item>
-        <Item>Averaged Frequency</Item>
-        <Item>Consumed Active Net Energy</Item>
-        <Item>Power Interruption Count In LS IP</Item>
-        <Item>Signal Strength (CSQ)</Item>
-        <Item>Diagnostic Information</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
+        <Item IS_15959_PARA="true">RTC</Item>
+        <Item IS_15959_PARA="true">Averaged R Phase Current - IR</Item>
+        <Item IS_15959_PARA="true">Averaged Y Phase Current - IY</Item>
+        <Item IS_15959_PARA="true">Averaged B Phase Current - IB</Item>
+        <Item IS_15959_PARA="true">Averaged R Phase Voltage - VRN</Item>
+        <Item IS_15959_PARA="true">Averaged Y Phase Voltage - VYN</Item>
+        <Item IS_15959_PARA="true">Averaged B Phase Voltage - VBN</Item>
+        <Item IS_15959_PARA="true">Consumed Active Import Energy</Item>
+        <Item IS_15959_PARA="true">Consumed Apparent Import Energy</Item>
+        <Item IS_15959_PARA="true">Consumed Active Export Energy</Item>
+        <Item IS_15959_PARA="true">Consumed Apparent Export Energy</Item>
+        <Item IS_15959_PARA="false">Status Byte</Item>
+        <Item IS_15959_PARA="false">Averaged Neutral Current - IN</Item>
+        <Item IS_15959_PARA="false">Consumed Reactive Energy - Q1</Item>
+        <Item IS_15959_PARA="false">Consumed Reactive Energy - Q2</Item>
+        <Item IS_15959_PARA="false">Consumed Reactive Energy - Q3</Item>
+        <Item IS_15959_PARA="false">Consumed Reactive Energy - Q4</Item>
+        <Item IS_15959_PARA="false">Averaged Temperature</Item>
+        <Item IS_15959_PARA="false">Averaged R Phase Voltage THD</Item>
+        <Item IS_15959_PARA="false">Averaged Y Phase Voltage THD</Item>
+        <Item IS_15959_PARA="false">Averaged B Phase Voltage THD</Item>
+        <Item IS_15959_PARA="false">Averaged R Phase Current THD</Item>
+        <Item IS_15959_PARA="false">Averaged Y Phase Current THD</Item>
+        <Item IS_15959_PARA="false">Averaged B Phase Current THD</Item>
+        <Item IS_15959_PARA="false">LS Period Power On Duration</Item>
+        <Item IS_15959_PARA="false">Averaged Frequency</Item>
+        <Item IS_15959_PARA="false">Consumed Active Net Energy</Item>
+        <Item IS_15959_PARA="false">Power Interruption Count In LS IP</Item>
+        <Item IS_15959_PARA="false">Signal Strength (CSQ)</Item>
+        <Item IS_15959_PARA="false">Diagnostic Information</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
     </Profile_3PProWCLoadSurvey>
     <Profile_3PProWCDailyEnergy>
-        <Item>RTC</Item>
-        <Item>Cum. Active Import Energy</Item>
-        <Item>Cum. Apparent Import Energy</Item>
-        <Item>Cum. Active Export Energy</Item>
-        <Item>Cum. Apparent Export Energy</Item>
-        <Item>Cum. Reactive Energy - Q1</Item>
-        <Item>Cum. Reactive Energy - Q2</Item>
-        <Item>Cum. Reactive Energy - Q3</Item>
-        <Item>Cum. Reactive Energy - Q4</Item>
-        <Item>Current Bill MD Active Import</Item>
-        <Item>Current Bill MD Active - Date and Time</Item>
-        <Item>Current Bill MD Apparent Import</Item>
-        <Item>Current Bill MD Apparent Import - Date and Time</Item>
-        <Item>Current Bill MD Active Export</Item>
-        <Item>Current Bill MD Active Export - Date and Time</Item>
-        <Item>Current Bill MD Apparent Export</Item>
-        <Item>Current Bill MD Apparent Export - Date and Time</Item>
-        <Item>Cum. Active Import Energy - TZ1</Item>
-        <Item>Cum. Active Import Energy - TZ2</Item>
-        <Item>Cum. Active Import Energy - TZ3</Item>
-        <Item>Cum. Active Import Energy - TZ4</Item>
-        <Item>Cum. Active Import Energy - TZ5</Item>
-        <Item>Cum. Active Import Energy - TZ6</Item>
-        <Item>Cum. Active Import Energy - TZ7</Item>
-        <Item>Cum. Active Import Energy - TZ8</Item>
-        <Item>Cum. Apparent Import Energy - TZ1</Item>
-        <Item>Cum. Apparent Import Energy - TZ2</Item>
-        <Item>Cum. Apparent Import Energy - TZ3</Item>
-        <Item>Cum. Apparent Import Energy - TZ4</Item>
-        <Item>Cum. Apparent Import Energy - TZ5</Item>
-        <Item>Cum. Apparent Import Energy - TZ6</Item>
-        <Item>Cum. Apparent Import Energy - TZ7</Item>
-        <Item>Cum. Apparent Import Energy - TZ8</Item>
-        <Item>Cum. Active Export Energy - TZ1</Item>
-        <Item>Cum. Active Export Energy - TZ2</Item>
-        <Item>Cum. Active Export Energy - TZ3</Item>
-        <Item>Cum. Active Export Energy - TZ4</Item>
-        <Item>Cum. Active Export Energy - TZ5</Item>
-        <Item>Cum. Active Export Energy - TZ6</Item>
-        <Item>Cum. Active Export Energy - TZ7</Item>
-        <Item>Cum. Active Export Energy - TZ8</Item>
-        <Item>Cum. Apparent Export Energy - TZ1</Item>
-        <Item>Cum. Apparent Export Energy - TZ2</Item>
-        <Item>Cum. Apparent Export Energy - TZ3</Item>
-        <Item>Cum. Apparent Export Energy - TZ4</Item>
-        <Item>Cum. Apparent Export Energy - TZ5</Item>
-        <Item>Cum. Apparent Export Energy - TZ6</Item>
-        <Item>Cum. Apparent Export Energy - TZ7</Item>
-        <Item>Cum. Apparent Export Energy - TZ8</Item>
-        <Item>Daily Energy Diagnostic Information</Item>
-        <Item>Cum. Active Reverse Energy</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
+        <Item IS_15959_PARA="true">RTC</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Import Energy</Item>
+        <Item IS_15959_PARA="true">Cum. Active Export Energy</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Export Energy</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy - Q1</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy - Q2</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy - Q3</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy - Q4</Item>
+        <Item IS_15959_PARA="false">Current Bill MD Active Import</Item>
+        <Item IS_15959_PARA="false">Current Bill MD Active - Date and Time</Item>
+        <Item IS_15959_PARA="false">Current Bill MD Apparent Import</Item>
+        <Item IS_15959_PARA="false">Current Bill MD Apparent Import - Date and Time</Item>
+        <Item IS_15959_PARA="false">Current Bill MD Active Export</Item>
+        <Item IS_15959_PARA="false">Current Bill MD Active Export - Date and Time</Item>
+        <Item IS_15959_PARA="false">Current Bill MD Apparent Export</Item>
+        <Item IS_15959_PARA="false">Current Bill MD Apparent Export - Date and Time</Item>
+        <Item IS_15959_PARA="false">Cum. Active Import Energy - TZ1</Item>
+        <Item IS_15959_PARA="false">Cum. Active Import Energy - TZ2</Item>
+        <Item IS_15959_PARA="false">Cum. Active Import Energy - TZ3</Item>
+        <Item IS_15959_PARA="false">Cum. Active Import Energy - TZ4</Item>
+        <Item IS_15959_PARA="false">Cum. Active Import Energy - TZ5</Item>
+        <Item IS_15959_PARA="false">Cum. Active Import Energy - TZ6</Item>
+        <Item IS_15959_PARA="false">Cum. Active Import Energy - TZ7</Item>
+        <Item IS_15959_PARA="false">Cum. Active Import Energy - TZ8</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Import Energy - TZ1</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Import Energy - TZ2</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Import Energy - TZ3</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Import Energy - TZ4</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Import Energy - TZ5</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Import Energy - TZ6</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Import Energy - TZ7</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Import Energy - TZ8</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ1</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ2</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ3</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ4</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ5</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ6</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ7</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ8</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ1</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ2</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ3</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ4</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ5</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ6</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ7</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ8</Item>
+        <Item IS_15959_PARA="false">Daily Energy Diagnostic Information</Item>
+        <Item IS_15959_PARA="false">Cum. Active Reverse Energy</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
     </Profile_3PProWCDailyEnergy>
     <Profile_3PProWCBillingEnergy>
-        <Item>Billing Date</Item>
-        <Item>Billing Period Import Power Factor</Item>
-        <Item>Cum. Active Import Energy</Item>
-        <Item>Cum. Active Import Energy - TZ1</Item>
-        <Item>Cum. Active Import Energy - TZ2</Item>
-        <Item>Cum. Active Import Energy - TZ3</Item>
-        <Item>Cum. Active Import Energy - TZ4</Item>
-        <Item>Cum. Active Import Energy - TZ5</Item>
-        <Item>Cum. Active Import Energy - TZ6</Item>
-        <Item>Cum. Active Import Energy - TZ7</Item>
-        <Item>Cum. Active Import Energy - TZ8</Item>
-        <Item>Cum. Apparent Import Energy - VAh</Item>
-        <Item>Cum. Apparent Import Energy - TZ1</Item>
-        <Item>Cum. Apparent Import Energy - TZ2</Item>
-        <Item>Cum. Apparent Import Energy - TZ3</Item>
-        <Item>Cum. Apparent Import Energy - TZ4</Item>
-        <Item>Cum. Apparent Import Energy - TZ5</Item>
-        <Item>Cum. Apparent Import Energy - TZ6</Item>
-        <Item>Cum. Apparent Import Energy - TZ7</Item>
-        <Item>Cum. Apparent Import Energy - TZ8</Item>
-        <Item>MD Active Import</Item>
-        <Item>MD Active Import - Date and Time</Item>
-        <Item>MD Active Import - TZ1</Item>
-        <Item>MD Active Import - TZ1 - Date and Time</Item>
-        <Item>MD Active Import - TZ2</Item>
-        <Item>MD Active Import - TZ2 - Date and Time</Item>
-        <Item>MD Active Import - TZ3</Item>
-        <Item>MD Active Import - TZ3 - Date and Time</Item>
-        <Item>MD Active Import - TZ4</Item>
-        <Item>MD Active Import - TZ4 - Date and Time</Item>
-        <Item>MD Active Import - TZ5</Item>
-        <Item>MD Active Import - TZ5 - Date and Time</Item>
-        <Item>MD Active Import - TZ6</Item>
-        <Item>MD Active Import - TZ6 - Date and Time</Item>
-        <Item>MD Active Import - TZ7</Item>
-        <Item>MD Active Import - TZ7 - Date and Time</Item>
-        <Item>MD Active Import - TZ8</Item>
-        <Item>MD Active Import - TZ8 - Date and Time</Item>
-        <Item>MD Apparent Import</Item>
-        <Item>MD Apparent Import - Date and Time</Item>
-        <Item>MD Apparent Import  - TZ1</Item>
-        <Item>MD Apparent Import  - TZ1 - Date and Time</Item>
-        <Item>MD Apparent Import  - TZ2</Item>
-        <Item>MD Apparent Import  - TZ2 - Date and Time</Item>
-        <Item>MD Apparent Import  - TZ3</Item>
-        <Item>MD Apparent Import  - TZ3 - Date and Time</Item>
-        <Item>MD Apparent Import  - TZ4</Item>
-        <Item>MD Apparent Import  - TZ4 - Date and Time</Item>
-        <Item>MD Apparent Import  - TZ5</Item>
-        <Item>MD Apparent Import  - TZ5 - Date and Time</Item>
-        <Item>MD Apparent Import  - TZ6</Item>
-        <Item>MD Apparent Import  - TZ6 - Date and Time</Item>
-        <Item>MD Apparent Import  - TZ7</Item>
-        <Item>MD Apparent Import  - TZ7 - Date and Time</Item>
-        <Item>MD Apparent Import  - TZ8</Item>
-        <Item>MD Apparent Import  - TZ8 - Date and Time</Item>
-        <Item>Billing Period Power On Duration</Item>
-        <Item>Cum. Active Export Energy</Item>
-        <Item>Cum. Apparent Export Energy</Item>
-        <Item>Cum. Reactive Energy - Q1</Item>
-        <Item>Cum. Reactive Energy - Q2</Item>
-        <Item>Cum. Reactive Energy - Q3</Item>
-        <Item>Cum. Reactive Energy - Q4</Item>
-        <Item>Cum. Billing Count (MD Reset Count)</Item>
-        <Item>Cause Of MD Reset</Item>
-        <Item>Cum. Active Export Energy - TZ1</Item>
-        <Item>Cum. Active Export Energy - TZ2</Item>
-        <Item>Cum. Active Export Energy - TZ3</Item>
-        <Item>Cum. Active Export Energy - TZ4</Item>
-        <Item>Cum. Active Export Energy - TZ5</Item>
-        <Item>Cum. Active Export Energy - TZ6</Item>
-        <Item>Cum. Active Export Energy - TZ7</Item>
-        <Item>Cum. Active Export Energy - TZ8</Item>
-        <Item>Cum. Apparent Export Energy - TZ1</Item>
-        <Item>Cum. Apparent Export Energy - TZ2</Item>
-        <Item>Cum. Apparent Export Energy - TZ3</Item>
-        <Item>Cum. Apparent Export Energy - TZ4</Item>
-        <Item>Cum. Apparent Export Energy - TZ5</Item>
-        <Item>Cum. Apparent Export Energy - TZ6</Item>
-        <Item>Cum. Apparent Export Energy - TZ7</Item>
-        <Item>Cum. Apparent Export Energy - TZ8</Item>
-        <Item>MD Active Export</Item>
-        <Item>MD Active Export - Date and Time</Item>
-        <Item>MD Active Export - TZ1</Item>
-        <Item>MD Active Export - TZ1 - Date and Time</Item>
-        <Item>MD Active Export - TZ2</Item>
-        <Item>MD Active Export - TZ2 - Date and Time</Item>
-        <Item>MD Active Export - TZ3</Item>
-        <Item>MD Active Export - TZ3 - Date and Time</Item>
-        <Item>MD Active Export - TZ4</Item>
-        <Item>MD Active Export - TZ4 - Date and Time</Item>
-        <Item>MD Active Export - TZ5</Item>
-        <Item>MD Active Export - TZ5 - Date and Time</Item>
-        <Item>MD Active Export - TZ6</Item>
-        <Item>MD Active Export - TZ6 - Date and Time</Item>
-        <Item>MD Active Export - TZ7</Item>
-        <Item>MD Active Export - TZ7 - Date and Time</Item>
-        <Item>MD Active Export - TZ8</Item>
-        <Item>MD Active Export - TZ8 - Date and Time</Item>
-        <Item>MD Apparent Export</Item>
-        <Item>MD Apparent Export - Date and Time</Item>
-        <Item>MD Apparent Export  - TZ1</Item>
-        <Item>MD Apparent Export  - TZ1 - Date and Time</Item>
-        <Item>MD Apparent Export  - TZ2</Item>
-        <Item>MD Apparent Export  - TZ2 - Date and Time</Item>
-        <Item>MD Apparent Export  - TZ3</Item>
-        <Item>MD Apparent Export  - TZ3 - Date and Time</Item>
-        <Item>MD Apparent Export  - TZ4</Item>
-        <Item>MD Apparent Export  - TZ4 - Date and Time</Item>
-        <Item>MD Apparent Export  - TZ5</Item>
-        <Item>MD Apparent Export  - TZ5 - Date and Time</Item>
-        <Item>MD Apparent Export  - TZ6</Item>
-        <Item>MD Apparent Export  - TZ6 - Date and Time</Item>
-        <Item>MD Apparent Export  - TZ7</Item>
-        <Item>MD Apparent Export  - TZ7 - Date and Time</Item>
-        <Item>MD Apparent Export  - TZ8</Item>
-        <Item>MD Apparent Export  - TZ8 - Date and Time</Item>
-        <Item>Billing Period Export Power Factor</Item>
-        <Item>Billing Period Tamper Count</Item>
-        <Item>Cum. MD Active Import</Item>
-        <Item>Cum. MD Apparent Import</Item>
-        <Item>Cum. MD Active Export</Item>
-        <Item>Cum. MD Apparent Export</Item>
-        <Item>Fundamental Active Energy Import</Item>
-        <Item>Fundamental Active Energy Export</Item>
-        <Item>Billing Period No. of Power Failure</Item>
-        <Item>Billing Period Power Failue Duration</Item>
-        <Item>Cum. Reactive Energy Q1 - TZ1</Item>
-        <Item>Cum. Reactive Energy Q1 - TZ2</Item>
-        <Item>Cum. Reactive Energy Q1 - TZ3</Item>
-        <Item>Cum. Reactive Energy Q1 - TZ4</Item>
-        <Item>Cum. Reactive Energy Q1 - TZ5</Item>
-        <Item>Cum. Reactive Energy Q1 - TZ6</Item>
-        <Item>Cum. Reactive Energy Q1 - TZ7</Item>
-        <Item>Cum. Reactive Energy Q1 - TZ8</Item>
-        <Item>Cum. Reactive Energy Q4 - TZ1</Item>
-        <Item>Cum. Reactive Energy Q4 - TZ2</Item>
-        <Item>Cum. Reactive Energy Q4 - TZ3</Item>
-        <Item>Cum. Reactive Energy Q4 - TZ4</Item>
-        <Item>Cum. Reactive Energy Q4 - TZ5</Item>
-        <Item>Cum. Reactive Energy Q4 - TZ6</Item>
-        <Item>Cum. Reactive Energy Q4 - TZ7</Item>
-        <Item>Cum. Reactive Energy Q4 - TZ8</Item>
-        <Item>Cum. Reactive Energy Q2 - TZ1</Item>
-        <Item>Cum. Reactive Energy Q2 - TZ2</Item>
-        <Item>Cum. Reactive Energy Q2 - TZ3</Item>
-        <Item>Cum. Reactive Energy Q2 - TZ4</Item>
-        <Item>Cum. Reactive Energy Q2 - TZ5</Item>
-        <Item>Cum. Reactive Energy Q2 - TZ6</Item>
-        <Item>Cum. Reactive Energy Q2 - TZ7</Item>
-        <Item>Cum. Reactive Energy Q2 - TZ8</Item>
-        <Item>Cum. Reactive Energy Q3 - TZ1</Item>
-        <Item>Cum. Reactive Energy Q3 - TZ2</Item>
-        <Item>Cum. Reactive Energy Q3 - TZ3</Item>
-        <Item>Cum. Reactive Energy Q3 - TZ4</Item>
-        <Item>Cum. Reactive Energy Q3 - TZ5</Item>
-        <Item>Cum. Reactive Energy Q3 - TZ6</Item>
-        <Item>Cum. Reactive Energy Q3 - TZ7</Item>
-        <Item>Cum. Reactive Energy Q3 - TZ8</Item>
-        <Item>Defraud Active Energy For Magnet Tamper</Item>
-        <Item>Defraud Active Energy For Neutral Disturbance Tamper</Item>
-        <Item>MD Reactive Q1</Item>
-        <Item>MD Reactive Q1 - Date and Time</Item>
-        <Item>MD Reactive Q2</Item>
-        <Item>MD Reactive Q2 - Date and Time</Item>
-        <Item>MD Reactive Q3</Item>
-        <Item>MD Reactive Q3 - Date and Time</Item>
-        <Item>MD Reactive Q4</Item>
-        <Item>MD Reactive Q4 - Date and Time</Item>
-        <Item>Maximum Voltage THD R Phase</Item>
-        <Item>Maximum Voltage THD R Phase - Date and Time</Item>
-        <Item>Maximum Voltage THD Y Phase</Item>
-        <Item>Maximum Voltage THD Y Phase - Date and Time</Item>
-        <Item>Maximum Voltage THD B Phase</Item>
-        <Item>Maximum Voltage THD B Phase - Date and Time</Item>
-        <Item>Maximum Current THD R Phase</Item>
-        <Item>Maximum Current THD R Phase - Date and Time</Item>
-        <Item>Maximum Current THD Y Phase</Item>
-        <Item>Maximum Current THD Y Phase - Date and Time</Item>
-        <Item>Maximum Current THD B Phase</Item>
-        <Item>Maximum Current THD B Phase - Date and Time</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
+        <Item IS_15959_PARA="true">Billing Date</Item>
+        <Item IS_15959_PARA="true">Billing Period Import Power Factor</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy - TZ1</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy - TZ2</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy - TZ3</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy - TZ4</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy - TZ5</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy - TZ6</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy - TZ7</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy - TZ8</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Import Energy - VAh</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Import Energy - TZ1</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Import Energy - TZ2</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Import Energy - TZ3</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Import Energy - TZ4</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Import Energy - TZ5</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Import Energy - TZ6</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Import Energy - TZ7</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Import Energy - TZ8</Item>
+        <Item IS_15959_PARA="true">MD Active Import</Item>
+        <Item IS_15959_PARA="true">MD Active Import - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ1</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ1 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ2</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ2 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ3</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ3 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ4</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ4 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ5</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ5 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ6</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ6 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ7</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ7 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ8</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ8 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ1</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ1 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ2</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ2 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ3</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ3 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ4</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ4 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ5</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ5 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ6</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ6 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ7</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ7 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ8</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ8 - Date and Time</Item>
+        <Item IS_15959_PARA="true">Billing Period Power On Duration</Item>
+        <Item IS_15959_PARA="true">Cum. Active Export Energy</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Export Energy</Item>
+        <Item IS_15959_PARA="true">Cum. Reactive Energy - Q1</Item>
+        <Item IS_15959_PARA="true">Cum. Reactive Energy - Q2</Item>
+        <Item IS_15959_PARA="true">Cum. Reactive Energy - Q3</Item>
+        <Item IS_15959_PARA="true">Cum. Reactive Energy - Q4</Item>
+        <Item IS_15959_PARA="false">Cum. Billing Count (MD Reset Count)</Item>
+        <Item IS_15959_PARA="false">Cause Of MD Reset</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ1</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ2</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ3</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ4</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ5</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ6</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ7</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ8</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ1</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ2</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ3</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ4</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ5</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ6</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ7</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ8</Item>
+        <Item IS_15959_PARA="false">MD Active Export</Item>
+        <Item IS_15959_PARA="false">MD Active Export - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ1</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ1 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ2</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ2 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ3</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ3 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ4</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ4 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ5</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ5 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ6</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ6 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ7</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ7 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ8</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ8 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ1</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ1 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ2</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ2 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ3</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ3 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ4</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ4 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ5</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ5 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ6</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ6 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ7</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ7 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ8</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ8 - Date and Time</Item>
+        <Item IS_15959_PARA="false">Billing Period Export Power Factor</Item>
+        <Item IS_15959_PARA="false">Billing Period Tamper Count</Item>
+        <Item IS_15959_PARA="false">Cum. MD Active Import</Item>
+        <Item IS_15959_PARA="false">Cum. MD Apparent Import</Item>
+        <Item IS_15959_PARA="false">Cum. MD Active Export</Item>
+        <Item IS_15959_PARA="false">Cum. MD Apparent Export</Item>
+        <Item IS_15959_PARA="false">Fundamental Active Energy Import</Item>
+        <Item IS_15959_PARA="false">Fundamental Active Energy Export</Item>
+        <Item IS_15959_PARA="false">Billing Period No. of Power Failure</Item>
+        <Item IS_15959_PARA="false">Billing Period Power Failue Duration</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q1 - TZ1</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q1 - TZ2</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q1 - TZ3</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q1 - TZ4</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q1 - TZ5</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q1 - TZ6</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q1 - TZ7</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q1 - TZ8</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q2 - TZ1</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q2 - TZ2</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q2 - TZ3</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q2 - TZ4</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q2 - TZ5</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q2 - TZ6</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q2 - TZ7</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q2 - TZ8</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q3 - TZ1</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q3 - TZ2</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q3 - TZ3</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q3 - TZ4</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q3 - TZ5</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q3 - TZ6</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q3 - TZ7</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q3 - TZ8</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q4 - TZ1</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q4 - TZ2</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q4 - TZ3</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q4 - TZ4</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q4 - TZ5</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q4 - TZ6</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q4 - TZ7</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q4 - TZ8</Item>
+        <Item IS_15959_PARA="false">Defraud Active Energy For Magnet Tamper</Item>
+        <Item IS_15959_PARA="false">Defraud Active Energy For Neutral Disturbance Tamper</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q1</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q1 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q2</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q2 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q3</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q3 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q4</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q4 - Date and Time</Item>
+        <Item IS_15959_PARA="false">Maximum Voltage THD R Phase</Item>
+        <Item IS_15959_PARA="false">Maximum Voltage THD R Phase - Date and Time</Item>
+        <Item IS_15959_PARA="false">Maximum Voltage THD Y Phase</Item>
+        <Item IS_15959_PARA="false">Maximum Voltage THD Y Phase - Date and Time</Item>
+        <Item IS_15959_PARA="false">Maximum Voltage THD B Phase</Item>
+        <Item IS_15959_PARA="false">Maximum Voltage THD B Phase - Date and Time</Item>
+        <Item IS_15959_PARA="false">Maximum Current THD R Phase</Item>
+        <Item IS_15959_PARA="false">Maximum Current THD R Phase - Date and Time</Item>
+        <Item IS_15959_PARA="false">Maximum Current THD Y Phase</Item>
+        <Item IS_15959_PARA="false">Maximum Current THD Y Phase - Date and Time</Item>
+        <Item IS_15959_PARA="false">Maximum Current THD B Phase</Item>
+        <Item IS_15959_PARA="false">Maximum Current THD B Phase - Date and Time</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
     </Profile_3PProWCBillingEnergy>
     <Profile_3PProWCEvent1>
-        <Item>Event Timestamp</Item>
-        <Item>Event code</Item>
-        <Item>R Phase Current - IR</Item>
-        <Item>Y Phase Current - IY</Item>
-        <Item>B Phase Current - IB</Item>
-        <Item>R Phase Voltage - VRN</Item>
-        <Item>Y Phase Voltage - VYN</Item>
-        <Item>B Phase Voltage - VBN</Item>
-        <Item>R Phase Power Factor</Item>
-        <Item>Y Phase Power Factor</Item>
-        <Item>B Phase Power Factor</Item>
-        <Item>Cum. Active Import Energy</Item>
-        <Item>Cum. Active Export Energy</Item>
-        <Item>Cum Tamper Count</Item>
-        <Item>Cum. Apparent Import Energy</Item>
-        <Item>Cum. Apparent Export Energy</Item>
-        <Item>Neutral Current</Item>
-        <Item>Event Log Sequence Number</Item>
-        <Item>Total Power Factor - PF</Item>
-        <Item>Temperature</Item>
-        <Item>R Phase Active Current</Item>
-        <Item>Y Phase Active Current</Item>
-        <Item>B Phase Active Current</Item>
-        <Item>Reserved</Item>
+        <Item IS_15959_PARA="true">Event Timestamp</Item>
+        <Item IS_15959_PARA="true">Event code</Item>
+        <Item IS_15959_PARA="true">R Phase Current - IR</Item>
+        <Item IS_15959_PARA="true">Y Phase Current - IY</Item>
+        <Item IS_15959_PARA="true">B Phase Current - IB</Item>
+        <Item IS_15959_PARA="true">R Phase Voltage - VRN</Item>
+        <Item IS_15959_PARA="true">Y Phase Voltage - VYN</Item>
+        <Item IS_15959_PARA="true">B Phase Voltage - VBN</Item>
+        <Item IS_15959_PARA="true">R Phase Power Factor</Item>
+        <Item IS_15959_PARA="true">Y Phase Power Factor</Item>
+        <Item IS_15959_PARA="true">B Phase Power Factor</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy</Item>
+        <Item IS_15959_PARA="true">Cum. Active Export Energy</Item>
+        <Item IS_15959_PARA="true">Cum Tamper Count</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Import Energy</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy</Item>
+        <Item IS_15959_PARA="false">Neutral Current</Item>
+        <Item IS_15959_PARA="false">Event Log Sequence Number</Item>
+        <Item IS_15959_PARA="false">Total Power Factor - PF</Item>
+        <Item IS_15959_PARA="false">Temperature</Item>
+        <Item IS_15959_PARA="false">R Phase Active Current</Item>
+        <Item IS_15959_PARA="false">Y Phase Active Current</Item>
+        <Item IS_15959_PARA="false">B Phase Active Current</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
     </Profile_3PProWCEvent1>
     <Profile_3PProWCEvent2>
-        <Item>Event Timestamp</Item>
-        <Item>Event code</Item>
-        <Item>Event Log Sequence Number</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
+        <Item IS_15959_PARA="true">Event Timestamp</Item>
+        <Item IS_15959_PARA="true">Event code</Item>
+        <Item IS_15959_PARA="false">Event Log Sequence Number</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
     </Profile_3PProWCEvent2>
     <Profile_3PProWCNameplate>
-        <Item>Meter Serial Number</Item>
-        <Item>Device ID</Item>
-        <Item>Manufacturer Name</Item>
-        <Item>Firmware Version</Item>
-        <Item>Meter Type</Item>
-        <Item>Meter Category</Item>
-        <Item>Current Rating</Item>
-        <Item>Year of Manufacture</Item>
-        <Item>Month of manufacture</Item>
-        <Item>Meter Constant</Item>
-        <Item>Voltage rating</Item>
-        <Item>NIC FW version</Item>
-        <Item>Module firmware version</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
+        <Item IS_15959_PARA="true">Meter Serial Number</Item>
+        <Item IS_15959_PARA="true">Device ID</Item>
+        <Item IS_15959_PARA="true">Manufacturer Name</Item>
+        <Item IS_15959_PARA="true">Firmware Version</Item>
+        <Item IS_15959_PARA="true">Meter Type</Item>
+        <Item IS_15959_PARA="true">Meter Category</Item>
+        <Item IS_15959_PARA="true">Current Rating</Item>
+        <Item IS_15959_PARA="true">Year of Manufacture</Item>
+        <Item IS_15959_PARA="false">Month of manufacture</Item>
+        <Item IS_15959_PARA="false">Meter Constant</Item>
+        <Item IS_15959_PARA="false">Voltage rating</Item>
+        <Item IS_15959_PARA="false">NIC FW version</Item>
+        <Item IS_15959_PARA="false">Module firmware version</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
     </Profile_3PProWCNameplate>
     <Profile_3PProWCInstantaneous>
-        <Item>RTC - Date and Time</Item>
-        <Item>R Phase Current - IR</Item>
-        <Item>Y Phase Current - IY</Item>
-        <Item>B Phase Current - IB</Item>
-        <Item>R Phase Voltage - VRN</Item>
-        <Item>Y Phase Voltage - VYN</Item>
-        <Item>B Phase Voltage - VBN</Item>
-        <Item>R Phase Power Factor</Item>
-        <Item>Y Phase Power Factor</Item>
-        <Item>B Phase Power Factor</Item>
-        <Item>Total Power Factor</Item>
-        <Item>Frequency</Item>
-        <Item>Total Apparent Power</Item>
-        <Item>Total Active Power</Item>
-        <Item>Total Reactive Power</Item>
-        <Item>No Of Power Failure</Item>
-        <Item>Cum. Power Failure Duration</Item>
-        <Item>Cum. Tamper Count</Item>
-        <Item>Cum. Billing Count</Item>
-        <Item>Cum. Programming Count</Item>
-        <Item>Last Billing Date and Time</Item>
-        <Item>Cum. Active Import Energy</Item>
-        <Item>Cum. Active Export Energy</Item>
-        <Item>Cum. Apparent Import Energy</Item>
-        <Item>Cum. Apparent Export Energy</Item>
-        <Item>MD Active Import</Item>
-        <Item>MD Active Import - Date and Time</Item>
-        <Item>MD Apparent Import</Item>
-        <Item>MD Apparent Import - Date and Time</Item>
-        <Item>Load Limit Function Status</Item>
-        <Item>Load Limit Value</Item>
-        <Item>Cum. Reactive Energy - Q1</Item>
-        <Item>Cum. Reactive Energy - Q2</Item>
-        <Item>Cum. Reactive Energy - Q3</Item>
-        <Item>Cum. Reactive Energy - Q4</Item>
-        <Item>Neutral Current</Item>
-        <Item>MD Active Export</Item>
-        <Item>MD Active Export - Date and Time</Item>
-        <Item>MD Apparent Export</Item>
-        <Item>MD Apparent Export - Date and Time</Item>
-        <Item>Self Diagnostic Details</Item>
-        <Item>Network Information Parameters (For GPRS NIC)</Item>
-        <Item>Defraud Active Energy For Magnet Tamper</Item>
-        <Item>Defraud Active Energy For Neutral Disturbance Tamper</Item>
-        <Item>Fundamental/Total Active Energy Import</Item>
-        <Item>Fundamental/Total Active Energy Export</Item>
-        <Item>Cum. Power on duration minutes</Item>
-        <Item>Cum. MD Active Import</Item>
-        <Item>Cum. MD Apparent Import</Item>
-        <Item>Cum. MD Active Export</Item>
-        <Item>Cum. MD Apparent Export</Item>
-        <Item>MD Reactive Q1</Item>
-        <Item>MD Reactive Q1 Date and Time</Item>
-        <Item>MD Reactive Q2</Item>
-        <Item>MD Reactive Q2 Date and Time</Item>
-        <Item>MD Reactive Q3</Item>
-        <Item>MD Reactive Q3 Date and Time</Item>
-        <Item>MD Reactive Q4</Item>
-        <Item>MD Reactive Q4 Date and Time</Item>
-        <Item>R Phase Miss Count</Item>
-        <Item>Y Phase Miss Count</Item>
-        <Item>B Phase Miss Count</Item>
-        <Item>R Phase CT Open Count</Item>
-        <Item>Y Phase CT Open Count</Item>
-        <Item>B Phase CT Open Count</Item>
-        <Item>Voltage Unbalance Count</Item>
-        <Item>Current Unbalance Count</Item>
-        <Item>CT Reverse Count Total</Item>
-        <Item>R Phase CT Reverse Count</Item>
-        <Item>Y Phase CT Reverse Count</Item>
-        <Item>B Phase CT Reverse Count</Item>
-        <Item>Magnet Count</Item>
-        <Item>High Voltage Count</Item>
-        <Item>Low Voltage Count</Item>
-        <Item>Over Load Count</Item>
-        <Item>Module Cover Open Count</Item>
-        <Item>Top Cover Open Count</Item>
-        <Item>Neutral Disturbance Count</Item>
-        <Item>R Phase Voltage THD</Item>
-        <Item>Y Phase Voltage THD</Item>
-        <Item>B Phase Voltage THD</Item>
-        <Item>R Phase Current THD</Item>
-        <Item>Y Phase Current THD</Item>
-        <Item>B Phase Current THD</Item>
-        <Item>R Phase Active Power</Item>
-        <Item>Y Phase Active Power</Item>
-        <Item>B Phase Active Power</Item>
-        <Item>R Phase Reactive Power</Item>
-        <Item>Y Phase Reactive Power</Item>
-        <Item>B Phase Reactive Power</Item>
-        <Item>R Phase Apparent Power</Item>
-        <Item>Y Phase Apparent Power</Item>
-        <Item>B Phase Apparent Power</Item>
-        <Item>Temperature</Item>
-        <Item>Relay Operation Count (Disconnect)</Item>
-        <Item>Relay Operation Count (Connect)</Item>
-        <Item>R Phase Active Current</Item>
-        <Item>Y Phase Active Current</Item>
-        <Item>B Phase Active Current</Item>
-        <Item>Angle Between Vr-Vy </Item>
-        <Item>Angle Between Vy-Vb </Item>
-        <Item>Angle Between Vr-Vb </Item>
-        <Item>Meter Serial Number</Item>
-        <Item>Digital Input Status</Item>
-        <Item>Network Info Parameter (As per Adani project)</Item>
-        <Item>Cell ID (As per Adani project)</Item>
-        <Item>RSSI</Item>
-        <Item>RAT and Band</Item>
-        <Item>Over Current Count</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
+        <Item IS_15959_PARA="true">RTC - Date and Time</Item>
+        <Item IS_15959_PARA="true">R Phase Current - IR</Item>
+        <Item IS_15959_PARA="true">Y Phase Current - IY</Item>
+        <Item IS_15959_PARA="true">B Phase Current - IB</Item>
+        <Item IS_15959_PARA="true">R Phase Voltage - VRN</Item>
+        <Item IS_15959_PARA="true">Y Phase Voltage - VYN</Item>
+        <Item IS_15959_PARA="true">B Phase Voltage - VBN</Item>
+        <Item IS_15959_PARA="true">R Phase Power Factor</Item>
+        <Item IS_15959_PARA="true">Y Phase Power Factor</Item>
+        <Item IS_15959_PARA="true">B Phase Power Factor</Item>
+        <Item IS_15959_PARA="true">Total Power Factor</Item>
+        <Item IS_15959_PARA="true">Frequency</Item>
+        <Item IS_15959_PARA="true">Total Apparent Power</Item>
+        <Item IS_15959_PARA="true">Total Active Power</Item>
+        <Item IS_15959_PARA="true">Total Reactive Power</Item>
+        <Item IS_15959_PARA="true">No Of Power Failure</Item>
+        <Item IS_15959_PARA="true">Cum. Power Failure Duration</Item>
+        <Item IS_15959_PARA="true">Cum. Tamper Count</Item>
+        <Item IS_15959_PARA="true">Cum. Billing Count</Item>
+        <Item IS_15959_PARA="true">Cum. Programming Count</Item>
+        <Item IS_15959_PARA="true">Last Billing Date and Time</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy</Item>
+        <Item IS_15959_PARA="true">Cum. Active Export Energy</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Import Energy</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Export Energy</Item>
+        <Item IS_15959_PARA="true">MD Active Import</Item>
+        <Item IS_15959_PARA="true">MD Active Import - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import - Date and Time</Item>
+        <Item IS_15959_PARA="true">Load Limit Function Status</Item>
+        <Item IS_15959_PARA="true">Load Limit Value</Item>
+        <Item IS_15959_PARA="true">Cum. Reactive Energy - Q1</Item>
+        <Item IS_15959_PARA="true">Cum. Reactive Energy - Q2</Item>
+        <Item IS_15959_PARA="true">Cum. Reactive Energy - Q3</Item>
+        <Item IS_15959_PARA="true">Cum. Reactive Energy - Q4</Item>
+        <Item IS_15959_PARA="false">Neutral Current</Item>
+        <Item IS_15959_PARA="false">MD Active Export</Item>
+        <Item IS_15959_PARA="false">MD Active Export - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export - Date and Time</Item>
+        <Item IS_15959_PARA="false">Self Diagnostic Details</Item>
+        <Item IS_15959_PARA="false">Network Information Parameters (For GPRS NIC)</Item>
+        <Item IS_15959_PARA="false">Defraud Active Energy For Magnet Tamper</Item>
+        <Item IS_15959_PARA="false">Defraud Active Energy For Neutral Disturbance Tamper</Item>
+        <Item IS_15959_PARA="false">Fundamental/Total Active Energy Import</Item>
+        <Item IS_15959_PARA="false">Fundamental/Total Active Energy Export</Item>
+        <Item IS_15959_PARA="false">Cum. Power on duration minutes</Item>
+        <Item IS_15959_PARA="false">Cum. MD Active Import</Item>
+        <Item IS_15959_PARA="false">Cum. MD Apparent Import</Item>
+        <Item IS_15959_PARA="false">Cum. MD Active Export</Item>
+        <Item IS_15959_PARA="false">Cum. MD Apparent Export</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q1</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q1 Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q2</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q2 Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q3</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q3 Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q4</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q4 Date and Time</Item>
+        <Item IS_15959_PARA="false">R Phase Miss Count</Item>
+        <Item IS_15959_PARA="false">Y Phase Miss Count</Item>
+        <Item IS_15959_PARA="false">B Phase Miss Count</Item>
+        <Item IS_15959_PARA="false">R Phase CT Open Count</Item>
+        <Item IS_15959_PARA="false">Y Phase CT Open Count</Item>
+        <Item IS_15959_PARA="false">B Phase CT Open Count</Item>
+        <Item IS_15959_PARA="false">Voltage Unbalance Count</Item>
+        <Item IS_15959_PARA="false">Current Unbalance Count</Item>
+        <Item IS_15959_PARA="false">CT Reverse Count Total</Item>
+        <Item IS_15959_PARA="false">R Phase CT Reverse Count</Item>
+        <Item IS_15959_PARA="false">Y Phase CT Reverse Count</Item>
+        <Item IS_15959_PARA="false">B Phase CT Reverse Count</Item>
+        <Item IS_15959_PARA="false">Magnet Count</Item>
+        <Item IS_15959_PARA="false">High Voltage Count</Item>
+        <Item IS_15959_PARA="false">Low Voltage Count</Item>
+        <Item IS_15959_PARA="false">Over Load Count</Item>
+        <Item IS_15959_PARA="false">Module Cover Open Count</Item>
+        <Item IS_15959_PARA="false">Top Cover Open Count</Item>
+        <Item IS_15959_PARA="false">Neutral Disturbance Count</Item>
+        <Item IS_15959_PARA="false">R Phase Voltage THD</Item>
+        <Item IS_15959_PARA="false">Y Phase Voltage THD</Item>
+        <Item IS_15959_PARA="false">B Phase Voltage THD</Item>
+        <Item IS_15959_PARA="false">R Phase Current THD</Item>
+        <Item IS_15959_PARA="false">Y Phase Current THD</Item>
+        <Item IS_15959_PARA="false">B Phase Current THD</Item>
+        <Item IS_15959_PARA="false">R Phase Active Power</Item>
+        <Item IS_15959_PARA="false">Y Phase Active Power</Item>
+        <Item IS_15959_PARA="false">B Phase Active Power</Item>
+        <Item IS_15959_PARA="false">R Phase Reactive Power</Item>
+        <Item IS_15959_PARA="false">Y Phase Reactive Power</Item>
+        <Item IS_15959_PARA="false">B Phase Reactive Power</Item>
+        <Item IS_15959_PARA="false">R Phase Apparent Power</Item>
+        <Item IS_15959_PARA="false">Y Phase Apparent Power</Item>
+        <Item IS_15959_PARA="false">B Phase Apparent Power</Item>
+        <Item IS_15959_PARA="false">Temperature</Item>
+        <Item IS_15959_PARA="false">Relay Operation Count (Disconnect)</Item>
+        <Item IS_15959_PARA="false">Relay Operation Count (Connect)</Item>
+        <Item IS_15959_PARA="false">R Phase Active Current</Item>
+        <Item IS_15959_PARA="false">Y Phase Active Current</Item>
+        <Item IS_15959_PARA="false">B Phase Active Current</Item>
+        <Item IS_15959_PARA="false">Angle Between Vr-Vy </Item>
+        <Item IS_15959_PARA="false">Angle Between Vy-Vb </Item>
+        <Item IS_15959_PARA="false">Angle Between Vr-Vb </Item>
+        <Item IS_15959_PARA="false">Meter Serial Number</Item>
+        <Item IS_15959_PARA="false">Digital Input Status</Item>
+        <Item IS_15959_PARA="false">Network Info Parameter (As per Adani project)</Item>
+        <Item IS_15959_PARA="false">Cell ID (As per Adani project)</Item>
+        <Item IS_15959_PARA="false">RSSI</Item>
+        <Item IS_15959_PARA="false">RAT and Band</Item>
+        <Item IS_15959_PARA="false">Over Current Count</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
     </Profile_3PProWCInstantaneous>
     <Profile_3PProLTCTLoadSurvey>
-        <Item>RTC</Item>
-        <Item>Averaged R Phase Current - IR</Item>
-        <Item>Averaged Y Phase Current - IY</Item>
-        <Item>Averaged B Phase Current - IB</Item>
-        <Item>Averaged R Phase Voltage - VRN</Item>
-        <Item>Averaged Y Phase Voltage - VYN</Item>
-        <Item>Averaged B Phase Voltage - VBN</Item>
-        <Item>Consumed Active Import Energy</Item>
-        <Item>Consumed Active Export Energy</Item>
-        <Item>Consumed Reactive Energy - Q1</Item>
-        <Item>Consumed Reactive Energy - Q2</Item>
-        <Item>Consumed Reactive Energy - Q3</Item>
-        <Item>Consumed Reactive Energy - Q4</Item>
-        <Item>Consumed Apparent Import Energy</Item>
-        <Item>Consumed Apparent Export Energy</Item>
-        <Item>Status Byte</Item>
-        <Item>Averaged Neutral Current - IN</Item>
-        <Item>Averaged Temperature</Item>
-        <Item>Averaged R Phase Voltage THD</Item>
-        <Item>Averaged Y Phase Voltage THD</Item>
-        <Item>Averaged B Phase Voltage THD</Item>
-        <Item>Averaged R Phase Current THD</Item>
-        <Item>Averaged Y Phase Current THD</Item>
-        <Item>Averaged B Phase Current THD</Item>
-        <Item>LS Period Power On Duration</Item>
-        <Item>Averaged Frequency</Item>
-        <Item>Consumed Active Net Energy</Item>
-        <Item>Power Interruption Count In LS IP</Item>
-        <Item>Signal Strength (CSQ)</Item>
-        <Item>Diagnostic Information</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
+        <Item IS_15959_PARA="true">RTC</Item>
+        <Item IS_15959_PARA="true">Averaged R Phase Current - IR</Item>
+        <Item IS_15959_PARA="true">Averaged Y Phase Current - IY</Item>
+        <Item IS_15959_PARA="true">Averaged B Phase Current - IB</Item>
+        <Item IS_15959_PARA="true">Averaged R Phase Voltage - VRN</Item>
+        <Item IS_15959_PARA="true">Averaged Y Phase Voltage - VYN</Item>
+        <Item IS_15959_PARA="true">Averaged B Phase Voltage - VBN</Item>
+        <Item IS_15959_PARA="true">Consumed Active Import Energy</Item>
+        <Item IS_15959_PARA="true">Consumed Active Export Energy</Item>
+        <Item IS_15959_PARA="true">Consumed Reactive Energy - Q1</Item>
+        <Item IS_15959_PARA="true">Consumed Reactive Energy - Q2</Item>
+        <Item IS_15959_PARA="true">Consumed Reactive Energy - Q3</Item>
+        <Item IS_15959_PARA="true">Consumed Reactive Energy - Q4</Item>
+        <Item IS_15959_PARA="true">Consumed Apparent Import Energy</Item>
+        <Item IS_15959_PARA="true">Consumed Apparent Export Energy</Item>
+        <Item IS_15959_PARA="false">Status Byte</Item>
+        <Item IS_15959_PARA="false">Averaged Neutral Current - IN</Item>
+        <Item IS_15959_PARA="false">Averaged Temperature</Item>
+        <Item IS_15959_PARA="false">Averaged R Phase Voltage THD</Item>
+        <Item IS_15959_PARA="false">Averaged Y Phase Voltage THD</Item>
+        <Item IS_15959_PARA="false">Averaged B Phase Voltage THD</Item>
+        <Item IS_15959_PARA="false">Averaged R Phase Current THD</Item>
+        <Item IS_15959_PARA="false">Averaged Y Phase Current THD</Item>
+        <Item IS_15959_PARA="false">Averaged B Phase Current THD</Item>
+        <Item IS_15959_PARA="false">LS Period Power On Duration</Item>
+        <Item IS_15959_PARA="false">Averaged Frequency</Item>
+        <Item IS_15959_PARA="false">Consumed Active Net Energy</Item>
+        <Item IS_15959_PARA="false">Power Interruption Count In LS IP</Item>
+        <Item IS_15959_PARA="false">Signal Strength (CSQ)</Item>
+        <Item IS_15959_PARA="false">Diagnostic Information</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
     </Profile_3PProLTCTLoadSurvey>
     <Profile_3PProLTCTDailyEnergy>
-        <Item>RTC</Item>
-        <Item>Cum. Active Import Energy</Item>
-        <Item>Cum. Active Export Energy</Item>
-        <Item>Cum. Apparent Import Energy</Item>
-        <Item>Cum. Apparent Export Energy</Item>
-        <Item>Cum. Reactive Energy - Q1</Item>
-        <Item>Cum. Reactive Energy - Q2</Item>
-        <Item>Cum. Reactive Energy - Q3</Item>
-        <Item>Cum. Reactive Energy - Q4</Item>
-        <Item>Current Bill MD Active Import</Item>
-        <Item>Current Bill MD Active - Date and Time</Item>
-        <Item>Current Bill MD Apparent Import</Item>
-        <Item>Current Bill MD Apparent Import - Date and Time</Item>
-        <Item>Current Bill MD Active Export</Item>
-        <Item>Current Bill MD Active Export - Date and Time</Item>
-        <Item>Current Bill MD Apparent Export</Item>
-        <Item>Current Bill MD Apparent Export - Date and Time</Item>
-        <Item>Cum. Active Import Energy - TZ1</Item>
-        <Item>Cum. Active Import Energy - TZ2</Item>
-        <Item>Cum. Active Import Energy - TZ3</Item>
-        <Item>Cum. Active Import Energy - TZ4</Item>
-        <Item>Cum. Active Import Energy - TZ5</Item>
-        <Item>Cum. Active Import Energy - TZ6</Item>
-        <Item>Cum. Active Import Energy - TZ7</Item>
-        <Item>Cum. Active Import Energy - TZ8</Item>
-        <Item>Cum. Apparent Import Energy - TZ1</Item>
-        <Item>Cum. Apparent Import Energy - TZ2</Item>
-        <Item>Cum. Apparent Import Energy - TZ3</Item>
-        <Item>Cum. Apparent Import Energy - TZ4</Item>
-        <Item>Cum. Apparent Import Energy - TZ5</Item>
-        <Item>Cum. Apparent Import Energy - TZ6</Item>
-        <Item>Cum. Apparent Import Energy - TZ7</Item>
-        <Item>Cum. Apparent Import Energy - TZ8</Item>
-        <Item>Cum. Active Export Energy - TZ1</Item>
-        <Item>Cum. Active Export Energy - TZ2</Item>
-        <Item>Cum. Active Export Energy - TZ3</Item>
-        <Item>Cum. Active Export Energy - TZ4</Item>
-        <Item>Cum. Active Export Energy - TZ5</Item>
-        <Item>Cum. Active Export Energy - TZ6</Item>
-        <Item>Cum. Active Export Energy - TZ7</Item>
-        <Item>Cum. Active Export Energy - TZ8</Item>
-        <Item>Cum. Apparent Export Energy - TZ1</Item>
-        <Item>Cum. Apparent Export Energy - TZ2</Item>
-        <Item>Cum. Apparent Export Energy - TZ3</Item>
-        <Item>Cum. Apparent Export Energy - TZ4</Item>
-        <Item>Cum. Apparent Export Energy - TZ5</Item>
-        <Item>Cum. Apparent Export Energy - TZ6</Item>
-        <Item>Cum. Apparent Export Energy - TZ7</Item>
-        <Item>Cum. Apparent Export Energy - TZ8</Item>
-        <Item>Daily Energy Diagnostic Information</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
+        <Item IS_15959_PARA="true">RTC</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy</Item>
+        <Item IS_15959_PARA="true">Cum. Active Export Energy</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Import Energy</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Export Energy</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy - Q1</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy - Q2</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy - Q3</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy - Q4</Item>
+        <Item IS_15959_PARA="false">Current Bill MD Active Import</Item>
+        <Item IS_15959_PARA="false">Current Bill MD Active - Date and Time</Item>
+        <Item IS_15959_PARA="false">Current Bill MD Apparent Import</Item>
+        <Item IS_15959_PARA="false">Current Bill MD Apparent Import - Date and Time</Item>
+        <Item IS_15959_PARA="false">Current Bill MD Active Export</Item>
+        <Item IS_15959_PARA="false">Current Bill MD Active Export - Date and Time</Item>
+        <Item IS_15959_PARA="false">Current Bill MD Apparent Export</Item>
+        <Item IS_15959_PARA="false">Current Bill MD Apparent Export - Date and Time</Item>
+        <Item IS_15959_PARA="false">Cum. Active Import Energy - TZ1</Item>
+        <Item IS_15959_PARA="false">Cum. Active Import Energy - TZ2</Item>
+        <Item IS_15959_PARA="false">Cum. Active Import Energy - TZ3</Item>
+        <Item IS_15959_PARA="false">Cum. Active Import Energy - TZ4</Item>
+        <Item IS_15959_PARA="false">Cum. Active Import Energy - TZ5</Item>
+        <Item IS_15959_PARA="false">Cum. Active Import Energy - TZ6</Item>
+        <Item IS_15959_PARA="false">Cum. Active Import Energy - TZ7</Item>
+        <Item IS_15959_PARA="false">Cum. Active Import Energy - TZ8</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Import Energy - TZ1</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Import Energy - TZ2</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Import Energy - TZ3</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Import Energy - TZ4</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Import Energy - TZ5</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Import Energy - TZ6</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Import Energy - TZ7</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Import Energy - TZ8</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ1</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ2</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ3</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ4</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ5</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ6</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ7</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ8</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ1</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ2</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ3</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ4</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ5</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ6</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ7</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ8</Item>
+        <Item IS_15959_PARA="false">Daily Energy Diagnostic Information</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
     </Profile_3PProLTCTDailyEnergy>
     <Profile_3PProLTCTBillingEnergy>
-        <Item>Billing Date</Item>
-        <Item>Billing Period Import Power Factor</Item>
-        <Item>Cum. Active Import Energy</Item>
-        <Item>Cum. Active Import Energy - TZ1</Item>
-        <Item>Cum. Active Import Energy - TZ2</Item>
-        <Item>Cum. Active Import Energy - TZ3</Item>
-        <Item>Cum. Active Import Energy - TZ4</Item>
-        <Item>Cum. Active Import Energy - TZ5</Item>
-        <Item>Cum. Active Import Energy - TZ6</Item>
-        <Item>Cum. Active Import Energy - TZ7</Item>
-        <Item>Cum. Active Import Energy - TZ8</Item>
-        <Item>Cum. Apparent Import Energy - VAh</Item>
-        <Item>Cum. Apparent Import Energy - TZ1</Item>
-        <Item>Cum. Apparent Import Energy - TZ2</Item>
-        <Item>Cum. Apparent Import Energy - TZ3</Item>
-        <Item>Cum. Apparent Import Energy - TZ4</Item>
-        <Item>Cum. Apparent Import Energy - TZ5</Item>
-        <Item>Cum. Apparent Import Energy - TZ6</Item>
-        <Item>Cum. Apparent Import Energy - TZ7</Item>
-        <Item>Cum. Apparent Import Energy - TZ8</Item>
-        <Item>MD Active Import</Item>
-        <Item>MD Active Import - Date and Time</Item>
-        <Item>MD Active Import - TZ1</Item>
-        <Item>MD Active Import - TZ1 - Date and Time</Item>
-        <Item>MD Active Import - TZ2</Item>
-        <Item>MD Active Import - TZ2 - Date and Time</Item>
-        <Item>MD Active Import - TZ3</Item>
-        <Item>MD Active Import - TZ3 - Date and Time</Item>
-        <Item>MD Active Import - TZ4</Item>
-        <Item>MD Active Import - TZ4 - Date and Time</Item>
-        <Item>MD Active Import - TZ5</Item>
-        <Item>MD Active Import - TZ5 - Date and Time</Item>
-        <Item>MD Active Import - TZ6</Item>
-        <Item>MD Active Import - TZ6 - Date and Time</Item>
-        <Item>MD Active Import - TZ7</Item>
-        <Item>MD Active Import - TZ7 - Date and Time</Item>
-        <Item>MD Active Import - TZ8</Item>
-        <Item>MD Active Import - TZ8 - Date and Time</Item>
-        <Item>MD Apparent Import</Item>
-        <Item>MD Apparent Import - Date and Time</Item>
-        <Item>MD Apparent Import  - TZ1</Item>
-        <Item>MD Apparent Import  - TZ1 - Date and Time</Item>
-        <Item>MD Apparent Import  - TZ2</Item>
-        <Item>MD Apparent Import  - TZ2 - Date and Time</Item>
-        <Item>MD Apparent Import  - TZ3</Item>
-        <Item>MD Apparent Import  - TZ3 - Date and Time</Item>
-        <Item>MD Apparent Import  - TZ4</Item>
-        <Item>MD Apparent Import  - TZ4 - Date and Time</Item>
-        <Item>MD Apparent Import  - TZ5</Item>
-        <Item>MD Apparent Import  - TZ5 - Date and Time</Item>
-        <Item>MD Apparent Import  - TZ6</Item>
-        <Item>MD Apparent Import  - TZ6 - Date and Time</Item>
-        <Item>MD Apparent Import  - TZ7</Item>
-        <Item>MD Apparent Import  - TZ7 - Date and Time</Item>
-        <Item>MD Apparent Import  - TZ8</Item>
-        <Item>MD Apparent Import  - TZ8 - Date and Time</Item>
-        <Item>Billing Period Power On Duration</Item>
-        <Item>Cum. Active Export Energy</Item>
-        <Item>Cum. Apparent Export Energy</Item>
-        <Item>Cum. Reactive Energy - Q1</Item>
-        <Item>Cum. Reactive Energy - Q2</Item>
-        <Item>Cum. Reactive Energy - Q3</Item>
-        <Item>Cum. Reactive Energy - Q4</Item>
-        <Item>Cum. Billing Count (MD Reset Count)</Item>
-        <Item>Cause Of MD Reset</Item>
-        <Item>Cum. Active Export Energy - TZ1</Item>
-        <Item>Cum. Active Export Energy - TZ2</Item>
-        <Item>Cum. Active Export Energy - TZ3</Item>
-        <Item>Cum. Active Export Energy - TZ4</Item>
-        <Item>Cum. Active Export Energy - TZ5</Item>
-        <Item>Cum. Active Export Energy - TZ6</Item>
-        <Item>Cum. Active Export Energy - TZ7</Item>
-        <Item>Cum. Active Export Energy - TZ8</Item>
-        <Item>Cum. Apparent Export Energy - TZ1</Item>
-        <Item>Cum. Apparent Export Energy - TZ2</Item>
-        <Item>Cum. Apparent Export Energy - TZ3</Item>
-        <Item>Cum. Apparent Export Energy - TZ4</Item>
-        <Item>Cum. Apparent Export Energy - TZ5</Item>
-        <Item>Cum. Apparent Export Energy - TZ6</Item>
-        <Item>Cum. Apparent Export Energy - TZ7</Item>
-        <Item>Cum. Apparent Export Energy - TZ8</Item>
-        <Item>MD Active Export</Item>
-        <Item>MD Active Export - Date and Time</Item>
-        <Item>MD Active Export - TZ1</Item>
-        <Item>MD Active Export - TZ1 - Date and Time</Item>
-        <Item>MD Active Export - TZ2</Item>
-        <Item>MD Active Export - TZ2 - Date and Time</Item>
-        <Item>MD Active Export - TZ3</Item>
-        <Item>MD Active Export - TZ3 - Date and Time</Item>
-        <Item>MD Active Export - TZ4</Item>
-        <Item>MD Active Export - TZ4 - Date and Time</Item>
-        <Item>MD Active Export - TZ5</Item>
-        <Item>MD Active Export - TZ5 - Date and Time</Item>
-        <Item>MD Active Export - TZ6</Item>
-        <Item>MD Active Export - TZ6 - Date and Time</Item>
-        <Item>MD Active Export - TZ7</Item>
-        <Item>MD Active Export - TZ7 - Date and Time</Item>
-        <Item>MD Active Export - TZ8</Item>
-        <Item>MD Active Export - TZ8 - Date and Time</Item>
-        <Item>MD Apparent Export</Item>
-        <Item>MD Apparent Export - Date and Time</Item>
-        <Item>MD Apparent Export  - TZ1</Item>
-        <Item>MD Apparent Export  - TZ1 - Date and Time</Item>
-        <Item>MD Apparent Export  - TZ2</Item>
-        <Item>MD Apparent Export  - TZ2 - Date and Time</Item>
-        <Item>MD Apparent Export  - TZ3</Item>
-        <Item>MD Apparent Export  - TZ3 - Date and Time</Item>
-        <Item>MD Apparent Export  - TZ4</Item>
-        <Item>MD Apparent Export  - TZ4 - Date and Time</Item>
-        <Item>MD Apparent Export  - TZ5</Item>
-        <Item>MD Apparent Export  - TZ5 - Date and Time</Item>
-        <Item>MD Apparent Export  - TZ6</Item>
-        <Item>MD Apparent Export  - TZ6 - Date and Time</Item>
-        <Item>MD Apparent Export  - TZ7</Item>
-        <Item>MD Apparent Export  - TZ7 - Date and Time</Item>
-        <Item>MD Apparent Export  - TZ8</Item>
-        <Item>MD Apparent Export  - TZ8 - Date and Time</Item>
-        <Item>Billing Period Export Power Factor</Item>
-        <Item>Billing Period Tamper Count</Item>
-        <Item>Cum. MD Active Import</Item>
-        <Item>Cum. MD Apparent Import</Item>
-        <Item>Cum. MD Active Export</Item>
-        <Item>Cum. MD Apparent Export</Item>
-        <Item>Fundamental Active Energy Import</Item>
-        <Item>Fundamental Active Energy Export</Item>
-        <Item>Billing Period No. of Power Failure</Item>
-        <Item>Billing Period Power Failue Duration</Item>
-        <Item>Cum. Reactive Energy Q1 - TZ1</Item>
-        <Item>Cum. Reactive Energy Q1 - TZ2</Item>
-        <Item>Cum. Reactive Energy Q1 - TZ3</Item>
-        <Item>Cum. Reactive Energy Q1 - TZ4</Item>
-        <Item>Cum. Reactive Energy Q1 - TZ5</Item>
-        <Item>Cum. Reactive Energy Q1 - TZ6</Item>
-        <Item>Cum. Reactive Energy Q1 - TZ7</Item>
-        <Item>Cum. Reactive Energy Q1 - TZ8</Item>
-        <Item>Cum. Reactive Energy Q4 - TZ1</Item>
-        <Item>Cum. Reactive Energy Q4 - TZ2</Item>
-        <Item>Cum. Reactive Energy Q4 - TZ3</Item>
-        <Item>Cum. Reactive Energy Q4 - TZ4</Item>
-        <Item>Cum. Reactive Energy Q4 - TZ5</Item>
-        <Item>Cum. Reactive Energy Q4 - TZ6</Item>
-        <Item>Cum. Reactive Energy Q4 - TZ7</Item>
-        <Item>Cum. Reactive Energy Q4 - TZ8</Item>
-        <Item>Cum. Reactive Energy Q2 - TZ1</Item>
-        <Item>Cum. Reactive Energy Q2 - TZ2</Item>
-        <Item>Cum. Reactive Energy Q2 - TZ3</Item>
-        <Item>Cum. Reactive Energy Q2 - TZ4</Item>
-        <Item>Cum. Reactive Energy Q2 - TZ5</Item>
-        <Item>Cum. Reactive Energy Q2 - TZ6</Item>
-        <Item>Cum. Reactive Energy Q2 - TZ7</Item>
-        <Item>Cum. Reactive Energy Q2 - TZ8</Item>
-        <Item>Cum. Reactive Energy Q3 - TZ1</Item>
-        <Item>Cum. Reactive Energy Q3 - TZ2</Item>
-        <Item>Cum. Reactive Energy Q3 - TZ3</Item>
-        <Item>Cum. Reactive Energy Q3 - TZ4</Item>
-        <Item>Cum. Reactive Energy Q3 - TZ5</Item>
-        <Item>Cum. Reactive Energy Q3 - TZ6</Item>
-        <Item>Cum. Reactive Energy Q3 - TZ7</Item>
-        <Item>Cum. Reactive Energy Q3 - TZ8</Item>
-        <Item>Defraud Active Energy For Magnet Tamper</Item>
-        <Item>Defraud Active Energy For Neutral Disturbance Tamper</Item>
-        <Item>MD Reactive Q1</Item>
-        <Item>MD Reactive Q1 - Date and Time</Item>
-        <Item>MD Reactive Q2</Item>
-        <Item>MD Reactive Q2 - Date and Time</Item>
-        <Item>MD Reactive Q3</Item>
-        <Item>MD Reactive Q3 - Date and Time</Item>
-        <Item>MD Reactive Q4</Item>
-        <Item>MD Reactive Q4 - Date and Time</Item>
-        <Item>Maximum Voltage THD R Phase</Item>
-        <Item>Maximum Voltage THD R Phase - Date and Time</Item>
-        <Item>Maximum Voltage THD Y Phase</Item>
-        <Item>Maximum Voltage THD Y Phase - Date and Time</Item>
-        <Item>Maximum Voltage THD B Phase</Item>
-        <Item>Maximum Voltage THD B Phase - Date and Time</Item>
-        <Item>Maximum Current THD R Phase</Item>
-        <Item>Maximum Current THD R Phase - Date and Time</Item>
-        <Item>Maximum Current THD Y Phase</Item>
-        <Item>Maximum Current THD Y Phase - Date and Time</Item>
-        <Item>Maximum Current THD B Phase</Item>
-        <Item>Maximum Current THD B Phase - Date and Time</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
+        <Item IS_15959_PARA="true">Billing Date</Item>
+        <Item IS_15959_PARA="true">Billing Period Import Power Factor</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy - TZ1</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy - TZ2</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy - TZ3</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy - TZ4</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy - TZ5</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy - TZ6</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy - TZ7</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy - TZ8</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Import Energy - VAh</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Import Energy - TZ1</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Import Energy - TZ2</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Import Energy - TZ3</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Import Energy - TZ4</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Import Energy - TZ5</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Import Energy - TZ6</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Import Energy - TZ7</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Import Energy - TZ8</Item>
+        <Item IS_15959_PARA="true">MD Active Import</Item>
+        <Item IS_15959_PARA="true">MD Active Import - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ1</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ1 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ2</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ2 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ3</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ3 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ4</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ4 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ5</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ5 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ6</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ6 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ7</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ7 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ8</Item>
+        <Item IS_15959_PARA="true">MD Active Import - TZ8 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ1</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ1 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ2</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ2 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ3</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ3 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ4</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ4 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ5</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ5 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ6</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ6 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ7</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ7 - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ8</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import  - TZ8 - Date and Time</Item>
+        <Item IS_15959_PARA="true">Billing Period Power On Duration</Item>
+        <Item IS_15959_PARA="true">Cum. Active Export Energy</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Export Energy</Item>
+        <Item IS_15959_PARA="true">Cum. Reactive Energy - Q1</Item>
+        <Item IS_15959_PARA="true">Cum. Reactive Energy - Q2</Item>
+        <Item IS_15959_PARA="true">Cum. Reactive Energy - Q3</Item>
+        <Item IS_15959_PARA="true">Cum. Reactive Energy - Q4</Item>
+        <Item IS_15959_PARA="false">Cum. Billing Count (MD Reset Count)</Item>
+        <Item IS_15959_PARA="false">Cause Of MD Reset</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ1</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ2</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ3</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ4</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ5</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ6</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ7</Item>
+        <Item IS_15959_PARA="false">Cum. Active Export Energy - TZ8</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ1</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ2</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ3</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ4</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ5</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ6</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ7</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy - TZ8</Item>
+        <Item IS_15959_PARA="false">MD Active Export</Item>
+        <Item IS_15959_PARA="false">MD Active Export - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ1</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ1 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ2</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ2 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ3</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ3 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ4</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ4 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ5</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ5 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ6</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ6 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ7</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ7 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ8</Item>
+        <Item IS_15959_PARA="false">MD Active Export - TZ8 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ1</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ1 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ2</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ2 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ3</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ3 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ4</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ4 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ5</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ5 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ6</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ6 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ7</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ7 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ8</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export  - TZ8 - Date and Time</Item>
+        <Item IS_15959_PARA="false">Billing Period Export Power Factor</Item>
+        <Item IS_15959_PARA="false">Billing Period Tamper Count</Item>
+        <Item IS_15959_PARA="false">Cum. MD Active Import</Item>
+        <Item IS_15959_PARA="false">Cum. MD Apparent Import</Item>
+        <Item IS_15959_PARA="false">Cum. MD Active Export</Item>
+        <Item IS_15959_PARA="false">Cum. MD Apparent Export</Item>
+        <Item IS_15959_PARA="false">Fundamental Active Energy Import</Item>
+        <Item IS_15959_PARA="false">Fundamental Active Energy Export</Item>
+        <Item IS_15959_PARA="false">Billing Period No. of Power Failure</Item>
+        <Item IS_15959_PARA="false">Billing Period Power Failue Duration</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q1 - TZ1</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q1 - TZ2</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q1 - TZ3</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q1 - TZ4</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q1 - TZ5</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q1 - TZ6</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q1 - TZ7</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q1 - TZ8</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q2 - TZ1</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q2 - TZ2</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q2 - TZ3</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q2 - TZ4</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q2 - TZ5</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q2 - TZ6</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q2 - TZ7</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q2 - TZ8</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q3 - TZ1</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q3 - TZ2</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q3 - TZ3</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q3 - TZ4</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q3 - TZ5</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q3 - TZ6</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q3 - TZ7</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q3 - TZ8</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q4 - TZ1</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q4 - TZ2</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q4 - TZ3</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q4 - TZ4</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q4 - TZ5</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q4 - TZ6</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q4 - TZ7</Item>
+        <Item IS_15959_PARA="false">Cum. Reactive Energy Q4 - TZ8</Item>
+        <Item IS_15959_PARA="false">Defraud Active Energy For Magnet Tamper</Item>
+        <Item IS_15959_PARA="false">Defraud Active Energy For Neutral Disturbance Tamper</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q1</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q1 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q2</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q2 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q3</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q3 - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q4</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q4 - Date and Time</Item>
+        <Item IS_15959_PARA="false">Maximum Voltage THD R Phase</Item>
+        <Item IS_15959_PARA="false">Maximum Voltage THD R Phase - Date and Time</Item>
+        <Item IS_15959_PARA="false">Maximum Voltage THD Y Phase</Item>
+        <Item IS_15959_PARA="false">Maximum Voltage THD Y Phase - Date and Time</Item>
+        <Item IS_15959_PARA="false">Maximum Voltage THD B Phase</Item>
+        <Item IS_15959_PARA="false">Maximum Voltage THD B Phase - Date and Time</Item>
+        <Item IS_15959_PARA="false">Maximum Current THD R Phase</Item>
+        <Item IS_15959_PARA="false">Maximum Current THD R Phase - Date and Time</Item>
+        <Item IS_15959_PARA="false">Maximum Current THD Y Phase</Item>
+        <Item IS_15959_PARA="false">Maximum Current THD Y Phase - Date and Time</Item>
+        <Item IS_15959_PARA="false">Maximum Current THD B Phase</Item>
+        <Item IS_15959_PARA="false">Maximum Current THD B Phase - Date and Time</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
     </Profile_3PProLTCTBillingEnergy>
     <Profile_3PProLTCTEvent1>
-        <Item>Event Timestamp</Item>
-        <Item>Event code</Item>
-        <Item>R Phase Current - IR</Item>
-        <Item>Y Phase Current - IY</Item>
-        <Item>B Phase Current - IB</Item>
-        <Item>R Phase Voltage - VRN</Item>
-        <Item>Y Phase Voltage - VYN</Item>
-        <Item>B Phase Voltage - VBN</Item>
-        <Item>R Phase Power Factor</Item>
-        <Item>Y Phase Power Factor</Item>
-        <Item>B Phase Power Factor</Item>
-        <Item>Cum. Active Import Energy</Item>
-        <Item>Cum. Active Export Energy</Item>
-        <Item>Cum Tamper Count</Item>
-        <Item>Cum. Apparent Import Energy</Item>
-        <Item>Cum. Apparent Export Energy</Item>
-        <Item>Neutral Current</Item>
-        <Item>Event Log Sequence Number</Item>
-        <Item>Total Power Factor - PF</Item>
-        <Item>Temperature</Item>
-        <Item>R Phase Active Current</Item>
-        <Item>Y Phase Active Current</Item>
-        <Item>B Phase Active Current</Item>
-        <Item>Reserved</Item>
+        <Item IS_15959_PARA="true">Event Timestamp</Item>
+        <Item IS_15959_PARA="true">Event code</Item>
+        <Item IS_15959_PARA="true">R Phase Current - IR</Item>
+        <Item IS_15959_PARA="true">Y Phase Current - IY</Item>
+        <Item IS_15959_PARA="true">B Phase Current - IB</Item>
+        <Item IS_15959_PARA="true">R Phase Voltage - VRN</Item>
+        <Item IS_15959_PARA="true">Y Phase Voltage - VYN</Item>
+        <Item IS_15959_PARA="true">B Phase Voltage - VBN</Item>
+        <Item IS_15959_PARA="true">R Phase Power Factor</Item>
+        <Item IS_15959_PARA="true">Y Phase Power Factor</Item>
+        <Item IS_15959_PARA="true">B Phase Power Factor</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy</Item>
+        <Item IS_15959_PARA="true">Cum. Active Export Energy</Item>
+        <Item IS_15959_PARA="true">Cum Tamper Count</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Import Energy</Item>
+        <Item IS_15959_PARA="false">Cum. Apparent Export Energy</Item>
+        <Item IS_15959_PARA="false">Neutral Current</Item>
+        <Item IS_15959_PARA="false">Event Log Sequence Number</Item>
+        <Item IS_15959_PARA="false">Total Power Factor - PF</Item>
+        <Item IS_15959_PARA="false">Temperature</Item>
+        <Item IS_15959_PARA="false">R Phase Active Current</Item>
+        <Item IS_15959_PARA="false">Y Phase Active Current</Item>
+        <Item IS_15959_PARA="false">B Phase Active Current</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
     </Profile_3PProLTCTEvent1>
     <Profile_3PProLTCTEvent2>
-        <Item>Event Timestamp</Item>
-        <Item>Event code</Item>
-        <Item>Event Log Sequence Number</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
+        <Item IS_15959_PARA="true">Event Timestamp</Item>
+        <Item IS_15959_PARA="true">Event code</Item>
+        <Item IS_15959_PARA="false">Event Log Sequence Number</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
     </Profile_3PProLTCTEvent2>
     <Profile_3PProLTCTNameplate>
-        <Item>Meter Serial Number</Item>
-        <Item>Device ID</Item>
-        <Item>Manufacturer Name</Item>
-        <Item>Firmware Version</Item>
-        <Item>Meter Type</Item>
-        <Item>Meter Category</Item>
-        <Item>Current Rating</Item>
-        <Item>Year of Manufacture</Item>
-        <Item>Month of manufacture</Item>
-        <Item>Meter Constant</Item>
-        <Item>Voltage rating</Item>
-        <Item>NIC FW version</Item>
-        <Item>Module firmware version</Item>
-        <Item>CTR</Item>
-        <Item>PTR</Item>
-        <Item>Reserved</Item>
+        <Item IS_15959_PARA="true">Meter Serial Number</Item>
+        <Item IS_15959_PARA="true">Device ID</Item>
+        <Item IS_15959_PARA="true">Manufacturer Name</Item>
+        <Item IS_15959_PARA="true">Firmware Version</Item>
+        <Item IS_15959_PARA="true">Meter Type</Item>
+        <Item IS_15959_PARA="true">Meter Category</Item>
+        <Item IS_15959_PARA="true">Current Rating</Item>
+        <Item IS_15959_PARA="true">Year of Manufacture</Item>
+        <Item IS_15959_PARA="false">Month of manufacture</Item>
+        <Item IS_15959_PARA="false">Meter Constant</Item>
+        <Item IS_15959_PARA="false">Voltage rating</Item>
+        <Item IS_15959_PARA="false">NIC FW version</Item>
+        <Item IS_15959_PARA="false">Module firmware version</Item>
+        <Item IS_15959_PARA="false">CTR</Item>
+        <Item IS_15959_PARA="false">PTR</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
     </Profile_3PProLTCTNameplate>
     <Profile_3PProLTCTInstantaneous>
-        <Item>RTC - Date and Time</Item>
-        <Item>R Phase Current - IR</Item>
-        <Item>Y Phase Current - IY</Item>
-        <Item>B Phase Current - IB</Item>
-        <Item>R Phase Voltage - VRN</Item>
-        <Item>Y Phase Voltage - VYN</Item>
-        <Item>B Phase Voltage - VBN</Item>
-        <Item>R Phase Power Factor</Item>
-        <Item>Y Phase Power Factor</Item>
-        <Item>B Phase Power Factor</Item>
-        <Item>Total Power Factor</Item>
-        <Item>Frequency</Item>
-        <Item>Total Apparent Power</Item>
-        <Item>Total Active Power</Item>
-        <Item>Total Reactive Power</Item>
-        <Item>No Of Power Failure</Item>
-        <Item>Cum. Power Failure Duration</Item>
-        <Item>Cum. Tamper Count</Item>
-        <Item>Cum. Billing Count</Item>
-        <Item>Cum. Programming Count</Item>
-        <Item>Last Billing Date and Time</Item>
-        <Item>Cum. Active Import Energy</Item>
-        <Item>Cum. Active Export Energy</Item>
-        <Item>Cum. Reactive Energy - Q1</Item>
-        <Item>Cum. Reactive Energy - Q2</Item>
-        <Item>Cum. Reactive Energy - Q3</Item>
-        <Item>Cum. Reactive Energy - Q4</Item>
-        <Item>Cum. Apparent Import Energy</Item>
-        <Item>Cum. Apparent Export Energy</Item>
-        <Item>MD Active Import</Item>
-        <Item>MD Active Import - Date and Time</Item>
-        <Item>MD Apparent Import</Item>
-        <Item>MD Apparent Import - Date and Time</Item>
-        <Item>Load Limit Function Status</Item>
-        <Item>Load Limit Value</Item>
-        <Item>Neutral Current</Item>
-        <Item>MD Active Export</Item>
-        <Item>MD Active Export - Date and Time</Item>
-        <Item>MD Apparent Export</Item>
-        <Item>MD Apparent Export - Date and Time</Item>
-        <Item>Self Diagnostic Details</Item>
-        <Item>Network Information Parameters (For GPRS NIC)</Item>
-        <Item>Defraud Active Energy For Magnet Tamper</Item>
-        <Item>Defraud Active Energy For Neutral Disturbance Tamper</Item>
-        <Item>Fundamental/Total Active Energy Import</Item>
-        <Item>Fundamental/Total Active Energy Export</Item>
-        <Item>Cum. Power on duration minutes</Item>
-        <Item>Cum. MD Active Import</Item>
-        <Item>Cum. MD Apparent Import</Item>
-        <Item>Cum. MD Active Export</Item>
-        <Item>Cum. MD Apparent Export</Item>
-        <Item>MD Reactive Q1</Item>
-        <Item>MD Reactive Q1 Date and Time</Item>
-        <Item>MD Reactive Q2</Item>
-        <Item>MD Reactive Q2 Date and Time</Item>
-        <Item>MD Reactive Q3</Item>
-        <Item>MD Reactive Q3 Date and Time</Item>
-        <Item>MD Reactive Q4</Item>
-        <Item>MD Reactive Q4 Date and Time</Item>
-        <Item>R Phase Miss Count</Item>
-        <Item>Y Phase Miss Count</Item>
-        <Item>B Phase Miss Count</Item>
-        <Item>R Phase CT Open Count</Item>
-        <Item>Y Phase CT Open Count</Item>
-        <Item>B Phase CT Open Count</Item>
-        <Item>Voltage Unbalance Count</Item>
-        <Item>Current Unbalance Count</Item>
-        <Item>CT Reverse Count Total</Item>
-        <Item>R Phase CT Reverse Count</Item>
-        <Item>Y Phase CT Reverse Count</Item>
-        <Item>B Phase CT Reverse Count</Item>
-        <Item>Magnet Count</Item>
-        <Item>High Voltage Count</Item>
-        <Item>Low Voltage Count</Item>
-        <Item>Over Load Count</Item>
-        <Item>Module Cover Open Count</Item>
-        <Item>Top Cover Open Count</Item>
-        <Item>Neutral Disturbance Count</Item>
-        <Item>R Phase Voltage THD</Item>
-        <Item>Y Phase Voltage THD</Item>
-        <Item>B Phase Voltage THD</Item>
-        <Item>R Phase Current THD</Item>
-        <Item>Y Phase Current THD</Item>
-        <Item>B Phase Current THD</Item>
-        <Item>R Phase Active Power</Item>
-        <Item>Y Phase Active Power</Item>
-        <Item>B Phase Active Power</Item>
-        <Item>R Phase Reactive Power</Item>
-        <Item>Y Phase Reactive Power</Item>
-        <Item>B Phase Reactive Power</Item>
-        <Item>R Phase Apparent Power</Item>
-        <Item>Y Phase Apparent Power</Item>
-        <Item>B Phase Apparent Power</Item>
-        <Item>Temperature</Item>
-        <Item>Relay Operation Count (Disconnect)</Item>
-        <Item>Relay Operation Count (Connect)</Item>
-        <Item>R Phase Active Current</Item>
-        <Item>Y Phase Active Current</Item>
-        <Item>B Phase Active Current</Item>
-        <Item>Angle Between Vr-Vy </Item>
-        <Item>Angle Between Vy-Vb </Item>
-        <Item>Angle Between Vr-Vb </Item>
-        <Item>Meter Serial Number</Item>
-        <Item>Digital Input Status</Item>
-        <Item>Network Info Parameter (As per Adani project)</Item>
-        <Item>Cell ID (As per Adani project)</Item>
-        <Item>RSSI</Item>
-        <Item>RAT and Band</Item>
-        <Item>Over Current Count</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
-        <Item>Reserved</Item>
+        <Item IS_15959_PARA="true">RTC - Date and Time</Item>
+        <Item IS_15959_PARA="true">R Phase Current - IR</Item>
+        <Item IS_15959_PARA="true">Y Phase Current - IY</Item>
+        <Item IS_15959_PARA="true">B Phase Current - IB</Item>
+        <Item IS_15959_PARA="true">R Phase Voltage - VRN</Item>
+        <Item IS_15959_PARA="true">Y Phase Voltage - VYN</Item>
+        <Item IS_15959_PARA="true">B Phase Voltage - VBN</Item>
+        <Item IS_15959_PARA="true">R Phase Power Factor</Item>
+        <Item IS_15959_PARA="true">Y Phase Power Factor</Item>
+        <Item IS_15959_PARA="true">B Phase Power Factor</Item>
+        <Item IS_15959_PARA="true">Total Power Factor</Item>
+        <Item IS_15959_PARA="true">Frequency</Item>
+        <Item IS_15959_PARA="true">Total Apparent Power</Item>
+        <Item IS_15959_PARA="true">Total Active Power</Item>
+        <Item IS_15959_PARA="true">Total Reactive Power</Item>
+        <Item IS_15959_PARA="true">No Of Power Failure</Item>
+        <Item IS_15959_PARA="true">Cum. Power Failure Duration</Item>
+        <Item IS_15959_PARA="true">Cum. Tamper Count</Item>
+        <Item IS_15959_PARA="true">Cum. Billing Count</Item>
+        <Item IS_15959_PARA="true">Cum. Programming Count</Item>
+        <Item IS_15959_PARA="true">Last Billing Date and Time</Item>
+        <Item IS_15959_PARA="true">Cum. Active Import Energy</Item>
+        <Item IS_15959_PARA="true">Cum. Active Export Energy</Item>
+        <Item IS_15959_PARA="true">Cum. Reactive Energy - Q1</Item>
+        <Item IS_15959_PARA="true">Cum. Reactive Energy - Q2</Item>
+        <Item IS_15959_PARA="true">Cum. Reactive Energy - Q3</Item>
+        <Item IS_15959_PARA="true">Cum. Reactive Energy - Q4</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Import Energy</Item>
+        <Item IS_15959_PARA="true">Cum. Apparent Export Energy</Item>
+        <Item IS_15959_PARA="true">MD Active Import</Item>
+        <Item IS_15959_PARA="true">MD Active Import - Date and Time</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import</Item>
+        <Item IS_15959_PARA="true">MD Apparent Import - Date and Time</Item>
+        <Item IS_15959_PARA="false">Load Limit Function Status</Item>
+        <Item IS_15959_PARA="false">Load Limit Value</Item>
+        <Item IS_15959_PARA="false">Neutral Current</Item>
+        <Item IS_15959_PARA="false">MD Active Export</Item>
+        <Item IS_15959_PARA="false">MD Active Export - Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export</Item>
+        <Item IS_15959_PARA="false">MD Apparent Export - Date and Time</Item>
+        <Item IS_15959_PARA="false">Self Diagnostic Details</Item>
+        <Item IS_15959_PARA="false">Network Information Parameters (For GPRS NIC)</Item>
+        <Item IS_15959_PARA="false">Defraud Active Energy For Magnet Tamper</Item>
+        <Item IS_15959_PARA="false">Defraud Active Energy For Neutral Disturbance Tamper</Item>
+        <Item IS_15959_PARA="false">Fundamental/Total Active Energy Import</Item>
+        <Item IS_15959_PARA="false">Fundamental/Total Active Energy Export</Item>
+        <Item IS_15959_PARA="false">Cum. Power on duration minutes</Item>
+        <Item IS_15959_PARA="false">Cum. MD Active Import</Item>
+        <Item IS_15959_PARA="false">Cum. MD Apparent Import</Item>
+        <Item IS_15959_PARA="false">Cum. MD Active Export</Item>
+        <Item IS_15959_PARA="false">Cum. MD Apparent Export</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q1</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q1 Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q2</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q2 Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q3</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q3 Date and Time</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q4</Item>
+        <Item IS_15959_PARA="false">MD Reactive Q4 Date and Time</Item>
+        <Item IS_15959_PARA="false">R Phase Miss Count</Item>
+        <Item IS_15959_PARA="false">Y Phase Miss Count</Item>
+        <Item IS_15959_PARA="false">B Phase Miss Count</Item>
+        <Item IS_15959_PARA="false">R Phase CT Open Count</Item>
+        <Item IS_15959_PARA="false">Y Phase CT Open Count</Item>
+        <Item IS_15959_PARA="false">B Phase CT Open Count</Item>
+        <Item IS_15959_PARA="false">Voltage Unbalance Count</Item>
+        <Item IS_15959_PARA="false">Current Unbalance Count</Item>
+        <Item IS_15959_PARA="false">CT Reverse Count Total</Item>
+        <Item IS_15959_PARA="false">R Phase CT Reverse Count</Item>
+        <Item IS_15959_PARA="false">Y Phase CT Reverse Count</Item>
+        <Item IS_15959_PARA="false">B Phase CT Reverse Count</Item>
+        <Item IS_15959_PARA="false">Magnet Count</Item>
+        <Item IS_15959_PARA="false">High Voltage Count</Item>
+        <Item IS_15959_PARA="false">Low Voltage Count</Item>
+        <Item IS_15959_PARA="false">Over Load Count</Item>
+        <Item IS_15959_PARA="false">Module Cover Open Count</Item>
+        <Item IS_15959_PARA="false">Top Cover Open Count</Item>
+        <Item IS_15959_PARA="false">Neutral Disturbance Count</Item>
+        <Item IS_15959_PARA="false">R Phase Voltage THD</Item>
+        <Item IS_15959_PARA="false">Y Phase Voltage THD</Item>
+        <Item IS_15959_PARA="false">B Phase Voltage THD</Item>
+        <Item IS_15959_PARA="false">R Phase Current THD</Item>
+        <Item IS_15959_PARA="false">Y Phase Current THD</Item>
+        <Item IS_15959_PARA="false">B Phase Current THD</Item>
+        <Item IS_15959_PARA="false">R Phase Active Power</Item>
+        <Item IS_15959_PARA="false">Y Phase Active Power</Item>
+        <Item IS_15959_PARA="false">B Phase Active Power</Item>
+        <Item IS_15959_PARA="false">R Phase Reactive Power</Item>
+        <Item IS_15959_PARA="false">Y Phase Reactive Power</Item>
+        <Item IS_15959_PARA="false">B Phase Reactive Power</Item>
+        <Item IS_15959_PARA="false">R Phase Apparent Power</Item>
+        <Item IS_15959_PARA="false">Y Phase Apparent Power</Item>
+        <Item IS_15959_PARA="false">B Phase Apparent Power</Item>
+        <Item IS_15959_PARA="false">Temperature</Item>
+        <Item IS_15959_PARA="false">Relay Operation Count (Disconnect)</Item>
+        <Item IS_15959_PARA="false">Relay Operation Count (Connect)</Item>
+        <Item IS_15959_PARA="false">R Phase Active Current</Item>
+        <Item IS_15959_PARA="false">Y Phase Active Current</Item>
+        <Item IS_15959_PARA="false">B Phase Active Current</Item>
+        <Item IS_15959_PARA="false">Angle Between Vr-Vy </Item>
+        <Item IS_15959_PARA="false">Angle Between Vy-Vb </Item>
+        <Item IS_15959_PARA="false">Angle Between Vr-Vb </Item>
+        <Item IS_15959_PARA="false">Meter Serial Number</Item>
+        <Item IS_15959_PARA="false">Digital Input Status</Item>
+        <Item IS_15959_PARA="false">Network Info Parameter (As per Adani project)</Item>
+        <Item IS_15959_PARA="false">Cell ID (As per Adani project)</Item>
+        <Item IS_15959_PARA="false">RSSI</Item>
+        <Item IS_15959_PARA="false">RAT and Band</Item>
+        <Item IS_15959_PARA="false">Over Current Count</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
+        <Item IS_15959_PARA="false">Reserved</Item>
     </Profile_3PProLTCTInstantaneous>
 </Root>
