@@ -1341,10 +1341,39 @@ def generate_doc():
     run = para.add_run(" If net-meter mode configured in meter, all forwarded parameters converted into Import parameters and distinguish with ")
     run.add_picture(os.path.join(default_folder, "Template images", "import.jpg"), width=Inches(0.25))
     run = para.add_run(" on display.")
-    para = doc.add_paragraph("3.  In the Auto Mode Display and Push Mode Display default here show all 8 zones for zone wise display parameters otherwise meter will show zones wise display parameters as per the configured zones in meter.")
-    para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    zone_wise_parameters = (
+        set(range(325, 501))
+        | set(range(525, 701))
+        | set(range(725, 901))
+        | set(range(925, 1101))
+    )
+    # Find matching zone-wise parameters
+    auto_zone_wise = zone_wise_parameters.intersection(auto_vals)
+    push_zone_wise = zone_wise_parameters.intersection(push_vals)
+
+    # Determine the applicable display mode
+    if auto_zone_wise or push_zone_wise:
+
+        if auto_zone_wise and push_zone_wise:
+            mode_text = "Auto Mode Display and Push Mode Display"
+        elif auto_zone_wise:
+            mode_text = "Auto Mode Display"
+        else:
+            mode_text = "Push Mode Display"
+
+        para = doc.add_paragraph(f"3.  In the {mode_text} default here show all 8 zones for zone wise display parameters otherwise meter will show zones wise display parameters as per the configured zones in meter.")
+        para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+        sr_no_temp_var = True
+
+    else:
+        sr_no_temp_var = False
+    
     if display_lock in["1", "2"]:
-        para = doc.add_paragraph("4.")   
+        if sr_no_temp_var:
+            para = doc.add_paragraph("4.")   
+        else:
+            para = doc.add_paragraph("3.")
+        
         para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
         run = para.add_run()
         run = para.add_run(" If top cover open tamper occurred in the meter then only the ") 
