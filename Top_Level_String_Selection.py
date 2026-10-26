@@ -435,7 +435,7 @@ COLORS = {
 }
 
 root = ctk.CTk()
-root.title("3P Pro Top Level String Selection | V2.0")
+root.title("3P Pro Top Level String Selection | V2.1")
 root.configure(fg_color=COLORS["bg"])
 root.resizable(False, False)
 
