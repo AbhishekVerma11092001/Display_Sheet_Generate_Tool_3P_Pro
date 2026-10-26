@@ -11,36 +11,40 @@ from tkinter import ttk
 
 # === Dialog and Function Definitions ===
 class InputDialog(simpledialog.Dialog):
+    def __init__(self, parent, title, initial_bits):
+        self.initial_bits = initial_bits
+        super().__init__(parent, title)
+
     def body(self, master):
-        bit0 = tk.IntVar(value=0)
+        bit0 = tk.IntVar(value=int(self.initial_bits[7]))
         chk_btn0 = ctk.CTkCheckBox(master, text="Metering Mode", variable=bit0)
         chk_btn0.grid(row=0, column=0, padx=30, sticky="w")
 
-        bit1 = tk.IntVar(value=0)
+        bit1 = tk.IntVar(value=int(self.initial_bits[6]))
         chk_btn1 = ctk.CTkCheckBox(master, text="Payment Mode", variable=bit1)
         chk_btn1.grid(row=1, column=0, padx=30, sticky="w")
 
-        bit2 = tk.IntVar(value=0)
+        bit2 = tk.IntVar(value=int(self.initial_bits[5]))
         chk_btn2 = ctk.CTkCheckBox(master, text="MD-IP", variable=bit2)
         chk_btn2.grid(row=2, column=0, padx=30, sticky="w")
 
-        bit3 = tk.IntVar(value=0)
+        bit3 = tk.IntVar(value=int(self.initial_bits[4]))
         chk_btn3 = ctk.CTkCheckBox(master, text="LS-IP", variable=bit3)
         chk_btn3.grid(row=3, column=0, padx=30, sticky="w")
 
-        bit4 = tk.IntVar(value=0)
+        bit4 = tk.IntVar(value=int(self.initial_bits[3]))
         chk_btn4 = ctk.CTkCheckBox(master, text="Firmware Upgrade", variable=bit4)
         chk_btn4.grid(row=4, column=0, padx=30, sticky="w")
 
-        bit5 = tk.IntVar(value=0)
+        bit5 = tk.IntVar(value=int(self.initial_bits[2]))
         chk_btn5 = ctk.CTkCheckBox(master, text="Apparent Cal Method", variable=bit5)
         chk_btn5.grid(row=5, column=0, padx=30, sticky="w")
 
-        bit6 = tk.IntVar(value=0)
+        bit6 = tk.IntVar(value=int(self.initial_bits[1]))
         # chk_btn6 = ctk.CTkCheckBox(master, text="Reserved", variable=bit6)
         # chk_btn6.grid(row=6, column=0, padx=30, sticky="w")
 
-        bit7 = tk.IntVar(value=0)
+        bit7 = tk.IntVar(value=int(self.initial_bits[0]))
         # chk_btn7 = ctk.CTkCheckBox(master, text="Reserved", variable=bit7)
         # chk_btn7.grid(row=7, column=0, padx=30, sticky="w")
 
@@ -61,7 +65,7 @@ def bits_to_hex(bits_string):
 
 
 def get_bill_due_config():
-    dialog = InputDialog(root, title="Bill due to Configuration")
+    dialog = InputDialog(root, title="Bill due to Configuration", initial_bits=bill_config_var.get())
     bill_string = dialog.result
     if bill_string is not None:
         bill_config_var.set(bill_string)
